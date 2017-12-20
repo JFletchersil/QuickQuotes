@@ -1,0 +1,96 @@
+<div class="jumbotron jumbotron-floating">
+    <h1 class="display-3 higher-heading">Administration</h1>
+    <br />
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+        <md-tab label="Administrators">
+            <md-content class="md-padding">
+                <div class="container col-12">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email Address</th>
+                                <th>Is Admin</th>
+                                <th>Account Locked</th>
+                                <th>Has Two Factor</th>
+                                <th>Change Password?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <button class="btn" data-ng-click="hideOptions()">Mark</button>
+                                    <br />
+                                </td>
+                                <td>Mark@Mark.com</td>
+                                <td>
+                                    <i class="material-icons">done</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">lock</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">done</i>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-raised btn-primary">Press Me!</button>
+                                </td>
+                            </tr>
+                            <tr data-ng-show="(showOptions)">
+                                <td colspan="6">
+                                    <button type="button" class="btn btn-raised btn-primary col-12 col-sm-2">Change Type</button>
+                                    <button type="button" class="btn btn-raised btn-primary col-12 col-sm-2">Change Details</button>
+                                    <button type="button" class="btn btn-raised btn-primary col-12 col-sm-2">Delete User</button>
+                                    <button type="button" class="btn btn-raised btn-primary col-12 col-sm-2">Enable Two Factor</button>
+                                    <button type="button" class="btn btn-raised btn-primary col-12 col-sm-2">Clone User</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </md-content>
+        </md-tab>
+        <md-tab label="Users">
+            <md-content class="md-padding">
+                <div class="container col-12">
+                    <table class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Email Address</th>
+                                <th>Is Admin</th>
+                                <th>Account Locked</th>
+                                <th>Has Two Factor</th>
+                                <th>Change Password?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mark</td>
+                                <td>Mark@Mark.com</td>
+                                <td>
+                                    <i class="material-icons">done</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">lock</i>
+                                </td>
+                                <td>
+                                    <i class="material-icons">done</i>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-raised btn-primary">Press Me!</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </md-content>
+        </md-tab>
+    </md-tabs>
+    <script>
+        $(document).ready(function () {
+            $('body').bootstrapMaterialDesign();
+            $.material.init();
+        });
+    </script>
+</div>

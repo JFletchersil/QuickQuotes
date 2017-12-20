@@ -1,0 +1,86 @@
+<h2 class="display-3">Hire Purchase</h2>
+<div class="card">
+
+    <!--Card image-->
+    <!--<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">-->
+    <!--Card content-->
+    <div class="card-body">
+        <!--Title-->
+        <h4 class="card-title">Purchase Details</h4>
+        <!--Text-->
+        <div class="md-form col-3">
+            <input type="text" id="form1" class="form-control">
+            <label for="form1" class="">Term</label>
+        </div>
+        <div class="md-form col-3">
+            <input type="text" id="form1" class="form-control">
+            <label for="form1" class="">Loan Amount</label>
+        </div>
+        <div class="md-form col-3">
+            <input type="text" id="form1" class="form-control">
+            <label for="form1" class="">Deposit</label>
+        </div>
+        <div class="md-form col-3">
+            <input type="text" id="form1" class="form-control">
+            <label for="form1" class="">Interest Rate</label>
+        </div>
+        <div class="row">
+            <div class="col-9"></div>
+            <button type="button" class="btn btn-outline-primary col-md-3">Generate</button>
+        </div>
+    </div>
+</div>
+
+<div class="row no-x-margin">
+    <div class="card col mt-4 mr-2">
+        <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title">Quotation Results</h4>
+            <!--Text-->
+            <div class="row">
+                <div class="md-form col-6">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form1" class="">Loan Amount</label>
+                </div>
+                <div class="md-form col-6">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form1" class="">Total Repayable</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="md-form col-6">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form1" class="">Fees</label>
+                </div>
+                <div class="md-form col-6">
+                    <input type="text" id="form1" class="form-control">
+                    <label for="form1" class="">Interest Rate</label>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card col mt-4 ml-2">
+        <!--Card image-->
+        <!--<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">-->
+        <!--Card content-->
+        <div class="card-body">
+            <!--Title-->
+            <h4 class="card-title">Quotation Options</h4>
+            <!--Text-->
+            <form>
+                <div class=checkbox>
+                    <label>
+                        <input type=checkbox> Include Fees
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function () {
+            $('body').bootstrapMaterialDesign();
+            $.material.init();
+        });
+    </script>
+</div>

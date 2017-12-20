@@ -3,10 +3,13 @@
 // Declare app level module which depends on views, and components
 angular.module('quoteTool', [
     'ngRoute',
+    'ngMaterial',
     'quoteTool.home',
     'quoteTool.quotequeue',
     'quoteTool.quoteselection',
-    'quoteTool.version'
+    'quoteTool.quotegeneration',
+    'quoteTool.version',
+    'quoteTool.administration'
 ])
 .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');

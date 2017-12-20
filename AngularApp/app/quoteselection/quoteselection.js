@@ -10,5 +10,5 @@ angular.module('quoteTool.quoteselection', ['ngRoute'])
     }])
 
     .controller('QuoteSelection', [function () {
-
+        $.material.init();
     }]);
