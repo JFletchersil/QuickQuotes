@@ -774,6 +774,7 @@
     <Content Include="app\bower_components\html5-boilerplate\src\tile.png" />
     <Content Include="app\bower_components\html5-boilerplate\test\file_content.js" />
     <Content Include="app\bower_components\html5-boilerplate\test\file_existence.js" />
+    <Content Include="app\bower_components\images\man-156584_640.png" />
     <Content Include="app\bower_components\jquery\AUTHORS.txt" />
     <Content Include="app\bower_components\jquery\dist\jquery.js" />
     <Content Include="app\bower_components\jquery\dist\jquery.min.js" />
@@ -1246,6 +1247,11 @@
     <Content Include="app\quotegeneration\quotegeneration.html" />
     <Content Include="app\quotegeneration\quotegeneration.js" />
     <Content Include="app\quotegeneration\quotegeneration_test.js" />
+    <Content Include="app\userdetails\userdetails.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="app\userdetails\userdetails.js" />
+    <Content Include="app\userdetails\userdetails_test.js" />
     <Content Include="app\quotequeue\quotequeue.html" />
     <Content Include="app\quotequeue\quotequeue.js" />
     <Content Include="app\quotequeue\quotequeue_test.js" />

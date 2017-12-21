@@ -86,7 +86,63 @@
                 </div>
             </md-content>
         </md-tab>
+        <md-tab>
+            <md-tab-label><md-icon class="material-icons">add</md-icon></md-tab-label>
+            <md-tab-body>
+                <md-content class="md-padding">
+                    <!--Card image-->
+                    <!--<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">-->
+                    <!--Card content-->
+                    <div class="card-body">
+                        <!--Title-->
+                        <h4 class="card-title">New User</h4>
+                        <!--Text-->
+                        <div class="row">
+                            <div class="md-form col-9">
+                                <div class="md-form col-9">
+                                    <input type="text" id="form1" class="form-control">
+                                    <label for="form1" class="">Username</label>
+                                </div>
+                                <div class="md-form col-9">
+                                    <input type="text" id="form1" class="form-control">
+                                    <label for="form1" class="">Email Address</label>
+                                </div>
+                                <div class="md-form col-9">
+                                    <input type="text" id="form1" class="form-control">
+                                    <label for="form1" class="">Account Locked?</label>
+                                </div>
+                                <!--Text-->
+                                <div class="md-form col-9 checkbox-heading">
+                                    <div class=checkbox>
+                                        <label>
+                                            <input type=checkbox> Is Administrator
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="md-form col-3">
+                                <div class="md-form">
+                                    <input type="text" id="form1" class="form-control">
+                                    <label for="form1" class="">Password</label>
+                                </div>
+                                <div class="md-form ">
+                                    <input type="text" id="form1" class="form-control">
+                                    <label for="form1" class="">Confirm Password</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-9"></div>
+                            <button type="button" class="btn btn-raised btn-primary col-md-3">Create User</button>
+                        </div>
+                    </div>
+                </md-content>
+            </md-tab-body>
+        </md-tab>
     </md-tabs>
+    <!--<button>
+        <i class="material-icons">add</i>
+    </button>-->
     <script>
         $(document).ready(function () {
             $('body').bootstrapMaterialDesign();

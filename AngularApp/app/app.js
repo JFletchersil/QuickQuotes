@@ -9,7 +9,8 @@ angular.module('quoteTool', [
     'quoteTool.quoteselection',
     'quoteTool.quotegeneration',
     'quoteTool.version',
-    'quoteTool.administration'
+    'quoteTool.administration',
+    'quoteTool.userdetails'
 ])
 .config(['$locationProvider', '$routeProvider', function ($locationProvider, $routeProvider) {
     $locationProvider.hashPrefix('!');
