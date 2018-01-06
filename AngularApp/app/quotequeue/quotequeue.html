@@ -1,1 +1,35 @@
-<p>This is the partial for the qoute queue.</p>
+<div class="jumbotron jumbotron-floating">
+    <h1 class="display-3 higher-heading">Quotation Queue</h1>
+    <br />
+    <div class="md-padding" style="background-color:rgb(250,250,250); color: black;">
+        <div class="container col-12">
+            <table class="table table-responsive">
+                <thead>
+                    <tr>
+                        <th>Quote Reference</th>
+                        <th>Quote Type</th>
+                        <th>Quote Status</th>
+                        <th>Quote Age</th>
+                        <th>Quote Author</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr dir-paginate="quote in quotes | filter:q | itemsPerPage: 5" current-page="currentPage">
+                        <td>{{quote.ReferenceNumber}}</td>
+                        <td>{{quote.Type}}</td>
+                        <td>{{quote.Status}}</td>
+                        <td>{{quote.Age}}</td>
+                        <td>{{quote.Author}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <dir-pagination-controls class="pagination" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../components/templates/paginatingselector.html"></dir-pagination-controls>
+        </div>
+    </div>
+    <script>
+        //$(document).ready(function () {
+        //    $('body').bootstrapMaterialDesign();
+        //    $.material.init();
+        //});
+    </script>
+</div>

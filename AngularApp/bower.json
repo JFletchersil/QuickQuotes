@@ -24,7 +24,8 @@
   "resolutions": {
     "angular": "^1.6.6",
     "bootstrap-material-design": "v4.0.0-beta.4",
-    "popper.js": "^1.12.9"
+    "popper.js": "1.12.9",
+    "jquery": "^3.2.1"
   },
   "authors": [
     "Gmandam <lukejunk1234@gmail.com>"
