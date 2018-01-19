@@ -1,0 +1,47 @@
+<div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-in" data-ng-controller="MainMenu as Menu">
+    <header class="bmd-layout-header">
+        <div class="navbar navbar-light bg-faded">
+            <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
+                <span class="sr-only">Toggle drawer</span>
+                <i class="material-icons">menu</i>
+            </button>
+            <ul class="nav navbar-nav">
+                <form class="form-inline">
+                    <i class="mi mi-search"></i>
+                    <input class="form-control mr-sm-2" placeholder="Quote Search" aria-label="Search" type="text" />
+                </form>
+            </ul>
+        </div>
+    </header>
+    <div id="dw-s1" class="bmd-layout-drawer bg-faded hidden-flow" aria-hidden="false">
+        <header>
+            <div class="container no-x-padding">
+                <i class="navbar-brand mi mi-verified-user mi-48 no-x-padding col-1"></i>
+                <a class="navbar-brand col-3 user-padding">{{user.username}}</a>
+            </div>
+        </header>
+        <ul class="list-group no-ytop-padding">
+            <!--<a class="list-group-item" href="#!/home">Home Menu</a>-->
+            <a class="list-group-item" ui-sref=".home">Home Menu</a>
+            <!--<a class="list-group-item" href="#!/quotequeue">Quote Queue</a>-->
+            <a class="list-group-item"  ui-sref=".quotequeue">Quote Queue</a>
+            <a class="list-group-item" href="#!/quoteselection">Quote Selection</a>
+            <a class="list-group-item" href="#!/administration">Administration</a>
+            <a class="list-group-item" href="#!/userdetails">User Details</a>
+        </ul>
+        <footer>
+            <a class="navbar-brand col-sm-12">Log Out</a>
+        </footer>
+    </div>
+    <main class="bmd-layout-content">
+        <div class="container-fluid">
+            <ui-view></ui-view>
+        </div>
+    </main>
+</div>
+<script>
+        //$(document).ready(function () {
+        //    $('body').bootstrapMaterialDesign();
+        //    $.material.init();
+        //});
+</script>

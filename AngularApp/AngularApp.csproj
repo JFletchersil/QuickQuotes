@@ -25,7 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,27 +46,107 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.0.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.7\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Net.Http" />
+    <Reference Include="Microsoft.Owin, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.1.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.1.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.1.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.1.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.1.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.1.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=3.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.1.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http.Owin, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Owin.5.2.3\lib\net45\System.Web.Http.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
@@ -81,6 +161,39 @@
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.2.2.0\lib\net45\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Agent.Intercept">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.2.0.6\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.DependencyCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.2.0\lib\net45\Microsoft.AI.DependencyCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.PerfCounterCollector">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.2.0\lib\net45\Microsoft.AI.PerfCounterCollector.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.ServerTelemetryChannel">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.2.0\lib\net45\Microsoft.AI.ServerTelemetryChannel.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.WindowsServer">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.WindowsServer.2.2.0\lib\net45\Microsoft.AI.WindowsServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AI.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.2.2.0\lib\net45\Microsoft.AI.Web.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\administration\administration.html" />
@@ -94,6 +207,9 @@
     <Content Include="app\bower_components\angular-aria\angular-aria.js" />
     <Content Include="app\bower_components\angular-aria\angular-aria.min.js" />
     <Content Include="app\bower_components\angular-aria\index.js" />
+    <Content Include="app\bower_components\angular-cookies\angular-cookies.js" />
+    <Content Include="app\bower_components\angular-cookies\angular-cookies.min.js" />
+    <Content Include="app\bower_components\angular-cookies\index.js" />
     <Content Include="app\bower_components\angular-loader\angular-loader.js" />
     <Content Include="app\bower_components\angular-loader\angular-loader.min.js" />
     <Content Include="app\bower_components\angular-material\.gitignore" />
@@ -591,6 +707,16 @@
     <Content Include="app\bower_components\angular-touch\angular-touch.js" />
     <Content Include="app\bower_components\angular-touch\angular-touch.min.js" />
     <Content Include="app\bower_components\angular-touch\index.js" />
+    <Content Include="app\bower_components\angular-ui-router\karma.conf.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\angular-ui-router.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\angular-ui-router.min.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\resolveService.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\resolveService.min.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\stateEvents.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\stateEvents.min.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\ui-router-angularjs.js" />
+    <Content Include="app\bower_components\angular-ui-router\release\ui-router-angularjs.min.js" />
+    <Content Include="app\bower_components\angular-ui-router\rollup.config.js" />
     <Content Include="app\bower_components\angular-ui\.gitignore" />
     <Content Include="app\bower_components\angular-ui\build\angular-ui-ieshiv.js" />
     <Content Include="app\bower_components\angular-ui\build\angular-ui-ieshiv.min.js" />
@@ -1220,6 +1346,7 @@
     <Content Include="app\bower_components\ui-bootstrap\template\tooltip\tooltip-template-popup.html" />
     <Content Include="app\bower_components\ui-bootstrap\template\typeahead\typeahead-match.html" />
     <Content Include="app\bower_components\ui-bootstrap\template\typeahead\typeahead-popup.html" />
+    <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\templates\paginatingselector.html" />
     <Content Include="app\components\version\interpolate-filter.js" />
     <Content Include="app\components\version\interpolate-filter_test.js" />
@@ -1232,6 +1359,12 @@
     <Content Include="app\home\home_test.js" />
     <Content Include="app\index-async.html" />
     <Content Include="app\index.html" />
+    <Content Include="app\login\login.html" />
+    <Content Include="app\login\login.js" />
+    <Content Include="app\login\login_test.js" />
+    <Content Include="app\mainmenu\mainmenu.html" />
+    <Content Include="app\mainmenu\mainmenu.js" />
+    <Content Include="app\mainmenu\mainmenu_test.js" />
     <Content Include="app\quotegeneration\quotegeneration.html" />
     <Content Include="app\quotegeneration\quotegeneration.js" />
     <Content Include="app\quotegeneration\quotegeneration_test.js" />
@@ -1248,7 +1381,6 @@
     <Content Include="app\quoteselection\quoteselection_test.js" />
     <Content Include="e2e-tests\protractor.conf.js" />
     <Content Include="e2e-tests\scenarios.js" />
-    <Content Include="Global.asax" />
     <Content Include="karma.conf.js" />
     <Content Include="node_modules\accepts\index.js" />
     <Content Include="node_modules\adm-zip\adm-zip.js" />
@@ -8048,83 +8180,6 @@
     <Content Include="node_modules\preserve\test.js" />
     <Content Include="node_modules\process-nextick-args\index.js" />
     <Content Include="node_modules\process-nextick-args\test.js" />
-    <Content Include="node_modules\protractor\bin\elementexplorer.js" />
-    <Content Include="node_modules\protractor\built\browser.js" />
-    <Content Include="node_modules\protractor\built\cli.js" />
-    <Content Include="node_modules\protractor\built\clientsidescripts.js" />
-    <Content Include="node_modules\protractor\built\config.js" />
-    <Content Include="node_modules\protractor\built\configParser.js" />
-    <Content Include="node_modules\protractor\built\debugger.js" />
-    <Content Include="node_modules\protractor\built\debugger\clients\explorer.js" />
-    <Content Include="node_modules\protractor\built\debugger\clients\wddebugger.js" />
-    <Content Include="node_modules\protractor\built\debugger\debuggerCommons.js" />
-    <Content Include="node_modules\protractor\built\debugger\modes\commandRepl.js" />
-    <Content Include="node_modules\protractor\built\debugger\modes\debuggerRepl.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\attachSession.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\browserStack.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\direct.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\driverProvider.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\hosted.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\index.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\local.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\mock.js" />
-    <Content Include="node_modules\protractor\built\driverProviders\sauce.js" />
-    <Content Include="node_modules\protractor\built\element.js" />
-    <Content Include="node_modules\protractor\built\exitCodes.js" />
-    <Content Include="node_modules\protractor\built\expectedConditions.js" />
-    <Content Include="node_modules\protractor\built\frameworks\debugprint.js" />
-    <Content Include="node_modules\protractor\built\frameworks\explorer.js" />
-    <Content Include="node_modules\protractor\built\frameworks\jasmine.js" />
-    <Content Include="node_modules\protractor\built\frameworks\mocha.js" />
-    <Content Include="node_modules\protractor\built\index.js" />
-    <Content Include="node_modules\protractor\built\launcher.js" />
-    <Content Include="node_modules\protractor\built\locators.js" />
-    <Content Include="node_modules\protractor\built\logger.js" />
-    <Content Include="node_modules\protractor\built\plugins.js" />
-    <Content Include="node_modules\protractor\built\ptor.js" />
-    <Content Include="node_modules\protractor\built\runner.js" />
-    <Content Include="node_modules\protractor\built\runnerCli.js" />
-    <Content Include="node_modules\protractor\built\selenium-webdriver\locators.js" />
-    <Content Include="node_modules\protractor\built\selenium-webdriver\webdriver.js" />
-    <Content Include="node_modules\protractor\built\taskLogger.js" />
-    <Content Include="node_modules\protractor\built\taskRunner.js" />
-    <Content Include="node_modules\protractor\built\taskScheduler.js" />
-    <Content Include="node_modules\protractor\built\util.js" />
-    <Content Include="node_modules\protractor\example\conf.js" />
-    <Content Include="node_modules\protractor\example\example_spec.js" />
-    <Content Include="node_modules\protractor\gulpfile.js" />
-    <Content Include="node_modules\protractor\node_modules\semver\semver.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\android_sdk.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\appium.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\binary.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\chrome_driver.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\gecko_driver.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\ie_driver.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\index.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\stand_alone.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\cli.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\index.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\logger.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\options.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\programs.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli_instance.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\clean.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\index.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\initialize.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\opts.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\shutdown.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\start.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\status.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\update.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\version.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\config.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloaded_binary.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloader.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\file_manager.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\index.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\utils.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\webdriver.js" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\gulpfile.js" />
     <Content Include="node_modules\punycode\LICENSE-MIT.txt" />
     <Content Include="node_modules\punycode\punycode.js" />
     <Content Include="node_modules\qs\index.js" />
@@ -8863,10 +8918,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
-    <Compile Include="Global.asax.cs">
-      <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
+    <Compile Include="Contexts\AuthContext.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="node_modules\selenium-webdriver\lib\test\data\Page.aspx.cs">
       <DependentUpon>Page.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -8876,6 +8934,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\AuthRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include=".bowerrc" />
@@ -11614,70 +11673,6 @@
     <Content Include="node_modules\process-nextick-args\license.md" />
     <Content Include="node_modules\process-nextick-args\package.json" />
     <Content Include="node_modules\process-nextick-args\readme.md" />
-    <Content Include="node_modules\protractor\bin\protractor" />
-    <Content Include="node_modules\protractor\bin\webdriver-manager" />
-    <Content Include="node_modules\protractor\CHANGELOG.md" />
-    <Content Include="node_modules\protractor\CONTRIBUTING.md" />
-    <Content Include="node_modules\protractor\exampleTypescript\asyncAwait\README.md" />
-    <Content Include="node_modules\protractor\exampleTypescript\package.json" />
-    <Content Include="node_modules\protractor\exampleTypescript\README.md" />
-    <Content Include="node_modules\protractor\exampleTypescript\tsconfig.json" />
-    <Content Include="node_modules\protractor\LICENSE" />
-    <Content Include="node_modules\protractor\node_modules\.bin\semver" />
-    <Content Include="node_modules\protractor\node_modules\.bin\semver.cmd" />
-    <Content Include="node_modules\protractor\node_modules\.bin\webdriver-manager" />
-    <Content Include="node_modules\protractor\node_modules\.bin\webdriver-manager.cmd" />
-    <Content Include="node_modules\protractor\node_modules\semver\bin\semver" />
-    <Content Include="node_modules\protractor\node_modules\semver\LICENSE" />
-    <Content Include="node_modules\protractor\node_modules\semver\package.json" />
-    <Content Include="node_modules\protractor\node_modules\semver\range.bnf" />
-    <Content Include="node_modules\protractor\node_modules\semver\README.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\bin\webdriver-manager" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\config.json" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\android_sdk.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\appium.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\binary.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\chrome_driver.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\gecko_driver.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\ie_driver.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\index.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\stand_alone.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\cli.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\index.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\logger.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\options.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\programs.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli_instance.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\clean.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\index.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\initialize.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\opts.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\shutdown.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\start.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\status.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\update.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\version.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\config.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloaded_binary.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloader.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\file_manager.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\index.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\utils.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\webdriver.js.map" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\built\package.json" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\CHANGELOG.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\config.json" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\CONTRIBUTING.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\docs\mobile.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\docs\protractor.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\docs\README.md" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\LICENSE" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\package.json" />
-    <Content Include="node_modules\protractor\node_modules\webdriver-manager\README.md" />
-    <Content Include="node_modules\protractor\package.json" />
-    <Content Include="node_modules\protractor\README.md" />
-    <Content Include="node_modules\protractor\tsconfig.json" />
-    <Content Include="node_modules\protractor\tslint.json" />
     <Content Include="node_modules\punycode\package.json" />
     <Content Include="node_modules\punycode\README.md" />
     <Content Include="node_modules\qs\.jshintignore" />
@@ -12213,8 +12208,35 @@
     <Content Include="app\bower_components\angularUtils-pagination\bower.json" />
     <Content Include="app\bower_components\angularUtils-pagination\package.json" />
     <Content Include="app\bower_components\angularUtils-pagination\README.md" />
+    <Content Include="app\bower_components\angular-ui-router\.bower.json" />
+    <Content Include="app\bower_components\angular-ui-router\artifacts.json" />
+    <Content Include="app\bower_components\angular-ui-router\bower.json" />
+    <Content Include="app\bower_components\angular-ui-router\CHANGELOG.md" />
+    <Content Include="app\bower_components\angular-ui-router\CONTRIBUTING.md" />
+    <Content Include="app\bower_components\angular-ui-router\DOCS.md" />
+    <Content Include="app\bower_components\angular-ui-router\downstream_projects.json" />
+    <Content Include="app\bower_components\angular-ui-router\ISSUE_TEMPLATE.md" />
+    <Content Include="app\bower_components\angular-ui-router\LICENSE" />
+    <Content Include="app\bower_components\angular-ui-router\README.md" />
+    <Content Include="app\bower_components\angular-ui-router\release\angular-ui-router.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\angular-ui-router.min.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\resolveService.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\resolveService.min.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\stateEvents.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\stateEvents.min.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\ui-router-angularjs.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\release\ui-router-angularjs.min.js.map" />
+    <Content Include="app\bower_components\angular-ui-router\tslint.json" />
+    <Content Include="app\bower_components\angular-ui-router\yarn.lock" />
+    <Content Include="app\bower_components\angular-cookies\.bower.json" />
+    <Content Include="app\bower_components\angular-cookies\angular-cookies.min.js.map" />
+    <Content Include="app\bower_components\angular-cookies\bower.json" />
+    <Content Include="app\bower_components\angular-cookies\LICENSE.md" />
+    <Content Include="app\bower_components\angular-cookies\package.json" />
+    <Content Include="app\bower_components\angular-cookies\README.md" />
     <None Include="packages.config" />
     <Content Include="ui-bootstrap" />
+    <Content Include="tsconfig.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -12223,10 +12245,7 @@
     </None>
     <Content Include="_bootstrap.scss" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="app\bower_components\popper.js\packages\popper\index.d.ts" />
     <TypeScriptCompile Include="node_modules\%40types\jasmine\index.d.ts" />
@@ -12246,75 +12265,9 @@
     <TypeScriptCompile Include="node_modules\ajv\lib\ajv.d.ts" />
     <TypeScriptCompile Include="node_modules\iconv-lite\lib\index.d.ts" />
     <TypeScriptCompile Include="node_modules\performance-now\src\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\browser.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\cli.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\config.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\configParser.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\debugger.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\attachSession.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\browserStack.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\direct.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\driverProvider.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\hosted.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\local.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\mock.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\driverProviders\sauce.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\element.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\exitCodes.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\expectedConditions.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\launcher.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\locators.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\logger.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\plugins.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\ptor.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\runner.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\runnerCli.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\taskLogger.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\taskRunner.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\taskScheduler.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\built\util.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\angularPage.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\asyncAwait\conf.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\asyncAwait\spec.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\conf.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\confPageObjects.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\plugins.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\spec.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\exampleTypescript\specPageObjects.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\android_sdk.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\appium.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\binary.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\chrome_driver.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\gecko_driver.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\ie_driver.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\binaries\stand_alone.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\cli.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\logger.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\options.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli\programs.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cli_instance.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\clean.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\initialize.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\opts.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\shutdown.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\start.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\status.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\update.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\cmds\version.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\config.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloaded_binary.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\downloader.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\file_manager.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\files\index.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\utils.d.ts" />
-    <TypeScriptCompile Include="node_modules\protractor\node_modules\webdriver-manager\built\lib\webdriver.d.ts" />
     <TypeScriptCompile Include="node_modules\raw-body\index.d.ts" />
     <TypeScriptCompile Include="node_modules\tweetnacl\nacl.d.ts" />
+    <TypeScriptCompile Include="scripts\empty.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
@@ -12335,7 +12288,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53267</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:53267/</IISUrl>
+          <IISUrl>http://localhost:8080/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -1,0 +1,17 @@
+﻿{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "sourceMap": true,
+    "target": "es2015",
+    "module": "amd",
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "lib",
+    "node_modules",
+    "app/bower_components"
+  ]
+}

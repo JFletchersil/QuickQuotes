@@ -18,11 +18,13 @@
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
+    <!--<script src="bower_components/angular-route/angular-route.js"></script>-->
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-ui/build/angular-ui.min.js"></script>
     <script src="bower_components/arrive/minified/arrive.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <link rel="stylesheet" href="/bower_components/angular-material/angular-material.css">
     <link href="bower_components/material-icons/css/material-icons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons" />
@@ -30,44 +32,8 @@
     <script src="bower_components/angularUtils-pagination/dirPagination.js"></script>
 </head>
 <body>
-    <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-in" data-ng-controller="MainMenu as Menu">
-        <header class="bmd-layout-header">
-            <div class="navbar navbar-light bg-faded">
-                <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
-                    <span class="sr-only">Toggle drawer</span>
-                    <i class="material-icons">menu</i>
-                </button>
-                <ul class="nav navbar-nav">
-                    <form class="form-inline">
-                        <i class="mi mi-search"></i>
-                        <input class="form-control mr-sm-2" placeholder="Quote Search" aria-label="Search" type="text" />
-                    </form>
-                </ul>
-            </div>
-        </header>
-        <div id="dw-s1" class="bmd-layout-drawer bg-faded hidden-flow" aria-hidden="false">
-            <header>
-                <div class="container no-x-padding">
-                    <i class="navbar-brand mi mi-verified-user mi-48 no-x-padding col-1"></i>
-                    <a class="navbar-brand col-3 user-padding">{{user.username}}</a>
-                </div>
-            </header>
-            <ul class="list-group no-ytop-padding">
-                <a class="list-group-item" href="#!/home">Home Menu</a>
-                <a class="list-group-item" href="#!/quotequeue">Quote Queue</a>
-                <a class="list-group-item" href="#!/quoteselection">Quote Selection</a>
-                <a class="list-group-item" href="#!/administration">Administration</a>
-                <a class="list-group-item" href="#!/userdetails">User Details</a>
-            </ul>
-            <footer>
-                <a class="navbar-brand col-sm-12">Log Out</a>
-            </footer>
-        </div>
-        <main class="bmd-layout-content">
-            <div class="container-fluid">
-                <div ng-view></div>
-            </div>
-        </main>
+    <div data-ng-controller="Login as Login">
+        <ui-view></ui-view>    
     </div>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -80,6 +46,9 @@
             $('body').bootstrapMaterialDesign();
         });
     </script>
+    <script src="login/login.js"></script>
+    <script src="components/services/AuthenticationService.js"></script>
+    <script src="mainmenu/mainmenu.js"></script>
     <script src="home/home.js"></script>
     <script src="quotequeue/quotequeue.js"></script>
     <script src="quoteselection/quoteselection.js"></script>
