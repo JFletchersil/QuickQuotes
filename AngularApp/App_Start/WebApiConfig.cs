@@ -13,6 +13,7 @@ namespace AngularApp
         {
 
             // Web API routes
+            config.EnableCors();
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(

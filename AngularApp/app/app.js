@@ -6,6 +6,7 @@ angular.module('quoteTool', [
     'ngAnimate',
     'ngMaterial',
     'Authentication',
+    'User',
     'ngCookies',
     'quoteTool.login',
     'quoteTool.mainmenu',

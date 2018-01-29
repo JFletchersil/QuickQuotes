@@ -8,10 +8,12 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Cors;
 
 namespace AngularApp.Controllers
 {
     [RoutePrefix("api/Account")]
+    [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
         private AuthRepository _repo = null;
@@ -26,6 +28,27 @@ namespace AngularApp.Controllers
         public string TestMethod()
         {
             return "Fuck The Sky!";
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = await _repo.FindUser(loginViewModel.Email, loginViewModel.Password);
+
+            if (result != null)
+            {
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         // POST api/Account/Register
