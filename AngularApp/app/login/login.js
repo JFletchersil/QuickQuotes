@@ -10,7 +10,7 @@ angular.module('quoteTool.login', ['ui.router', 'ngAnimate'])
                 $scope.dataLoading = true;
                 AuthenticationService.Login($scope.username, $scope.password, function (response) {
                     if (response.status === 200) {
-                        UserService.addItem({ email: $scope.username });
+                        UserService.addItem({ shortname: response.data.shortName });
                         AuthenticationService.SetCredentials($scope.username, $scope.password);
                         $location.path('/home');
                     } else {

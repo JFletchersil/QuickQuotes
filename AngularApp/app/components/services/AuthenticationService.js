@@ -31,6 +31,10 @@ angular.module('Authentication')
                 $cookieStore.put('globals', $rootScope.globals);
             };
 
+            service.HasCredentials = function () {
+                return $cookieStore.get('globals');
+            }
+
             service.ClearCredentials = function () {
                 $rootScope.globals = {};
                 $cookieStore.remove('globals');

@@ -1,4 +1,5 @@
-﻿using AngularApp.Models;
+﻿using AngularApp.API.Models.DBModels;
+using AngularApp.Models;
 using AngularApp.Repository;
 using Microsoft.AspNet.Identity;
 using System;
@@ -43,7 +44,10 @@ namespace AngularApp.Controllers
 
             if (result != null)
             {
-                return Ok();
+                var db = new PetaPoco.Database("MyConnection");
+                var returnData = db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE Id = '{result.Id}'").FirstOrDefault();
+
+                return Ok(new { ShortName = returnData.ShortName.Trim() });
             }
             else
             {
