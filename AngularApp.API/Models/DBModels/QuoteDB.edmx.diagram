@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fb13d7a8576c4892ad21ca383629f5b5" Name="Diagram1">
+        <EntityTypeShape EntityType="QuoteDBModel.HirePurchaseQuote" Width="1.5" PointX="7" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.ProductType" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.Quote" Width="1.5" PointX="3.875" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.QuoteStatus" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.QuoteType" Width="1.5" PointX="0.75" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="QuoteDBModel.FK_HirePurchaseQuotes_HirePurchaseQuotes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_ProductTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteTypes" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

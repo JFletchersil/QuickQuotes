@@ -44,7 +44,7 @@ namespace AngularApp.Controllers
 
             if (result != null)
             {
-                var db = new PetaPoco.Database("MyConnection");
+                var db = new PetaPoco.Database("AngularUsers");
                 var returnData = db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE Id = '{result.Id}'").FirstOrDefault();
 
                 return Ok(new { ShortName = returnData.ShortName.Trim() });

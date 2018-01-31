@@ -1,13 +1,16 @@
 'use strict';
-
 // Declare app level module which depends on views, and components
+var expireDate = new Date();
+// this will set the expiration to 1 day;
+expireDate.setDate(expireDate.getDate() + 1);
+//angular.module('Authentication', []);
 angular.module('quoteTool', [
     'ui.router',
     'ngAnimate',
     'ngMaterial',
-    'Authentication',
     'User',
     'ngCookies',
+    //'Authentication',
     'quoteTool.login',
     'quoteTool.mainmenu',
     'quoteTool.home',
@@ -43,19 +46,30 @@ angular.module('quoteTool', [
                 url: '^/quotequeue',
                 templateUrl: '../quotequeue/quotequeue.html',
                 controller: 'QuoteQueue'
+            })
+            .state('mainmenu.quoteselection', {
+                url: '^/quoteselection',
+                templateUrl: '../quoteselection/quoteselection.html',
+                controller: 'QuoteSelection'
+            })
+            .state('mainmenu.quotegeneration', {
+                url: '^/hirepurchase',
+                templateUrl: '../quotegeneration/quotegeneration.html',
+                controller: 'QuoteGeneration'
             });
     }])
-    .run(['$rootScope', '$location', '$cookieStore', '$http',
-        function ($rootScope, $location, $cookieStore, $http) {
+    .run(['$rootScope', '$location', '$cookies', '$http',
+        function ($rootScope, $location, $cookies, $http) {
             // keep user logged in after page refresh
-            $rootScope.globals = $cookieStore.get('globals') || {};
+            $rootScope.globals = $cookies.getObject('globals') || {};
             if ($rootScope.globals.currentUser) {
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
+                $rootScope.hasValidated = true;
             }
 
             $rootScope.$on('$locationChangeStart', function (event, next, current) {
                 // redirect to login page if not logged in
-                if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
+                if ($location.path() !== '/login' && !($rootScope.globals.currentUser || $rootScope.hasValidated)) {
                     $location.path('/login');
                 }
             });

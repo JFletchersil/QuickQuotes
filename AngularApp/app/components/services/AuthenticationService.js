@@ -1,9 +1,9 @@
 ﻿'use strict';
 
-angular.module('Authentication')
+angular.module('quoteTool.login')
     .factory('AuthenticationService',
-    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-        function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+    ['Base64', '$http', '$cookies', '$rootScope', '$timeout',
+        function (Base64, $http, $cookies, $rootScope, $timeout) {
             var service = {};
 
             service.Login = function (username, password, callback) {
@@ -28,16 +28,20 @@ angular.module('Authentication')
                 };
 
                 $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                $cookieStore.put('globals', $rootScope.globals);
+                $cookies.putObject('globals', $rootScope.globals, {
+                    expires: expireDate,
+                    path: '/',
+                    withCredentials: true
+                });
             };
 
             service.HasCredentials = function () {
-                return $cookieStore.get('globals');
+                return $cookies.getObject('globals');
             }
 
             service.ClearCredentials = function () {
                 $rootScope.globals = {};
-                $cookieStore.remove('globals');
+                $cookies.remove('globals');
                 $http.defaults.headers.common.Authorization = 'Basic ';
             };
 

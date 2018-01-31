@@ -1,33 +1,58 @@
 <h2 class="display-3">Hire Purchase</h2>
 <div class="card">
-
     <!--Card image-->
     <!--<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">-->
     <!--Card content-->
     <div class="card-body">
-        <!--Title-->
-        <h4 class="card-title">Purchase Details</h4>
-        <!--Text-->
-        <div class="md-form col-3">
-            <input type="text" id="form1" class="form-control">
-            <label for="form1" class="">Term</label>
-        </div>
-        <div class="md-form col-3">
-            <input type="text" id="form1" class="form-control">
-            <label for="form1" class="">Loan Amount</label>
-        </div>
-        <div class="md-form col-3">
-            <input type="text" id="form1" class="form-control">
-            <label for="form1" class="">Deposit</label>
-        </div>
-        <div class="md-form col-3">
-            <input type="text" id="form1" class="form-control">
-            <label for="form1" class="">Interest Rate</label>
-        </div>
-        <div class="row">
-            <div class="col-9"></div>
-            <button type="button" class="btn btn-outline-primary col-md-3">Generate</button>
-        </div>
+        <form name="hirepurchaseform" ng-submit="submitForm()">
+            <!--Title-->
+            <h4 class="card-title">Purchase Details</h4>
+            <!--Text-->
+            <div class="row">
+                <div class="md-form col-6">
+                    <div class="md-form col-6">
+                        <input type="text" id="termInMonths" name="termInMonths" class="form-control" ng-model="termInMonths"
+                               ng-class="{ 'has-error': hirepurchaseform.termInMonths.$dirty && hirepurchaseform.termInMonths.$error.required }" required>
+                        <label for="form1" class="">Term</label>
+                        <span ng-show="hirepurchaseform.termInMonths.$dirty && hirepurchaseform.termInMonths.$error.required" 
+                              class="help-block alert-danger">A term in Months is Required</span>
+                    </div>
+                    <div class="md-form col-6">
+                        <input type="text" id="loanAmount" name="loanAmount" class="form-control" ng-model="loanAmount"
+                               ng-class="{ 'has-error': hirepurchaseform.loanAmount.$dirty && hirepurchaseform.loanAmount.$error.required }" required>
+                        <label for="form1" class="">Loan Amount</label>
+                        <span ng-show="hirepurchaseform.loanAmount.$dirty && hirepurchaseform.loanAmount.$error.required" 
+                              class="help-block alert-danger">A loan amount is Required</span>
+                    </div>
+                    <div class="md-form col-6">
+                        <input type="text" id="deposit" name="deposit" class="form-control" ng-model="deposit"
+                               ng-class="{ 'has-error': hirepurchaseform.deposit.$dirty && hirepurchaseform.deposit.$error.required }" required>
+                        <label for="form1" class="">Deposit</label>
+                        <span ng-show="hirepurchaseform.deposit.$dirty && hirepurchaseform.deposit.$error.required" 
+                              class="help-block alert-danger">A deposit is required</span>
+                    </div>
+                    <div class="md-form col-6">
+                        <input type="text" id="interestRate" name="interestRate" class="form-control" ng-model="interestRate"
+                               ng-class="{ 'has-error': hirepurchaseform.interestRate.$dirty && hirepurchaseform.interestRate.$error.required }" required>
+                        <label for="form1" class="">Interest Rate</label>
+                        <span ng-show="hirepurchaseform.interestRate.$dirty && hirepurchaseform.interestRate.$error.required" 
+                              class="help-block alert-danger">An interest rate is required</span>
+                    </div>
+                </div>
+                <div class="md-form col-6 card-body">
+                    <h4 class="card-title">Payment Schedules</h4>
+                    <div>
+                        Insert Schedules Here
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-9"></div>
+                <button type="submit" class="btn btn-outline-primary col-md-3" ng-disabled="hirepurchaseform.$invalid">Save</button>
+                <div class="col-9"></div>
+                <button type="button" class="btn btn-outline-secondary col-md-3" ng-disabled="hirepurchaseform.$invalid">Generate</button>
+            </div>
+        </form>
     </div>
 </div>
 

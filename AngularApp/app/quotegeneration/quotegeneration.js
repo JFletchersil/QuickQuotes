@@ -1,14 +1,9 @@
 'use strict';
 
 angular.module('quoteTool.quotegeneration', ['ui.router', 'ngAnimate'])
-
-    //.config(['$routeProvider', function ($routeProvider) {
-    //    $routeProvider.when('/quotegeneration', {
-    //        templateUrl: 'quotegeneration/quotegeneration.html',
-    //        controller: 'QuoteGeneration'
-    //    });
-    //}])
-
-    .controller('QuoteGeneration', [function () {
-        $.material.init();
+    .controller('QuoteGeneration', ['$scope', function ($scope) {
+        //$.material.init();
+        $scope.submitForm = function () {
+            alert("Fuck the World");
+        };
     }]);

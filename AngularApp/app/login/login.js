@@ -1,11 +1,11 @@
 'use strict';
-angular.module('Authentication', []);
+//angular.module('Authentication', []);
 angular.module('User', []);
 angular.module('quoteTool.login', ['ui.router', 'ngAnimate'])
     .controller('Login', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'UserService',
         function ($scope, $rootScope, $location, AuthenticationService, UserService) {
             // reset login status
-            AuthenticationService.ClearCredentials();
+            //AuthenticationService.ClearCredentials();
             $scope.submitForm = function () {
                 $scope.dataLoading = true;
                 AuthenticationService.Login($scope.username, $scope.password, function (response) {

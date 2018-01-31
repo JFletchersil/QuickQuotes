@@ -8,7 +8,7 @@ namespace AngularApp.Contexts
 {
     public class AuthContext : IdentityDbContext<IdentityUser>
     {
-        public AuthContext(): base("MyConnection")
+        public AuthContext(): base("AngularUsers")
         {
 
         }
