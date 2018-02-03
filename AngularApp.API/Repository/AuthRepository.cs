@@ -1,50 +1,47 @@
-﻿using AngularApp.Contexts;
-using AngularApp.Models;
+﻿using System;
+using System.Threading.Tasks;
+using AngularApp.API.Contexts;
+using AngularApp.API.Models.WebViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
-namespace AngularApp.Repository
+namespace AngularApp.API.Repository
 {
     public class AuthRepository : IDisposable
     {
         private AuthContext _ctx;
 
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<IdentityUser> _UserManager;
 
         public AuthRepository()
         {
             _ctx = new AuthContext();
-            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
         }
 
-        public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
+        public async Task<IdentityResult> RegisterUser(RegisterViewModel UserModel)
         {
-            IdentityUser user = new IdentityUser
+            var User = new IdentityUser
             {
-                UserName = userModel.Email
+                UserName = UserModel.Email
             };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+            var result = await _UserManager.CreateAsync(User, UserModel.Password);
 
             return result;
         }
 
-        public async Task<IdentityUser> FindUser(string userName, string password)
+        public async Task<IdentityUser> FindUser(string UserName, string password)
         {
-            IdentityUser user = await _userManager.FindAsync(userName, password);
+            var User = await _UserManager.FindAsync(UserName, password);
 
-            return user;
+            return User;
         }
 
         public void Dispose()
         {
             _ctx.Dispose();
-            _userManager.Dispose();
+            _UserManager.Dispose();
 
         }
     }

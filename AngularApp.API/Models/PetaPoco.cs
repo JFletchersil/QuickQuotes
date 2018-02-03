@@ -2668,7 +2668,7 @@ namespace PetaPoco
 
         void IBuildConfigurationSettings.SetSetting(string key, object value)
         {
-            // Note: no argument checking because, pref, enduser unlikely and handled by RT/FW
+            // Note: no argument checking because, pref, endUser unlikely and handled by RT/FW
             if (value != null)
                 _settings[key] = value;
             else
@@ -2677,7 +2677,7 @@ namespace PetaPoco
 
         void IBuildConfigurationSettings.TryGetSetting<T>(string key, Action<T> setSetting, Action onFail = null)
         {
-            // Note: no argument checking because, pref, enduser unlikely and handled by RT/FW
+            // Note: no argument checking because, pref, endUser unlikely and handled by RT/FW
             object setting;
             if (_settings.TryGetValue(key, out setting))
                 setSetting((T) setting);

@@ -25,11 +25,12 @@ namespace AngularApp.API.Models.DBModels
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<QuoteDefault> QuoteDefaults { get; set; }
         public virtual DbSet<HirePurchaseQuote> HirePurchaseQuotes { get; set; }
         public virtual DbSet<ProductType> ProductTypes { get; set; }
-        public virtual DbSet<QuoteDefault> QuoteDefaults { get; set; }
         public virtual DbSet<Quote> Quotes { get; set; }
         public virtual DbSet<QuoteStatus> QuoteStatuses { get; set; }
         public virtual DbSet<QuoteType> QuoteTypes { get; set; }
+        public virtual DbSet<HirePurchaseQuoteResult> HirePurchaseQuoteResults { get; set; }
     }
 }

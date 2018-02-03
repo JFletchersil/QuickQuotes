@@ -14,7 +14,7 @@
     padding-top: 0px !important;
 }
 
-.user-padding {
+.User-padding {
     padding-left: 10px !important;
 }
 
@@ -34,9 +34,106 @@
     margin-top: 30px;
 }
 
+.spread-boxes {
+    margin-top: 10px;
+}
+
 .vertical-center {
     min-height: 96%; /* Fallback for browsers do NOT support vh unit */
     min-height: 96vh; /* These two lines are counted as one :-)       */
     display: flex;
     align-items: center;
+}
+
+.label-left {
+    padding-left: 15px;
+}
+/*
+    Animation Transitions
+*/
+
+.ng-hide-add {
+    -webkit-animation: 0.5s hide;
+    animation: 0.5s hide;
+}
+
+.ng-hide-remove {
+    -webkit-animation: 0.3s show;
+    animation: 0.3s show;
+}
+
+@keyframes show {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    35% {
+        transform: scale(0.75);
+    }
+
+    70% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@-webkit-keyframes show {
+    0% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+
+    35% {
+        transform: scale(0.75);
+    }
+
+    70% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes hide {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.02);
+    }
+
+    60% {
+        transform: scale(0.752);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+}
+
+@-webkit-keyframes hide {
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    30% {
+        transform: scale(1.02);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.5);
+    }
 }

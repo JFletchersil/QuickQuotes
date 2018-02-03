@@ -1,9 +1,9 @@
-'use strict';
+"use strict";
 
-angular.module('quoteTool.mainmenu', ['ui.router', 'ngAnimate'])
-    .controller('MainMenu', ['$scope', 'UserService', function ($scope, UserService) {
-        $scope.user = {
-            "username": UserService.getItem().shortname,
-            "shortname": UserService.getItem().shortname
+angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
+    .controller("MainMenu", ["$scope", "UserService", function ($scope, UserService) {
+        $scope.User = {
+            "Username": UserService.getItem().fullName,
+            "shortname": UserService.getItem().fullName
         };
     }]);

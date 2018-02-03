@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace AngularApp.Models
+namespace AngularApp.API.Models.WebViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {

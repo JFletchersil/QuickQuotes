@@ -5,6 +5,16 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="QuoteDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="HirePurchaseQuoteResults">
+          <Key>
+            <PropertyRef Name="QuoteReference" />
+          </Key>
+          <Property Name="QuoteReference" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MonthlyAmount" Type="float" Nullable="false" />
+          <Property Name="TotalRepayable" Type="float" Nullable="false" />
+          <Property Name="Fees" Type="float" Nullable="false" />
+          <Property Name="InterestRate" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="HirePurchaseQuotes">
           <Key>
             <PropertyRef Name="QuoteReference" />
@@ -18,15 +28,15 @@
           <Key>
             <PropertyRef Name="ProductTypeID" />
           </Key>
-          <Property Name="ProductTypeID" Type="int" Nullable="false" />
-          <Property Name="ProductType" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProductTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductType" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="QuoteDefaults">
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ValueDefaultsJson" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
         </EntityType>
@@ -38,25 +48,38 @@
           <Property Name="QuoteType" Type="int" Nullable="false" />
           <Property Name="QuoteStatus" Type="int" Nullable="false" />
           <Property Name="ProductType" Type="int" Nullable="false" />
-          <Property Name="QuoteAge" Type="datetime" Nullable="false" />
+          <Property Name="QuoteDate" Type="datetime" Nullable="false" />
           <Property Name="QuoteAuthor" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="QuoteStatuses">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="int" Nullable="false" />
-          <Property Name="State" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="StatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="State" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="QuoteTypes">
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="int" Nullable="false" />
+          <Property Name="TypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="QuoteType" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductParentID" Type="int" Nullable="false" />
           <Property Name="Enabled" Type="bit" Nullable="false" />
         </EntityType>
+        <Association Name="FK_HirePurchaseQuoteResults_Quotes">
+          <End Role="Quotes" Type="Self.Quotes" Multiplicity="1" />
+          <End Role="HirePurchaseQuoteResults" Type="Self.HirePurchaseQuoteResults" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Quotes">
+              <PropertyRef Name="QuoteReference" />
+            </Principal>
+            <Dependent Role="HirePurchaseQuoteResults">
+              <PropertyRef Name="QuoteReference" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HirePurchaseQuotes_HirePurchaseQuotes">
           <End Role="Quotes" Type="Self.Quotes" Multiplicity="1" />
           <End Role="HirePurchaseQuotes" Type="Self.HirePurchaseQuotes" Multiplicity="0..1" />
@@ -117,13 +140,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_QuoteTypes_ProductTypes">
+          <End Role="ProductTypes" Type="Self.ProductTypes" Multiplicity="1" />
+          <End Role="QuoteTypes" Type="Self.QuoteTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductTypes">
+              <PropertyRef Name="ProductTypeID" />
+            </Principal>
+            <Dependent Role="QuoteTypes">
+              <PropertyRef Name="ProductParentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="QuoteDBModelStoreContainer">
+          <EntitySet Name="HirePurchaseQuoteResults" EntityType="Self.HirePurchaseQuoteResults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HirePurchaseQuotes" EntityType="Self.HirePurchaseQuotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductTypes" EntityType="Self.ProductTypes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuoteDefaults" EntityType="Self.QuoteDefaults" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotes" EntityType="Self.Quotes" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuoteStatuses" EntityType="Self.QuoteStatuses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuoteTypes" EntityType="Self.QuoteTypes" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_HirePurchaseQuoteResults_Quotes" Association="Self.FK_HirePurchaseQuoteResults_Quotes">
+            <End Role="Quotes" EntitySet="Quotes" />
+            <End Role="HirePurchaseQuoteResults" EntitySet="HirePurchaseQuoteResults" />
+          </AssociationSet>
           <AssociationSet Name="FK_HirePurchaseQuotes_HirePurchaseQuotes" Association="Self.FK_HirePurchaseQuotes_HirePurchaseQuotes">
             <End Role="Quotes" EntitySet="Quotes" />
             <End Role="HirePurchaseQuotes" EntitySet="HirePurchaseQuotes" />
@@ -144,15 +184,19 @@
             <End Role="QuoteTypes" EntitySet="QuoteTypes" />
             <End Role="Quotes" EntitySet="Quotes" />
           </AssociationSet>
+          <AssociationSet Name="FK_QuoteTypes_ProductTypes" Association="Self.FK_QuoteTypes_ProductTypes">
+            <End Role="ProductTypes" EntitySet="ProductTypes" />
+            <End Role="QuoteTypes" EntitySet="QuoteTypes" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuoteDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="QuoteDefaults" EntityType="QuoteDBModel.QuoteDefault" />
           <EntitySet Name="HirePurchaseQuotes" EntityType="QuoteDBModel.HirePurchaseQuote" />
           <EntitySet Name="ProductTypes" EntityType="QuoteDBModel.ProductType" />
-          <EntitySet Name="QuoteDefaults" EntityType="QuoteDBModel.QuoteDefault" />
           <EntitySet Name="Quotes" EntityType="QuoteDBModel.Quote" />
           <EntitySet Name="QuoteStatuses" EntityType="QuoteDBModel.QuoteStatus" />
           <EntitySet Name="QuoteTypes" EntityType="QuoteDBModel.QuoteType" />
@@ -163,6 +207,10 @@
           <AssociationSet Name="FK_Quotes_ProductTypes" Association="QuoteDBModel.FK_Quotes_ProductTypes">
             <End Role="ProductType" EntitySet="ProductTypes" />
             <End Role="Quote" EntitySet="Quotes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_QuoteTypes_ProductTypes" Association="QuoteDBModel.FK_QuoteTypes_ProductTypes">
+            <End Role="ProductType" EntitySet="ProductTypes" />
+            <End Role="QuoteType" EntitySet="QuoteTypes" />
           </AssociationSet>
           <AssociationSet Name="FK_QuoteDefaults_QuoteTypes" Association="QuoteDBModel.FK_QuoteDefaults_QuoteTypes">
             <End Role="QuoteType" EntitySet="QuoteTypes" />
@@ -176,26 +224,12 @@
             <End Role="QuoteType" EntitySet="QuoteTypes" />
             <End Role="Quote" EntitySet="Quotes" />
           </AssociationSet>
-        </EntityContainer>
-        <EntityType Name="HirePurchaseQuote">
-          <Key>
-            <PropertyRef Name="QuoteReference" />
-          </Key>
-          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
-          <Property Name="TermInMonths" Type="Int32" Nullable="false" />
-          <Property Name="LoanAmount" Type="Double" Nullable="false" />
-          <Property Name="Deposit" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Quote" Relationship="QuoteDBModel.FK_HirePurchaseQuotes_HirePurchaseQuotes" FromRole="HirePurchaseQuote" ToRole="Quote" />
-        </EntityType>
-        <EntityType Name="ProductType">
-          <Key>
-            <PropertyRef Name="ProductTypeID" />
-          </Key>
-          <Property Name="ProductTypeID" Type="Int32" Nullable="false" />
-          <Property Name="ProductType1" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Quotes" Relationship="QuoteDBModel.FK_Quotes_ProductTypes" FromRole="ProductType" ToRole="Quote" />
-        </EntityType>
+          <EntitySet Name="HirePurchaseQuoteResults" EntityType="QuoteDBModel.HirePurchaseQuoteResult" />
+          <AssociationSet Name="FK_HirePurchaseQuoteResults_Quotes" Association="QuoteDBModel.FK_HirePurchaseQuoteResults_Quotes">
+            <End Role="Quote" EntitySet="Quotes" />
+            <End Role="HirePurchaseQuoteResult" EntitySet="HirePurchaseQuoteResults" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="QuoteDefault">
           <Key>
             <PropertyRef Name="TypeID" />
@@ -205,6 +239,23 @@
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="QuoteType" Relationship="QuoteDBModel.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteDefault" ToRole="QuoteType" />
         </EntityType>
+        <EntityType Name="HirePurchaseQuote">
+          <Key>
+            <PropertyRef Name="QuoteReference" />
+          </Key>
+          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
+          <Property Name="TermInMonths" Type="Int32" Nullable="false" />
+          <Property Name="LoanAmount" Type="Double" Nullable="false" />
+          <Property Name="Deposit" Type="Double" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeID" />
+          </Key>
+          <Property Name="ProductTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACProductType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Enabled" Type="Boolean" Nullable="false" />
+        </EntityType>
         <EntityType Name="Quote">
           <Key>
             <PropertyRef Name="QuoteReference" />
@@ -213,31 +264,25 @@
           <Property Name="QuoteType" Type="Int32" Nullable="false" />
           <Property Name="QuoteStatus" Type="Int32" Nullable="false" />
           <Property Name="ProductType" Type="Int32" Nullable="false" />
-          <Property Name="QuoteAge" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="QuoteAuthor" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="HirePurchaseQuote" Relationship="QuoteDBModel.FK_HirePurchaseQuotes_HirePurchaseQuotes" FromRole="Quote" ToRole="HirePurchaseQuote" />
-          <NavigationProperty Name="ProductType1" Relationship="QuoteDBModel.FK_Quotes_ProductTypes" FromRole="Quote" ToRole="ProductType" />
-          <NavigationProperty Name="QuoteStatus1" Relationship="QuoteDBModel.FK_Quotes_QuoteStatuses" FromRole="Quote" ToRole="QuoteStatus" />
-          <NavigationProperty Name="QuoteType1" Relationship="QuoteDBModel.FK_Quotes_QuoteTypes" FromRole="Quote" ToRole="QuoteType" />
+          <Property Name="QuoteDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <EntityType Name="QuoteStatus">
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="Int32" Nullable="false" />
-          <Property Name="State" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Quotes" Relationship="QuoteDBModel.FK_Quotes_QuoteStatuses" FromRole="QuoteStatus" ToRole="Quote" />
         </EntityType>
         <EntityType Name="QuoteType">
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" />
-          <Property Name="QuoteType1" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ACQuoteType" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductParentID" Type="Int32" Nullable="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="QuoteDefault" Relationship="QuoteDBModel.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteType" ToRole="QuoteDefault" />
-          <NavigationProperty Name="Quotes" Relationship="QuoteDBModel.FK_Quotes_QuoteTypes" FromRole="QuoteType" ToRole="Quote" />
         </EntityType>
         <Association Name="FK_HirePurchaseQuotes_HirePurchaseQuotes">
           <End Type="QuoteDBModel.Quote" Role="Quote" Multiplicity="1" />
@@ -260,6 +305,18 @@
             </Principal>
             <Dependent Role="Quote">
               <PropertyRef Name="ProductType" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_QuoteTypes_ProductTypes">
+          <End Type="QuoteDBModel.ProductType" Role="ProductType" Multiplicity="1" />
+          <End Type="QuoteDBModel.QuoteType" Role="QuoteType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductType">
+              <PropertyRef Name="ProductTypeID" />
+            </Principal>
+            <Dependent Role="QuoteType">
+              <PropertyRef Name="ProductParentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -299,12 +356,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="HirePurchaseQuoteResult">
+          <Key>
+            <PropertyRef Name="QuoteReference" />
+          </Key>
+          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
+          <Property Name="MonthlyAmount" Type="Double" Nullable="false" />
+          <Property Name="TotalRepayable" Type="Double" Nullable="false" />
+          <Property Name="Fees" Type="Double" Nullable="false" />
+          <Property Name="InterestRate" Type="Double" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_HirePurchaseQuoteResults_Quotes">
+          <End Type="QuoteDBModel.Quote" Role="Quote" Multiplicity="1" />
+          <End Type="QuoteDBModel.HirePurchaseQuoteResult" Role="HirePurchaseQuoteResult" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Quote">
+              <PropertyRef Name="QuoteReference" />
+            </Principal>
+            <Dependent Role="HirePurchaseQuoteResult">
+              <PropertyRef Name="QuoteReference" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="QuoteDBModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="QuoteDefaults">
+            <EntityTypeMapping TypeName="QuoteDBModel.QuoteDefault">
+              <MappingFragment StoreEntitySet="QuoteDefaults">
+                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
+                <ScalarProperty Name="ValueDefaultsJson" ColumnName="ValueDefaultsJson" />
+                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="HirePurchaseQuotes">
             <EntityTypeMapping TypeName="QuoteDBModel.HirePurchaseQuote">
               <MappingFragment StoreEntitySet="HirePurchaseQuotes">
@@ -319,25 +407,16 @@
             <EntityTypeMapping TypeName="QuoteDBModel.ProductType">
               <MappingFragment StoreEntitySet="ProductTypes">
                 <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-                <ScalarProperty Name="ProductType1" ColumnName="ProductType" />
+                <ScalarProperty Name="ACProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="ProductTypeID" ColumnName="ProductTypeID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="QuoteDefaults">
-            <EntityTypeMapping TypeName="QuoteDBModel.QuoteDefault">
-              <MappingFragment StoreEntitySet="QuoteDefaults">
-                <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-                <ScalarProperty Name="ValueDefaultsJson" ColumnName="ValueDefaultsJson" />
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Quotes">
             <EntityTypeMapping TypeName="QuoteDBModel.Quote">
               <MappingFragment StoreEntitySet="Quotes">
+                <ScalarProperty Name="QuoteDate" ColumnName="QuoteDate" />
                 <ScalarProperty Name="QuoteAuthor" ColumnName="QuoteAuthor" />
-                <ScalarProperty Name="QuoteAge" ColumnName="QuoteAge" />
                 <ScalarProperty Name="ProductType" ColumnName="ProductType" />
                 <ScalarProperty Name="QuoteStatus" ColumnName="QuoteStatus" />
                 <ScalarProperty Name="QuoteType" ColumnName="QuoteType" />
@@ -358,12 +437,24 @@
             <EntityTypeMapping TypeName="QuoteDBModel.QuoteType">
               <MappingFragment StoreEntitySet="QuoteTypes">
                 <ScalarProperty Name="Enabled" ColumnName="Enabled" />
-                <ScalarProperty Name="QuoteType1" ColumnName="QuoteType" />
+                <ScalarProperty Name="ProductParentID" ColumnName="ProductParentID" />
+                <ScalarProperty Name="ACQuoteType" ColumnName="QuoteType" />
                 <ScalarProperty Name="TypeID" ColumnName="TypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          <EntitySetMapping Name="HirePurchaseQuoteResults">
+            <EntityTypeMapping TypeName="QuoteDBModel.HirePurchaseQuoteResult">
+              <MappingFragment StoreEntitySet="HirePurchaseQuoteResults">
+                <ScalarProperty Name="InterestRate" ColumnName="InterestRate" />
+                <ScalarProperty Name="Fees" ColumnName="Fees" />
+                <ScalarProperty Name="TotalRepayable" ColumnName="TotalRepayable" />
+                <ScalarProperty Name="MonthlyAmount" ColumnName="MonthlyAmount" />
+                <ScalarProperty Name="QuoteReference" ColumnName="QuoteReference" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>
@@ -378,7 +469,7 @@
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="true" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>

@@ -1,13 +1,13 @@
-﻿'use strict';
+﻿"use strict";
 
-angular.module('quoteTool.login')
-    .factory('AuthenticationService',
-    ['Base64', '$http', '$cookies', '$rootScope', '$timeout',
+angular.module("quoteTool.login")
+    .factory("AuthenticationService",
+    ["Base64", "$http", "$cookies", "$rootScope", "$timeout",
         function (Base64, $http, $cookies, $rootScope, $timeout) {
             var service = {};
 
-            service.Login = function (username, password, callback) {
-                $http.post('http://localhost:8080/api/Account/Login', { Email: username, Password: password })
+            service.Login = function (Username, password, callback) {
+                $http.post("http://localhost:8080/api/Account/Login", { Email: Username, Password: password })
                     .then(function (response) {
                         callback(response);
                     })
@@ -17,40 +17,40 @@ angular.module('quoteTool.login')
 
             };
 
-            service.SetCredentials = function (username, password) {
-                var authdata = Base64.encode(username + ':' + password);
+            service.SetCredentials = function (Username, password) {
+                var authdata = Base64.encode(Username + ":" + password);
 
                 $rootScope.globals = {
                     currentUser: {
-                        username: username,
+                        Username: Username,
                         authdata: authdata
                     }
                 };
 
-                $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
-                $cookies.putObject('globals', $rootScope.globals, {
+                $http.defaults.headers.common["Authorization"] = "Basic " + authdata; // jshint ignore:line
+                $cookies.putObject("globals", $rootScope.globals, {
                     expires: expireDate,
-                    path: '/',
+                    path: "/",
                     withCredentials: true
                 });
             };
 
             service.HasCredentials = function () {
-                return $cookies.getObject('globals');
+                return $cookies.getObject("globals");
             }
 
             service.ClearCredentials = function () {
                 $rootScope.globals = {};
-                $cookies.remove('globals');
-                $http.defaults.headers.common.Authorization = 'Basic ';
+                $cookies.remove("globals");
+                $http.defaults.headers.common.Authorization = "Basic ";
             };
 
             return service;
         }])
-    .factory('Base64', function () {
+    .factory("Base64", function () {
         /* jshint ignore:start */
 
-        var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+        var keyStr = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
         return {
             encode: function (input) {

@@ -3,33 +3,30 @@
     <br />
     <div class="md-padding" style="background-color:rgb(250,250,250); color: black;">
         <div class="container col-12">
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>Quote Reference</th>
-                        <th>Quote Type</th>
-                        <th>Quote Status</th>
-                        <th>Quote Age</th>
-                        <th>Quote Author</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr dir-paginate="quote in quotes | filter:q | itemsPerPage: 5" current-page="currentPage">
-                        <td>{{quote.ReferenceNumber}}</td>
-                        <td>{{quote.Type}}</td>
-                        <td>{{quote.Status}}</td>
-                        <td>{{quote.Age}}</td>
-                        <td>{{quote.Author}}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <dir-pagination-controls class="pagination" boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="../components/templates/paginatingselector.html"></dir-pagination-controls>
+            <md-table-container>
+                <table md-table md-row-select ng-model="selected" ng-model-options="{ debounce: 1500 }" md-progress="promise">
+                    <thead md-head md-order="query.order" md-on-reorder="pageChangeHandler">
+                        <tr md-row>
+                            <th md-column md-order-by="QuoteReference"><span>Quote Reference</span></th>
+                            <th md-column md-order-by="QuoteType"><span>Quote Type</span></th>
+                            <th md-column md-order-by="QuoteStatus">Quote Status</th>
+                            <th md-column md-order-by="QuoteDate">Quote Date</th>
+                            <th md-column md-order-by="QuoteAuthor">Quote Author</th>
+                        </tr>
+                    </thead>
+                    <tbody md-body>
+                    <tr md-row md-auto-select md-select="quote" md-select-id="QuoteReference" md-on-select="moveToQuote" 
+                        ng-repeat="quote in quotes | orderBy: query.order">
+                            <td md-cell>{{quote.QuoteReference}}</td>
+                            <td md-cell>{{splitOnUpper(quote.QuoteType)}}</td>
+                            <td md-cell>{{quote.QuoteStatus}}</td>
+                            <td md-cell>{{quote.QuoteDate | date}}</td>
+                            <td md-cell>{{splitOnUpper(quote.QuoteAuthor)}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </md-table-container>
+            <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{TotalItems}}" md-on-paginate="pageChangeHandler" md-page-select></md-table-pagination>
         </div>
     </div>
-    <script>
-        //$(document).ready(function () {
-        //    $('body').bootstrapMaterialDesign();
-        //    $.material.init();
-        //});
-    </script>
 </div>

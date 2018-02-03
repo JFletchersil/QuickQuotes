@@ -1,28 +1,47 @@
-'use strict';
+"use strict";
 
-angular.module('quoteTool.quotequeue', ['ui.router', 'ngAnimate', 'angularUtils.directives.dirPagination'])
+angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])    
+    .controller("QuoteQueue", ["$scope", "$http", "$location", function ($scope, $http, $location) {
+        $scope.selected = [];
+        $scope.quotes = [];
 
-    //.config(['$routeProvider', function ($routeProvider) {
-    //    $routeProvider.when('/quotequeue', {
-    //        templateUrl: 'quotequeue/quotequeue.html',
-    //        controller: 'QuoteQueue'
-    //    });
-    //}])
-    
-    .controller('QuoteQueue', ['$scope', function ($scope) {
-        //$.material.init();
-        $scope.currentPage = 1;
-        $scope.quotes = [
-            {ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            {ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" },
-            { ReferenceNumber: "Test One", Type: "Test Two", Status: "Test Three", Age: "Test Four", Author: "Test Five" }
-        ]
+        $scope.pagingModel = {
+            PageNumber: 1,
+            PageSize: 5
+        };
+
+        $scope.query = {
+            order: "QuoteReference",
+            limit: $scope.pagingModel.PageSize,
+            page: $scope.pagingModel.PageNumber
+        };
+
+        $scope.TotalSize = 0;
+        $scope.TotalItems = 0;
+
+        function success(returnData) {
+            $scope.TotalSize = returnData.TotalPages;
+            $scope.TotalItems = returnData.TotalItems;
+            $scope.quotes = returnData.QueueDisplay;
+        }
+
+        $scope.pageChangeHandler = function (newPageNumber) {
+            $scope.pagingModel.PageNumber = newPageNumber;
+            //$scope.promise = $http.post("http://localhost:8080/api/Queue/ShowPaginatedQuotes", $scope.pagingModel, success).$promise;
+            $scope.promise =
+                $http.post("http://localhost:8080/api/Queue/ShowPaginatedQuotes", $scope.pagingModel).
+                then(function(response) {
+                    success(response.data);
+                });
+        }
+
+        $scope.moveToQuote = function () {
+            debugger;
+            $location.path("/hirepurchase/" + $scope.selected[0].QuoteReference);
+        }
+
+        $scope.splitOnUpper = function (string) {
+            return string.split(/(?=[A-Z])/).join(" ");
+        }
+        $scope.pageChangeHandler(1);
     }]);

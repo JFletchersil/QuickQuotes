@@ -1,8 +1,8 @@
-'use strict';
+"use strict";
 
-angular.module('quoteTool.version', [
-  'myApp.version.interpolate-filter',
-  'myApp.version.version-directive'
+angular.module("quoteTool.version", [
+  "myApp.version.interpolate-filter",
+  "myApp.version.version-directive"
 ])
 
-.value('version', '0.1');
+.value("version", "0.1");

@@ -1325,8 +1325,8 @@ class OracleSchemaReader : SchemaReader
 
 	string GetPK(string table){
 		
-		string sql=@"select column_name from USER_CONSTRAINTS uc
-  inner join USER_CONS_COLUMNS ucc on uc.constraint_name = ucc.constraint_name
+		string sql=@"select column_name from User_CONSTRAINTS uc
+  inner join User_CONS_COLUMNS ucc on uc.constraint_name = ucc.constraint_name
 where uc.constraint_type = 'P'
 and uc.table_name = upper(:tableName)
 and ucc.position = 1";
@@ -1408,11 +1408,11 @@ and ucc.position = 1";
 
 
 
-	const string TABLE_SQL=@"select TABLE_NAME, 'Table' TABLE_TYPE, USER TABLE_SCHEMA
-from USER_TABLES
+	const string TABLE_SQL=@"select TABLE_NAME, 'Table' TABLE_TYPE, User TABLE_SCHEMA
+from User_TABLES
 union all
-select VIEW_NAME, 'View', USER
-from USER_VIEWS";
+select VIEW_NAME, 'View', User
+from User_VIEWS";
 
 
 	const string COLUMN_SQL=@"select table_name TableName, 
@@ -1420,7 +1420,7 @@ from USER_VIEWS";
  data_type DataType, 
  data_scale DataScale,
  nullable IsNullable
- from USER_TAB_COLS utc 
+ from User_TAB_COLS utc 
  where table_name = :tableName
  and virtual_column = 'NO'
  order by column_id";

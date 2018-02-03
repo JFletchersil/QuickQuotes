@@ -1,6 +1,7 @@
-﻿angular.module('User')
-    .factory('UserService', function () {
-        var dict = {};
+﻿angular.module("User", ["ngStorage"])
+    .factory("UserService", ["$localStorage", function ($localStorage) {
+        $storage = $localStorage;
+        var user = undefined;
 
         return {
             addItem: addItem,
@@ -8,10 +9,18 @@
         };
 
         function addItem(item) {
-            dict = item;
+            if (user === undefined)
+                user = {}
+            Object.keys(item).forEach(function (key) {
+                user[key] = item[key];
+            });
+            $storage.user = user;
         }
 
         function getItem() {
-            return dict;
+            if (!user) {
+                user = $storage.user;
+            }
+            return user;
         }
-    });
+    }]);

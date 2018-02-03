@@ -1,14 +1,32 @@
-'use strict';
+"use strict";
 
-angular.module('quoteTool.userdetails', ['ui.router', 'ngAnimate'])
+angular.module("quoteTool.Userdetails", ["ui.router", "ngAnimate"])
+    .controller("UserDetails", ["$scope", "$http", "UserService", function ($scope, $http, UserService) {
+        $scope.userModel = {};
+        $scope.hasChangedUserDetails = false;
 
-    //.config(['$routeProvider', function ($routeProvider) {
-    //    $routeProvider.when('/userdetails', {
-    //        templateUrl: 'userdetails/userdetails.html',
-    //        controller: 'UserDetails'
-    //    });
-    //}])
+        $scope.getUserDetails = function () {
+            $http.post("http://localhost:8080/api/Users/ReturnUserModel", UserService.getItem().fullName)
+                .then(function (response) {
+                    $scope.userModel = response.data;
+                })
+                .catch(function (error) {
 
-    .controller('UserDetails', [function () {
+                });
+        }
 
+        $scope.saveUserDetails = function() {
+            $http.post("http://localhost:8080/api/Users/SaveUserModel", $scope.userModel)
+                .then(function (response) {
+                })
+                .catch(function (error) {
+
+                });
+        }
+
+        $scope.trackFormChange = function () {
+            $scope.hasChangedUserDetails = true;
+        }
+
+        $scope.getUserDetails();
     }]);

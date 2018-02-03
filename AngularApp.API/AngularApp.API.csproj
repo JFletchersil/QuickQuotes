@@ -190,6 +190,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Models\DBModels\AngularUsers.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AngularUsers.edmx</DependentUpon>
+      <LastGenOutput>AngularUsers.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\DBModels\AngularUsers.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>AngularUsers.edmx</DependentUpon>
+      <LastGenOutput>AngularUsers.cs</LastGenOutput>
+    </Content>
     <Content Include="Models\DBModels\QuoteDB.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>QuoteDB.edmx</DependentUpon>
@@ -211,10 +221,47 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Contexts\AuthContext.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ProductQuoteTypeController.cs" />
+    <Compile Include="Controllers\QueueController.cs" />
+    <Compile Include="Controllers\QuoteController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBModels\AngularUsers.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngularUsers.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AngularUsers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AngularUsers.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AngularUsers.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AspNetRole.cs">
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AspNetUser.cs">
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AspNetUserClaim.cs">
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AspNetUserDetail.cs">
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\AspNetUserLogin.cs">
+      <DependentUpon>AngularUsers.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBModels\HirePurchaseQuote.cs">
+      <DependentUpon>QuoteDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBModels\HirePurchaseQuoteResult.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModels\ProductType.cs">
@@ -257,6 +304,11 @@
     <Compile Include="Models\WebViewModels\IdentityModels.cs" />
     <Compile Include="Models\WebViewModels\ManageViewModels.cs" />
     <Compile Include="Models\PetaPoco.cs" />
+    <Compile Include="Models\WebViewModels\PagingParameterWebViewModel.cs" />
+    <Compile Include="Models\WebViewModels\QueueDisplayWebViewModel.cs" />
+    <Compile Include="Models\WebViewModels\QuotationDetailWebViewModels.cs" />
+    <Compile Include="Models\WebViewModels\QuotationResultsWebViewModel.cs" />
+    <Compile Include="Models\WebViewModels\QuotationSaveWebViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AuthRepository.cs" />
   </ItemGroup>
@@ -269,6 +321,13 @@
     </EntityDeploy>
     <Content Include="Models\DBModels\QuoteDB.edmx.diagram">
       <DependentUpon>QuoteDB.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\DBModels\AngularUsers.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>AngularUsers.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DBModels\AngularUsers.edmx.diagram">
+      <DependentUpon>AngularUsers.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

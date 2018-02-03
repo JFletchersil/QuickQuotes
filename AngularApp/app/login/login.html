@@ -6,10 +6,10 @@
             <div class="md-padding" style="background-color:rgb(250,250,250); color: black;">
                 <div class="container-fluid col-12">
                     <form name="loginform" ng-submit="submitForm()">
-                        <div class="form-group" ng-class="{ 'has-error': loginform.username.$dirty && loginform.username.$error.required }">
-                            <label for="username">Username</label>
-                            <input type="text" name="username" id="username" class="form-control" ng-model="username" required />
-                            <span ng-show="loginform.username.$dirty && loginform.username.$error.required" class="help-block">Username is required</span>
+                        <div class="form-group" ng-class="{ 'has-error': loginform.Username.$dirty && loginform.Username.$error.required }">
+                            <label for="Username">Username</label>
+                            <input type="text" name="Username" id="Username" class="form-control" ng-model="Username" required />
+                            <span ng-show="loginform.Username.$dirty && loginform.Username.$error.required" class="help-block">Username is required</span>
                         </div>
                         <div class="form-group" ng-class="{ 'has-error': loginform.password.$dirty && loginform.password.$error.required }">
                             <label for="password">Password</label>

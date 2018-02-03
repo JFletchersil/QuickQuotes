@@ -1,19 +1,15 @@
-﻿using AngularApp.API.Models.DBModels;
-using AngularApp.Models;
-using AngularApp.Repository;
-using Microsoft.AspNet.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AngularApp.API.Models.DBModels;
+using AngularApp.API.Models.WebViewModels;
+using AngularApp.API.Repository;
+using Microsoft.AspNet.Identity;
 
-namespace AngularApp.Controllers
+namespace AngularApp.API.Controllers
 {
-    [RoutePrefix("api/Account")]
+    //[RoutePrefix("api/Account")]
     [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
@@ -25,14 +21,14 @@ namespace AngularApp.Controllers
         }
 
         [HttpGet]
-        [Route("TestMethod")]
+        //[Route("TestMethod")]
         public string TestMethod()
         {
             return "Fuck The Sky!";
         }
 
         [HttpPost]
-        [Route("Login")]
+        //[Route("Login")]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -47,7 +43,7 @@ namespace AngularApp.Controllers
                 var db = new PetaPoco.Database("AngularUsers");
                 var returnData = db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE Id = '{result.Id}'").FirstOrDefault();
 
-                return Ok(new { ShortName = returnData.ShortName.Trim() });
+                return Ok(new { FullName = returnData.FullName.Trim() });
             }
             else
             {
@@ -57,17 +53,17 @@ namespace AngularApp.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
-        [Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
+        //[Route("Register")]
+        public async Task<IHttpActionResult> Register(RegisterViewModel UserModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result = await _repo.RegisterUser(userModel);
+            var result = await _repo.RegisterUser(UserModel);
 
-            IHttpActionResult errorResult = GetErrorResult(result);
+            var errorResult = GetErrorResult(result);
 
             if (errorResult != null)
             {
@@ -98,7 +94,7 @@ namespace AngularApp.Controllers
             {
                 if (result.Errors != null)
                 {
-                    foreach (string error in result.Errors)
+                    foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError("", error);
                     }

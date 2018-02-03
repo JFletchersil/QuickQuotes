@@ -10,11 +10,11 @@
 //        },
 
 //        SaveState: function () {
-//            sessionStorage.userService = angular.toJson(service.model);
+//            sessionStorage.UserService = angular.toJson(service.model);
 //        },
 
 //        RestoreState: function () {
-//            service.model = angular.fromJson(sessionStorage.userService);
+//            service.model = angular.fromJson(sessionStorage.UserService);
 //        }
 //    }
 

@@ -5,46 +5,71 @@
     <!--<img class="img-fluid" src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg" alt="Card image cap">-->
     <!--Card content-->
     <div class="card-body">
-        <!--Text-->
-        <div class="row">
-            <div class="md-form col-9">
+        <form name="userform" ng-submit="saveUserDetails()">
+            <div class="row">
                 <div class="md-form col-9">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1" class="">Full Name</label>
+                    <div class="md-form col-9 spread-boxes">
+                        <input type="text" id="FirstName" name="FirstName" class="form-control" ng-model="userModel.FirstName"
+                               ng-class="{ 'has-error': userform.FirstName.$dirty && userform.FirstName.$error.required }"
+                               ng-change="trackFormChange()" required>
+                        <label for="FirstName">First Name</label>
+                        <span ng-show="userform.FirstName.$dirty && userform.FirstName.$error.required"
+                              class="help-block alert-danger">A First Name is Required</span>
+                    </div>
+                    <div class="md-form col-9 spread-boxes">
+                        <input type="text" id="LastName" name="LastName" class="form-control" ng-model="userModel.LastName"
+                               ng-class="{ 'has-error': userform.LastName.$dirty && userform.LastName.$error.required }"
+                               ng-change="trackFormChange()" required>
+                        <label for="LastName">Last Name</label>
+                        <span ng-show="userform.LastName.$dirty && userform.LastName.$error.required"
+                              class="help-block alert-danger">A Last Name is Required</span>
+                    </div>
+                    <div class="md-form col-9 spread-boxes">
+                        <input type="text" id="FullName" name="FullName" class="form-control" ng-model="userModel.FullName"
+                               ng-class="{ 'has-error': userform.FullName.$dirty && userform.FullName.$error.required }"
+                               ng-change="trackFormChange()" required>
+                        <label for="FullName">Full Name</label>
+                        <span ng-show="userform.FullName.$dirty && userform.FullName.$error.required"
+                              class="help-block alert-danger">A Full Name is Required</span>
+                    </div>
+                    <div class="md-form col-9 spread-boxes">
+                        <input type="text" id="Business" name="Business" class="form-control" ng-model="userModel.Business"
+                               ng-class="{ 'has-error': userform.Business.$dirty && userform.Business.$error.required }"
+                               ng-change="trackFormChange()" required>
+                        <label for="Business">Business</label>
+                        <span ng-show="userform.Business.$dirty && userform.Business.$error.required"
+                              class="help-block alert-danger">A Business is Required</span>
+                    </div>
+                    <div class="md-form col-9 spread-boxes">
+                        <input type="text" id="Title" name="Title" class="form-control" ng-model="userModel.Title"
+                               ng-class="{ 'has-error': userform.Title.$dirty && userform.Title.$error.required }"
+                               ng-change="trackFormChange()" required>
+                        <label for="RoleTitle">Role Title</label>
+                        <span ng-show="userform.Title.$dirty && userform.Title.$error.required"
+                              class="help-block alert-danger">A Title is Required</span>
+                    </div>
+                    <div class="md-form col-9 spread-boxes">
+                        <textarea id="BoundCustomers" name="BoundCustomers" class="form-control" ng-model="userModel.BoundCustomers"
+                               ng-class="{ 'has-error': userform.BoundCustomers.$dirty && userform.BoundCustomers.$error.required }"
+                               ng-change="trackFormChange()" required></textarea>
+                        <label for="BoundCustomers">Bound Customers</label>
+                        <span ng-show="userform.BoundCustomers.$dirty && userform.BoundCustomers.$error.required"
+                              class="help-block alert-danger">A Bound Customers is Required</span>
+                    </div>
                 </div>
-                <div class="md-form col-9">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1" class="">Short Name</label>
-                </div>
-                <div class="md-form col-9">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1" class="">Business</label>
-                </div>
-                <div class="md-form col-9">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1" class="">User Level</label>
-                </div>
-                <div class="md-form col-9">
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1" class="">Role Title</label>
-                </div>
-                <div class="md-form col-9">
-                    <textarea id="form1" class="form-control"></textarea>
-                    <label for="form1" class="">Bound Customers</label>
+                <div class="md-form col-3">
+                    <div class="md-form">
+                        <img alt="an example image" src="../bower_components/images/man-156584_1280.png" class="img-fluid">
+                        <label for="form1">User Image</label>
+                    </div>
                 </div>
             </div>
-            <div class="md-form col-3">
-                <div class="md-form">
-                    <img src="../bower_components/images/man-156584_640.png" class="img-fluid">                   
-                    <label for="form1" class="">User Image</label>
-                </div>
+            <br />
+            <div class="row checkbox-heading">
+                <div class="col-9"></div>
+                <button type="submit" class="btn btn-raised btn-primary col-md-3" ng-disabled="!hasChangedUserDetails">Save Details</button>
             </div>
-        </div>
-        <br />
-        <div class="row checkbox-heading">
-            <div class="col-9"></div>
-            <button type="button" class="btn btn-raised btn-primary col-md-3">Save Details</button>
-        </div>
+        </form>
     </div>
     <script>
         $(document).ready(function () {

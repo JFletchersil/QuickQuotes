@@ -18,12 +18,17 @@
     "bootstrap-material-design": "v4.0.0-beta.4",
     "popper.js": "1.12.6",
     "tooltip.js": "https://unpkg.com/tooltip.js",
-    "angular-material": "^1.1.5",
+    "angular-material": "^1.1.6",
     "arrive": "^2.4.1",
     "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
     "angular-ui-router": "^1.0.13",
     "jquery": "^3.2.1",
-    "angular-cookies": "^1.6.8"
+    "angular-cookies": "^1.6.8",
+    "ng-input-currency": "^0.9.10",
+    "ngstorage": "^0.3.11",
+    "bootstrap": "^4.0.0",
+    "angular-ui": "^0.4.0",
+    "angular-material-data-table": "^0.10.10"
   },
   "resolutions": {
     "angular": "^1.6.6",

@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-angular.module('quoteTool.home', ['ui.router', 'ngAnimate'])
+angular.module("quoteTool.home", ["ui.router", "ngAnimate"])
 
 //.config(['$routeProvider', function ($routeProvider) {
 //    $routeProvider.when('/home', {
@@ -9,6 +9,6 @@ angular.module('quoteTool.home', ['ui.router', 'ngAnimate'])
 //    });
 //}])
 
-.controller('Home', [function () {
+.controller("Home", [function () {
 
 }]);

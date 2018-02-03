@@ -1,18 +1,18 @@
-'use strict';
+"use strict";
 //angular.module('Authentication', []);
-angular.module('User', []);
-angular.module('quoteTool.login', ['ui.router', 'ngAnimate'])
-    .controller('Login', ['$scope', '$rootScope', '$location', 'AuthenticationService', 'UserService',
+angular.module("User", []);
+angular.module("quoteTool.login", ["ui.router", "ngAnimate"])
+    .controller("Login", ["$scope", "$rootScope", "$location", "AuthenticationService", "UserService",
         function ($scope, $rootScope, $location, AuthenticationService, UserService) {
             // reset login status
             //AuthenticationService.ClearCredentials();
             $scope.submitForm = function () {
                 $scope.dataLoading = true;
-                AuthenticationService.Login($scope.username, $scope.password, function (response) {
+                AuthenticationService.Login($scope.Username, $scope.password, function (response) {
                     if (response.status === 200) {
-                        UserService.addItem({ shortname: response.data.shortName });
-                        AuthenticationService.SetCredentials($scope.username, $scope.password);
-                        $location.path('/home');
+                        UserService.addItem({ fullName: response.data.FullName, email: $scope.Username});
+                        AuthenticationService.SetCredentials($scope.Username, $scope.password);
+                        $location.path("/home");
                     } else {
                         $scope.error = response.message;
                         $scope.dataLoading = false;

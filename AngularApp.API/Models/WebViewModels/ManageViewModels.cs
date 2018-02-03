@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
-namespace AngularApp.Models
+namespace AngularApp.API.Models.WebViewModels
 {
     public class IndexViewModel
     {

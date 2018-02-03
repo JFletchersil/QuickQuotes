@@ -18,7 +18,5 @@ namespace AngularApp.API.Models.DBModels
         public int TermInMonths { get; set; }
         public double LoanAmount { get; set; }
         public double Deposit { get; set; }
-    
-        public virtual Quote Quote { get; set; }
     }
 }

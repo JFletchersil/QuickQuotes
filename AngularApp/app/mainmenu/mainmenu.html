@@ -6,10 +6,12 @@
                 <i class="material-icons">menu</i>
             </button>
             <ul class="nav navbar-nav">
-                <form class="form-inline">
-                    <i class="mi mi-search"></i>
-                    <input class="form-control mr-sm-2" placeholder="Quote Search" aria-label="Search" type="text" />
-                </form>
+                <li>
+                    <form class="form-inline">
+                        <i class="mi mi-search"></i>
+                        <input class="form-control mr-sm-2" placeholder="Quote Search" aria-label="Search" type="text" />
+                    </form>
+                </li>
             </ul>
         </div>
     </header>
@@ -17,17 +19,15 @@
         <header>
             <div class="container no-x-padding">
                 <i class="navbar-brand mi mi-verified-user mi-48 no-x-padding col-1"></i>
-                <a class="navbar-brand col-3 user-padding">{{user.username}}</a>
+                <a class="navbar-brand col-3 User-padding">{{User.Username}}</a>
             </div>
         </header>
         <ul class="list-group no-ytop-padding">
-            <!--<a class="list-group-item" href="#!/home">Home Menu</a>-->
-            <a class="list-group-item" ui-sref=".home">Home Menu</a>
-            <!--<a class="list-group-item" href="#!/quotequeue">Quote Queue</a>-->
-            <a class="list-group-item"  ui-sref=".quotequeue">Quote Queue</a>
-            <a class="list-group-item" href="#!/quoteselection">Quote Selection</a>
-            <a class="list-group-item" href="#!/administration">Administration</a>
-            <a class="list-group-item" href="#!/userdetails">User Details</a>
+            <li><a class="list-group-item" ui-sref=".home">Home Menu</a></li>
+            <li><a class="list-group-item" ui-sref=".quotequeue">Quote Queue</a></li>
+            <li><a class="list-group-item" ui-sref=".quoteselection">Quote Selection</a></li>
+            <li><a class="list-group-item" ui-sref=".administration">Administration</a></li>
+            <li><a class="list-group-item" ui-sref=".userdetails">User Details</a></li>
         </ul>
         <footer>
             <a class="navbar-brand col-sm-12">Log Out</a>
@@ -39,9 +39,3 @@
         </div>
     </main>
 </div>
-<script>
-        //$(document).ready(function () {
-        //    $('body').bootstrapMaterialDesign();
-        //    $.material.init();
-        //});
-</script>
