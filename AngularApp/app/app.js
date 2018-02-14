@@ -70,6 +70,12 @@ angular.module("quoteTool", [
                 url: "^/userdetails",
                 templateUrl: "../userdetails/userdetails.html",
                 controller: "UserDetails"
+            })
+            .state("mainmenu.administration",
+            {
+                url: "^/administration",
+                templateUrl: "../administration/administration.html",
+                controller: "Administration"
             });
     }])
     .run(["$rootScope", "$location", "$cookies", "$http",

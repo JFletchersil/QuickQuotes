@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using AngularApp.API.Contexts;
 using AngularApp.API.Models.WebViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using WebGrease.Css.Extensions;
 
 namespace AngularApp.API.Repository
 {
@@ -11,37 +16,54 @@ namespace AngularApp.API.Repository
     {
         private AuthContext _ctx;
 
-        private UserManager<IdentityUser> _UserManager;
+        private UserManager<IdentityUser> _userManager;
 
         public AuthRepository()
         {
             _ctx = new AuthContext();
-            _UserManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
+            _userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(_ctx));
         }
 
-        public async Task<IdentityResult> RegisterUser(RegisterViewModel UserModel)
+        public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
         {
-            var User = new IdentityUser
+
+            var currGuid = Guid.NewGuid().ToString();
+            var user = new IdentityUser
             {
-                UserName = UserModel.Email
+                Id = currGuid,
+                UserName = userModel.UserName,
+                Roles =
+                {
+                    new IdentityUserRole()
+                    {
+                        RoleId = (userModel.IsAdministrator) ? WebConfigurationManager.AppSettings["AdministratorRole"] : WebConfigurationManager.AppSettings["UserRole"],
+                        UserId = currGuid
+                    }
+                },
+                Email = userModel.Email
             };
 
-            var result = await _UserManager.CreateAsync(User, UserModel.Password);
+            var result = await _userManager.CreateAsync(user, userModel.Password);
 
             return result;
         }
 
-        public async Task<IdentityUser> FindUser(string UserName, string password)
+        public async Task<IdentityUser> FindUser(string userName, string password)
         {
-            var User = await _UserManager.FindAsync(UserName, password);
+            var user = await _userManager.FindAsync(userName, password);
+            return user;
+        }
 
-            return User;
+        public List<IdentityUser> GetAllUsers()
+        {
+            var users = _userManager.Users.ToList();
+            return users;
         }
 
         public void Dispose()
         {
             _ctx.Dispose();
-            _UserManager.Dispose();
+            _userManager.Dispose();
 
         }
     }

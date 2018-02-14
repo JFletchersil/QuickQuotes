@@ -36,7 +36,6 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
         }
 
         $scope.moveToQuote = function () {
-            debugger;
             $location.path("/hirepurchase/" + $scope.selected[0].QuoteReference);
         }
 

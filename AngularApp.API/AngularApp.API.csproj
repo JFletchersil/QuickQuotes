@@ -224,7 +224,7 @@
     <Compile Include="Controllers\ProductQuoteTypeController.cs" />
     <Compile Include="Controllers\QueueController.cs" />
     <Compile Include="Controllers\QuoteController.cs" />
-    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\UserDetailsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -267,6 +267,7 @@
     <Compile Include="Models\DBModels\ProductType.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WebViewModels\QueueUserWebViewModel.cs" />
     <Compile Include="Models\DBModels\Quote.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>

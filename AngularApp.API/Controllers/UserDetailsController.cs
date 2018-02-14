@@ -14,7 +14,7 @@ namespace AngularApp.API.Controllers
 {
     [EnableCors("*", "*", "*")]
     [RoutePrefix("api/Users")]
-    public class UsersController : ApiController
+    public class UserDetailsController : ApiController
     {
         [HttpPost]
         public UserDetails ReturnUserModel(HttpRequestMessage request)

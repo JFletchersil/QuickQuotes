@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AngularApp.API.Models.DBModels;
@@ -13,22 +15,14 @@ namespace AngularApp.API.Controllers
     [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
-        private AuthRepository _repo = null;
+        private readonly AuthRepository _repo = null;
 
         public AccountController()
         {
             _repo = new AuthRepository();
         }
 
-        [HttpGet]
-        //[Route("TestMethod")]
-        public string TestMethod()
-        {
-            return "Fuck The Sky!";
-        }
-
         [HttpPost]
-        //[Route("Login")]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
             if (!ModelState.IsValid)
@@ -43,7 +37,13 @@ namespace AngularApp.API.Controllers
                 var db = new PetaPoco.Database("AngularUsers");
                 var returnData = db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE Id = '{result.Id}'").FirstOrDefault();
 
-                return Ok(new { FullName = returnData.FullName.Trim() });
+                return Ok(new
+                {
+                    FullName = returnData?.FullName.Trim(),
+                    result.UserName,
+                    IsSuperAdmin = result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"]),
+                    IsAdmin = result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])
+                });
             }
             else
             {
@@ -53,24 +53,48 @@ namespace AngularApp.API.Controllers
 
         // POST api/Account/Register
         [AllowAnonymous]
-        //[Route("Register")]
-        public async Task<IHttpActionResult> Register(RegisterViewModel UserModel)
+        [HttpPost]
+        public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var result = await _repo.RegisterUser(UserModel);
+            var result = await _repo.RegisterUser(userModel);
 
             var errorResult = GetErrorResult(result);
 
-            if (errorResult != null)
-            {
-                return errorResult;
-            }
+            return errorResult ?? Ok();
+        }
 
-            return Ok();
+        [HttpPost]
+        public IHttpActionResult ReturnAllUsers(PagingParameterWebViewModel parameterWebView)
+        {
+            var users = _repo.GetAllUsers();
+
+            var totalPages = (int)Math.Ceiling(users.Count() / (double)parameterWebView.PageSize);
+            var pagedQuotes = users.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
+
+            pagedQuotes = !parameterWebView.ReturnAll ? 
+                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
+                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
+                
+
+            var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
+            {
+                UserName = x.UserName,
+                AccountLocked = !x.LockoutEndDateUtc.HasValue,
+                EmailAddress = x.Email,
+                HasTwoFactor = x.TwoFactorEnabled,
+                IsAdmin = x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"] || y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])
+            });
+            return Ok(new PaginatedQueueUserResult()
+            {
+                QueueDisplay = returnItems,
+                TotalPages = totalPages,
+                TotalItems = users.Count
+            });
         }
 
         protected override void Dispose(bool disposing)

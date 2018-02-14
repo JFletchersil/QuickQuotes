@@ -19,18 +19,18 @@
         <header>
             <div class="container no-x-padding">
                 <i class="navbar-brand mi mi-verified-user mi-48 no-x-padding col-1"></i>
-                <a class="navbar-brand col-3 User-padding">{{User.Username}}</a>
+                <a class="navbar-brand col-3 User-padding">{{User.userName}}</a>
             </div>
         </header>
         <ul class="list-group no-ytop-padding">
             <li><a class="list-group-item" ui-sref=".home">Home Menu</a></li>
             <li><a class="list-group-item" ui-sref=".quotequeue">Quote Queue</a></li>
             <li><a class="list-group-item" ui-sref=".quoteselection">Quote Selection</a></li>
-            <li><a class="list-group-item" ui-sref=".administration">Administration</a></li>
+            <li ng-show="(User.isAdmin || User.isSuperAdmin)"><a class="list-group-item" ui-sref=".administration">Administration</a></li>
             <li><a class="list-group-item" ui-sref=".userdetails">User Details</a></li>
         </ul>
         <footer>
-            <a class="navbar-brand col-sm-12">Log Out</a>
+            <a class="navbar-brand col-sm-12" ui-sref="login" ng-click="logOut()" style="margin-bottom: 35px;">Log Out</a>
         </footer>
     </div>
     <main class="bmd-layout-content">
