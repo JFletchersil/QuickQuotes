@@ -79,9 +79,8 @@ namespace AngularApp.API.Models.WebViewModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
         [Display(Name = "Is Admin")]
-        public bool IsAdministrator { get; set; }
+        public bool IsAdministrator { get; set; } = false;
 
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

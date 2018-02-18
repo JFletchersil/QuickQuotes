@@ -302,7 +302,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WebViewModels\IdentityModels.cs" />
+    <Compile Include="Models\DBModels\IdentityModels.cs" />
     <Compile Include="Models\WebViewModels\ManageViewModels.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\WebViewModels\PagingParameterWebViewModel.cs" />
@@ -310,6 +310,7 @@
     <Compile Include="Models\WebViewModels\QuotationDetailWebViewModels.cs" />
     <Compile Include="Models\WebViewModels\QuotationResultsWebViewModel.cs" />
     <Compile Include="Models\WebViewModels\QuotationSaveWebViewModels.cs" />
+    <Compile Include="Models\WebViewModels\UserActionViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AuthRepository.cs" />
   </ItemGroup>

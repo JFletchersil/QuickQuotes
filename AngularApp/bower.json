@@ -28,7 +28,9 @@
     "ngstorage": "^0.3.11",
     "bootstrap": "^4.0.0",
     "angular-ui": "^0.4.0",
-    "angular-material-data-table": "^0.10.10"
+    "angular-material-data-table": "^0.10.10",
+    "angular-bootstrap": "^2.5.0",
+    "angular-modal-service": "^0.13.0"
   },
   "resolutions": {
     "angular": "^1.6.6",

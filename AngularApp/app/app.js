@@ -10,8 +10,9 @@ angular.module("quoteTool", [
     "ngAnimate",
     "ngMaterial",
     "md.data.table",
-    "User",
     "ngCookies",
+    "angularModalService",
+    "User",
     //'Authentication',
     "quoteTool.login",
     "quoteTool.mainmenu",
@@ -21,6 +22,7 @@ angular.module("quoteTool", [
     "quoteTool.quotegeneration",
     "quoteTool.version",
     "quoteTool.administration",
+    "quoteTool.adminmodal",
     "quoteTool.Userdetails"
 ])
     .config(["$locationProvider", "$stateProvider", "$urlRouterProvider", function ($locationProvider, $stateProvider, $urlRouterProvider) {

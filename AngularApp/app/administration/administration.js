@@ -1,7 +1,7 @@
 "use strict";
 
-angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])
-    .controller("Administration", ["$scope", "$http", "UserService", function ($scope, $http, UserService) {
+angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table", "ui.bootstrap"])
+    .controller("Administration", ["$scope", "$http", "UserService", "ModalService", function ($scope, $http, UserService, ModalService) {
         $scope.pagingModel = {
             PageNumber: 1,
             PageSize: 5
@@ -18,10 +18,14 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         };
 
         $scope.showOptions = false;
+
         $scope.isSuperAdmin = UserService.getItem().isSuperAdmin;
         $scope.isAdmin = UserService.getItem().isAdmin;
-        $scope.users = [];
 
+        $scope.tabs = ($scope.isSuperAdmin) ? [1, 2] : [1];
+        $scope.tabLabels = ["Administrators", "Users"];
+
+        $scope.selected = {};
         $scope.TotalSize = 0;
         $scope.TotalItems = 0;
 
@@ -52,12 +56,93 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
                 });
         }
 
-        $scope.hideOptions = function () {
-            $scope.showOptions = !$scope.showOptions;
+        $scope.hideOptions = function (user) {
+            $scope.selected = user;
+            user.showOptions = !user.showOptions;
         }
 
         $scope.onTabSelected = function (tabSelected) {
             $scope.pagingModel.ReturnAll = tabSelected === 0;
             $scope.pageChangeHandler(1);
         }
+
+        $scope.onOpenModal = function (title, infoMessage) {
+            return ModalService.showModal({
+                templateUrl: "../administration/modals/adminmodal.html",
+                controller: "AdminModal",
+                preClose: (modal) => { modal.element.modal("hide"); },
+                inputs: {
+                    title: title,
+                    infoMessage: infoMessage
+                }
+            });
+        }
+
+        $scope.onChangeUserType = function () {
+            $http.post("http://localhost:8080/api/Account/ChangeUserType", {
+                Guid: $scope.selected.Guid,
+                IsAdmin: $scope.selected.IsAdmin
+            })
+                .then(function (response) {
+                })
+                .catch(function (error) {
+
+                });
+        };
+
+        $scope.onEditUserDetails = function () {
+            $scope.onOpenModal("Edit User", "Please enter the details you wish to change").then(function (modal) {
+                modal.element.modal();
+                modal.closed.then(function (result) {
+                    if (result.UserName === undefined) {
+                        alert("No changes saved");
+                    } else {
+                        $http.post("http://localhost:8080/api/Account/AlterAccountLoginDetails",
+                            {
+                                Guid: $scope.selected.Guid,
+                                UserName: result.UserName,
+                                EmailAddress: result.EmailAddress,
+                                Password: result.Password,
+                                ConfirmPassword: result.ConfirmPassword,
+                                PhoneNumber: result.PhoneNumber
+                            })
+                            .then(function (response) {
+                            })
+                            .catch(function (error) {
+
+                            });
+                    }
+                });
+            });
+        };
+
+        $scope.onDeleteUser = function () {
+            $http.post("http://localhost:8080/api/Account/DeleteUser", { Guid: $scope.selected.Guid, IsDeleting: true }).then(
+                function (response) {
+                })
+                .catch(function (error) {
+
+                });
+        };
+
+        $scope.onCloneUser = function () {
+            $scope.onOpenModal("Clone User", "Please enter the details you wish to set the cloned user with").then(function (modal) {
+                modal.element.modal();
+                modal.closed.then(function (result) {
+                    if (result.UserName === undefined || result.EmailAddress === undefined || result.Password === undefined || result.ConfirmPassword === undefined) {
+                        alert("No changes saved");
+                    } else {
+                        $http.post("http://localhost:8080/api/Account/CloneUser", {
+                            Guid: $scope.selected.Guid, UserName: result.UserName, EmailAddress: result.EmailAddress,
+                            Password: result.Password, ConfirmPassword: result.ConfirmPassword
+                        })
+                            .then(function (response) {
+                            })
+                            .catch(function (error) {
+
+                            });
+                    }
+                });
+            });
+        };
     }]);

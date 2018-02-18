@@ -8,6 +8,7 @@ using AngularApp.API.Models.DBModels;
 using AngularApp.API.Models.WebViewModels;
 using AngularApp.API.Repository;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AngularApp.API.Controllers
 {
@@ -76,17 +77,19 @@ namespace AngularApp.API.Controllers
             var totalPages = (int)Math.Ceiling(users.Count() / (double)parameterWebView.PageSize);
             var pagedQuotes = users.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
 
-            pagedQuotes = !parameterWebView.ReturnAll ? 
+            pagedQuotes = !parameterWebView.ReturnAll ?
                 pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
                 pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
-                
+
 
             var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
             {
+                Guid = x.Id,
                 UserName = x.UserName,
                 AccountLocked = !x.LockoutEndDateUtc.HasValue,
                 EmailAddress = x.Email,
-                HasTwoFactor = x.TwoFactorEnabled,
+                PhoneNumber = string.IsNullOrEmpty(x.PhoneNumber) ? "00000 000000" : x.PhoneNumber,
+                EmailConfirmed = x.EmailConfirmed,
                 IsAdmin = x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"] || y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])
             });
             return Ok(new PaginatedQueueUserResult()
@@ -95,6 +98,75 @@ namespace AngularApp.API.Controllers
                 TotalPages = totalPages,
                 TotalItems = users.Count
             });
+        }
+
+        [HttpPost]
+        public IHttpActionResult DeleteUser(UserDeleteViewModel deleteModel)
+        {
+            if (!deleteModel.IsDeleting) return Ok();
+            var result = _repo.DeleteUser(deleteModel.Guid).Result;
+            return result.Succeeded ? Ok() : GetErrorResult(result);
+        }
+
+        [HttpPost]
+        public async Task<IHttpActionResult> AlterAccountLoginDetails(UserEditViewModel editViewModel)
+        {
+            try
+            {
+                var result = await _repo.EditUser(new RegisterViewModel()
+                {
+                    UserName = editViewModel.UserName,
+                    Email = editViewModel.EmailAddress,
+                    Password = editViewModel.Password,
+                    ConfirmPassword = editViewModel.ConfirmPassword
+                }, editViewModel.Guid, editViewModel.PhoneNumber);
+
+                var errorResult = GetErrorResult(result);
+
+                return errorResult ?? Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+        }
+
+        [HttpPost]
+        public IHttpActionResult CloneUser(UserEditViewModel cloneUserViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var result = _repo.CloneUser(cloneUserViewModel);
+
+            var errorResult = GetErrorResult(result);
+
+            return errorResult ?? Ok();
+        }
+
+        [HttpPost]
+        public IHttpActionResult ChangeUserType(UserTypeViewModel typeViewModel)
+        {
+            try
+            {
+                if (typeViewModel.IsAdmin)
+                {
+                    _repo.SwapUserRoles(typeViewModel.Guid, "Administrator", "User");
+                    return Ok();
+                }
+                else
+                {
+                    _repo.SwapUserRoles(typeViewModel.Guid, "User", "Administrator");
+                    return Ok();
+                }
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
 
         protected override void Dispose(bool disposing)
