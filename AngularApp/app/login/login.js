@@ -6,6 +6,7 @@ angular.module("quoteTool.login", ["ui.router", "ngAnimate"])
         function ($scope, $rootScope, $location, AuthenticationService, UserService) {
             // reset login status
             //AuthenticationService.ClearCredentials();
+            $scope.testInput = ""
             $scope.submitForm = function () {
                 $scope.dataLoading = true;
                 AuthenticationService.Login($scope.Username, $scope.password, function (response) {

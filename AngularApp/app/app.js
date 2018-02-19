@@ -12,6 +12,7 @@ angular.module("quoteTool", [
     "md.data.table",
     "ngCookies",
     "angularModalService",
+    "GInputDirective",
     "User",
     //'Authentication',
     "quoteTool.login",

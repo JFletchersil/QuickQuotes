@@ -1,0 +1,5 @@
+﻿<div class="form-group" ng-class="{'has-error': form[elementHtmlName].$dirty && form[elementHtmlName].$error.required }">
+    <label for="{{::elementHtmlName}}">{{::label}}</label>
+    <input type="text" name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control" ng-model="binding" required />
+    <span ng-show="form[elementHtmlName].$dirty && form[elementHtmlName].$error.required" class="help-block">{{::label}} is required</span>
+</div>
