@@ -10,29 +10,9 @@
             <!--Text-->
             <div class="row">
                 <div class="md-form col-6">
-                    <div class="md-form col-6">
-                        <input type="text" id="TermInMonths" name="TermInMonths" class="form-control" ng-model="quotationDetails.TermInMonths"
-                               ng-class="{ 'has-error': hirepurchaseform.TermInMonths.$dirty && hirepurchaseform.TermInMonths.$error.required }"
-                               ng-change="trackFormChange()" required>
-                        <label for="form1" class="">Term (in Months)</label>
-                        <span ng-show="hirepurchaseform.TermInMonths.$dirty && hirepurchaseform.TermInMonths.$error.required"
-                              class="help-block alert-danger">A term in Months is Required</span>
-                    </div>
-                    <div class="md-form col-6">
-                        <input ng-input-currency type="text" id="LoanAmount" name="LoanAmount" class="form-control" ng-model="quotationDetails.LoanAmount"
-                               ng-class="{ 'has-error': hirepurchaseform.LoanAmount.$dirty && hirepurchaseform.LoanAmount.$error.required }"
-                               ng-change="trackFormChange()" required>
-                        <label for="form1" class="">Loan Amount</label>
-                        <span ng-show="hirepurchaseform.LoanAmount.$dirty && hirepurchaseform.LoanAmount.$error.required"
-                              class="help-block alert-danger">A loan amount is Required</span>
-                    </div>
-                    <div class="md-form col-6">
-                        <input ng-input-currency type="text" id="Deposit" name="Deposit" class="form-control" ng-model="quotationDetails.Deposit"
-                               ng-class="{ 'has-error': hirepurchaseform.Deposit.$dirty && hirepurchaseform.Deposit.$error.required }"
-                               ng-change="trackFormChange()" required>
-                        <label for="form1" class="">Deposit</label>
-                        <span ng-show="hirepurchaseform.Deposit.$dirty && hirepurchaseform.Deposit.$error.required"
-                              class="help-block alert-danger">A Deposit is required</span>
+                    <div class="md-form col-6" ng-repeat="element in elements track by $index">
+                        <dbinput element-html-name="element.ElementName" label="element.LabelName"
+                                 form="hirepurchaseform" binding="element.Value" warning-label="element.WarningLabel" description="element.ElementDescription"></dbinput>
                     </div>
                 </div>
                 <div class="md-form col-6 card-body">

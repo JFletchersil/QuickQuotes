@@ -7,6 +7,46 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
         $scope.parentID = $stateParams.parentID;
         $scope.quoteID = $stateParams.quoteID;
         $scope.quoteReference = $stateParams.quoteReference;
+        $scope.quotationDetails = {};
+
+        $scope.elements = [
+            {
+                ElementName: "TermInMonths",
+                WarningLabel: "Term In Months",
+                LabelName: "Term (in Months)",
+                ElementDescription: {
+                    Type: "number",
+                    IsCurrency: false,
+                    Required: true,
+                    Max: 72,
+                    Min: 0
+                }
+            },
+            {
+                ElementName: "LoanAmount",
+                WarningLabel: "A loan amount",
+                LabelName: "Loan Amount",
+                ElementDescription: {
+                    Type: "text",
+                    IsCurrency: true,
+                    Required: true,
+                    Max: 2500,
+                    Min: 250
+                }
+            },
+            {
+                ElementName: "Deposit",
+                WarningLabel: "A Deposit",
+                LabelName: "Deposit",
+                ElementDescription: {
+                    Type: "text",
+                    IsCurrency: true,
+                    Required: true,
+                    Max: 2500,
+                    Min: 250
+                }
+            }
+        ];
 
         $scope.submitForm = function () {
             $scope.submitData = {};
@@ -28,6 +68,10 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
 
         $scope.generateQuote = function () {
             //console.log($stateParams.parentID);
+            $scope.elements.forEach(function (element) {
+                $scope.quotationDetails[element.ElementName] = element.Value;
+            });
+            console.log($scope.quotationDetails);
             $http.post("http://localhost:8080/api/Quote/CalculateQuote", $scope.quotationDetails)
                 .then(function (response) {
                     $scope.quotationResult = response.data;
