@@ -2,7 +2,7 @@
 
 namespace AngularApp.API.Models.WebViewModels
 {
-    public class CarHirePurchaseWebViewModel
+    public class PersonalLoanWebViewModel
     {
         [Required]
         public int TermInMonths { get; set; }

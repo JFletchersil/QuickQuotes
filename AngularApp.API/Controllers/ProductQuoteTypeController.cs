@@ -28,8 +28,8 @@ namespace AngularApp.API.Controllers
             foreach(var product in productTypes)
             {
                 approvedStructures.Add(product.Enabled
-                    ? new JProperty(product.ACProductType, true)
-                    : new JProperty(product.ACProductType, false));
+                    ? new JProperty(product.IncProductType, true)
+                    : new JProperty(product.IncProductType, false));
             }
             return approvedStructures;
         }
@@ -42,8 +42,8 @@ namespace AngularApp.API.Controllers
             var groupedApprovedStructures = new JObject();
             foreach (var productType in orderedQuoteTypes)
             {
-                var retProductType = productTypes.FirstOrDefault(x => x.ProductTypeID == productType.Key)?.ACProductType;
-                groupedApprovedStructures.Add(new JProperty(retProductType, productType.Select(x => x.ACQuoteType).ToList()));
+                var retProductType = productTypes.FirstOrDefault(x => x.ProductTypeID == productType.Key)?.IncProductType;
+                groupedApprovedStructures.Add(new JProperty(retProductType, productType.Select(x => x.IncQuoteType).ToList()));
             }
 
             return groupedApprovedStructures;

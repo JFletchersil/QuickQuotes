@@ -1,63 +1,22 @@
 "use strict";
-//angular.module('CurrencyDirective', []);
 angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "CurrencyDirective", "ngInputCurrency"])
     .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", function ($scope, $http, $stateParams) {
-        //$.material.init();
         $scope.hasChangedQuoteDetails = false;
         $scope.parentID = $stateParams.parentID;
         $scope.quoteID = $stateParams.quoteID;
         $scope.quoteReference = $stateParams.quoteReference;
         $scope.quotationDetails = {};
 
-        $scope.elements = [
-            {
-                ElementName: "TermInMonths",
-                WarningLabel: "Term In Months",
-                LabelName: "Term (in Months)",
-                ElementDescription: {
-                    Type: "number",
-                    IsCurrency: false,
-                    Required: true,
-                    Max: 72,
-                    Min: 0
-                }
-            },
-            {
-                ElementName: "LoanAmount",
-                WarningLabel: "A loan amount",
-                LabelName: "Loan Amount",
-                ElementDescription: {
-                    Type: "text",
-                    IsCurrency: true,
-                    Required: true,
-                    Max: 2500,
-                    Min: 250
-                }
-            },
-            {
-                ElementName: "Deposit",
-                WarningLabel: "A Deposit",
-                LabelName: "Deposit",
-                ElementDescription: {
-                    Type: "text",
-                    IsCurrency: true,
-                    Required: true,
-                    Max: 2500,
-                    Min: 250
-                }
-            }
-        ];
-
         $scope.submitForm = function () {
             $scope.submitData = {};
             $scope.submitData.QuotationCalculation = $scope.quotationResult;
-            $scope.submitData.QuotationDetails = $scope.quotationDetails;
+            $scope.submitData.QuotationDetails = JSON.stringify($scope.quotationDetails);
             $scope.submitData.ParentID = $scope.parentID;
             $scope.submitData.QuoteID = $scope.quoteID;
             $http.post("http://localhost:8080/api/Quote/SaveQuote", $scope.submitData)
-                .then(function(response) {
+                .then(function (response) {
                 })
-                .catch(function(error) {
+                .catch(function (error) {
 
                 });
         };
@@ -67,12 +26,13 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
         }
 
         $scope.generateQuote = function () {
-            //console.log($stateParams.parentID);
             $scope.elements.forEach(function (element) {
                 $scope.quotationDetails[element.ElementName] = element.Value;
             });
-            console.log($scope.quotationDetails);
-            $http.post("http://localhost:8080/api/Quote/CalculateQuote", $scope.quotationDetails)
+            var quoteDets = $scope.quotationDetails;
+            quoteDets.Type = $scope.quoteID;
+            var quoteText = JSON.stringify(quoteDets);
+            $http.post("http://localhost:8080/api/Quote/CalculateQuote", quoteText)
                 .then(function (response) {
                     $scope.quotationResult = response.data;
                     $scope.hasChangedQuoteDetails = true;
@@ -90,13 +50,39 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
                     $scope.quotationDetails = $scope.guidRetrevial.QuotationDetails;
                     $scope.parentID = $scope.guidRetrevial.ParentId;
                     $scope.quoteID = $scope.guidRetrevial.QuoteId;
+                    $scope.retrieveElementConfiguration();
                 })
                 .catch(function (error) {
 
                 });
         }
 
+        $scope.retrieveElementConfiguration = function() {
+            $http.get("http://localhost:8080/api/Quote/GetElementConfiguration", { params: { quoteType: $scope.quoteID } })
+                .then(function (response) {
+                    $scope.elements = response.data;
+                    $scope.elements.forEach(function (element) {
+                        element.Value = $scope.quotationDetails[element.ElementName];
+                    });
+                })
+                .catch(function (error) {
+
+                });
+        }
+
+        $scope.splitOnUpper = function (string) {
+            if (string === undefined) {
+                return "";
+            } else {
+                return string.split(/(?=[A-Z])/).join(" ");
+            }
+        }
+
         if ($scope.quoteReference !== undefined) {
             $scope.retrieveWithQuoteReference();
+        }
+
+        if ($scope.quoteID !== undefined) {
+            $scope.retrieveElementConfiguration();
         }
     }]);

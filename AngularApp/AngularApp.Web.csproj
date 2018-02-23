@@ -1557,6 +1557,7 @@
     <Content Include="app\bower_components\ui-bootstrap\template\typeahead\typeahead-popup.html" />
     <Content Include="app\components\directives\CurrencyDirective.js" />
     <Content Include="app\components\directives\GenericInputDirective.js" />
+    <Content Include="app\components\directives\ng-input-currency.js" />
     <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\services\StorageService.js" />
     <Content Include="app\components\services\UserService.js" />
@@ -12610,9 +12611,14 @@
     <Content Include="app\bower_components\angular-modal-service\.bower.json" />
     <Content Include="app\bower_components\angular-modal-service\bower.json" />
     <Content Include="app\bower_components\angular-modal-service\dst\angular-modal-service.js.map" />
-    <Content Include="app\bower_components\angular-modal-service\dst\angular-modal-service.min.js.map" />
+    <Content Include="app\bower_components\angular-modal-service\dst\angular-modal-service.min.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="app\bower_components\angular-modal-service\LICENSE" />
     <Content Include="app\bower_components\angular-modal-service\README.md" />
+    <Content Include="app\bower_components\angular-modal-service\dst\dst\angular-modal-service.min.js.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

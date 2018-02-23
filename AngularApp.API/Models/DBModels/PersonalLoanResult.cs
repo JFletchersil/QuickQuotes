@@ -12,12 +12,14 @@ namespace AngularApp.API.Models.DBModels
     using System;
     using System.Collections.Generic;
     
-    public partial class HirePurchaseQuoteResult
+    public partial class PersonalLoanResult
     {
         public System.Guid QuoteReference { get; set; }
-        public double MonthlyAmount { get; set; }
         public double TotalRepayable { get; set; }
         public double Fees { get; set; }
         public double InterestRate { get; set; }
+        public double MonthlyRepayable { get; set; }
+    
+        public virtual Quote Quote { get; set; }
     }
 }

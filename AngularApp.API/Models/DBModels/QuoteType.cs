@@ -14,9 +14,20 @@ namespace AngularApp.API.Models.DBModels
     
     public partial class QuoteType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public QuoteType()
+        {
+            this.Quotes = new HashSet<Quote>();
+        }
+    
         public int TypeID { get; set; }
-        public string ACQuoteType { get; set; }
+        public string IncQuoteType { get; set; }
         public int ProductParentID { get; set; }
         public bool Enabled { get; set; }
+    
+        public virtual ProductType ProductType { get; set; }
+        public virtual QuoteDefault QuoteDefault { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Quote> Quotes { get; set; }
     }
 }

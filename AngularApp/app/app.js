@@ -58,7 +58,7 @@ angular.module("quoteTool", [
                 controller: "QuoteSelection"
             })
             .state("mainmenu.quotegeneration", {
-                url: "^/hirepurchase/{parentID}/{quoteID}",
+                url: "^/{parentID}/{quoteID}",
                 templateUrl: "../quotegeneration/quotegeneration.html",
                 controller: "QuoteGeneration"
             })

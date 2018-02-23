@@ -15,8 +15,11 @@ namespace AngularApp.API.Models.DBModels
     public partial class QuoteDefault
     {
         public int TypeID { get; set; }
-        public string ValueDefaultsJson { get; set; }
+        public string ElementDescription { get; set; }
+        public string XMLTemplate { get; set; }
         public bool Enabled { get; set; }
+        public string TotalRepayableTemplate { get; set; }
+        public string MonthlyRepayableTemplate { get; set; }
     
         public virtual QuoteType QuoteType { get; set; }
     }

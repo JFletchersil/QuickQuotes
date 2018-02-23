@@ -27,7 +27,6 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
 
         $scope.pageChangeHandler = function (newPageNumber) {
             $scope.pagingModel.PageNumber = newPageNumber;
-            //$scope.promise = $http.post("http://localhost:8080/api/Queue/ShowPaginatedQuotes", $scope.pagingModel, success).$promise;
             $scope.promise =
                 $http.post("http://localhost:8080/api/Queue/ShowPaginatedQuotes", $scope.pagingModel).
                 then(function(response) {

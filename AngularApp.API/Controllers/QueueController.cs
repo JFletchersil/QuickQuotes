@@ -28,7 +28,7 @@ namespace AngularApp.API.Controllers
                 QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
                 QuoteAuthor = x.QuoteAuthor,
                 QuoteDate = x.QuoteDate,
-                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.TypeID == x.QuoteType)?.ACQuoteType
+                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.TypeID == x.QuoteType)?.IncQuoteType
             });
             return new PaginatedQueueResult()
             {

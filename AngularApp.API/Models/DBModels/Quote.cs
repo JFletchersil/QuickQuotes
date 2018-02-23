@@ -18,7 +18,13 @@ namespace AngularApp.API.Models.DBModels
         public int QuoteType { get; set; }
         public int QuoteStatus { get; set; }
         public int ProductType { get; set; }
-        public string QuoteAuthor { get; set; }
         public System.DateTime QuoteDate { get; set; }
+        public string QuoteAuthor { get; set; }
+    
+        public virtual PersonalLoanQuote PersonalLoanQuote { get; set; }
+        public virtual PersonalLoanResult PersonalLoanResult { get; set; }
+        public virtual ProductType NaviProductType { get; set; }
+        public virtual QuoteStatus NaviQuoteStatus { get; set; }
+        public virtual QuoteType NaviQuoteType { get; set; }
     }
 }

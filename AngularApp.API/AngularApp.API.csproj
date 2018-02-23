@@ -258,16 +258,16 @@
     <Compile Include="Models\DBModels\AspNetUserLogin.cs">
       <DependentUpon>AngularUsers.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBModels\HirePurchaseQuote.cs">
+    <Compile Include="Models\DBModels\ColumnMapper.cs" />
+    <Compile Include="Models\DBModels\PersonalLoanQuote.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DBModels\HirePurchaseQuoteResult.cs">
+    <Compile Include="Models\DBModels\PersonalLoanResult.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModels\ProductType.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\WebViewModels\QueueUserWebViewModel.cs" />
     <Compile Include="Models\DBModels\Quote.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
@@ -295,6 +295,8 @@
     <Compile Include="Models\DBModels\QuoteType.cs">
       <DependentUpon>QuoteDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WebViewModels\ElementConfigurationWebViewModel.cs" />
+    <Compile Include="Models\WebViewModels\QueueUserWebViewModel.cs" />
     <Compile Include="Models\DBModels\UserDetails.cs" />
     <Compile Include="Models\WebViewModels\AccountViewModels.cs" />
     <Compile Include="Models\Generated\Database.cs">
@@ -317,19 +319,19 @@
   <ItemGroup>
     <Content Include="Models\Generated\PetaPoco.Generator.ttinclude" />
     <Content Include="Models\Generated\PetaPoco.Core.ttinclude" />
-    <EntityDeploy Include="Models\DBModels\QuoteDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QuoteDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\DBModels\QuoteDB.edmx.diagram">
-      <DependentUpon>QuoteDB.edmx</DependentUpon>
-    </Content>
     <EntityDeploy Include="Models\DBModels\AngularUsers.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>AngularUsers.Designer.cs</LastGenOutput>
     </EntityDeploy>
     <Content Include="Models\DBModels\AngularUsers.edmx.diagram">
       <DependentUpon>AngularUsers.edmx</DependentUpon>
+    </Content>
+    <EntityDeploy Include="Models\DBModels\QuoteDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QuoteDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\DBModels\QuoteDB.edmx.diagram">
+      <DependentUpon>QuoteDB.edmx</DependentUpon>
     </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">

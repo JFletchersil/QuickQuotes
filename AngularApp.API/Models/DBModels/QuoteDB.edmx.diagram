@@ -4,19 +4,21 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fb13d7a8576c4892ad21ca383629f5b5" Name="Diagram1" ZoomLevel="94">
-        <EntityTypeShape EntityType="QuoteDBModel.HirePurchaseQuote" Width="1.5" PointX="10.125" PointY="5.625" />
-        <EntityTypeShape EntityType="QuoteDBModel.ProductType" Width="1.5" PointX="0.75" PointY="3.125" />
-        <EntityTypeShape EntityType="QuoteDBModel.Quote" Width="1.5" PointX="5.25" PointY="4.75" />
-        <EntityTypeShape EntityType="QuoteDBModel.QuoteStatus" Width="1.5" PointX="3.125" PointY="4.25" />
-        <EntityTypeShape EntityType="QuoteDBModel.QuoteType" Width="1.5" PointX="2.625" PointY="7.5" />
-        <AssociationConnector Association="QuoteDBModel.FK_HirePurchaseQuotes_HirePurchaseQuotes" />
-        <AssociationConnector Association="QuoteDBModel.FK_Quotes_ProductTypes" />
-        <AssociationConnector Association="QuoteDBModel.FK_QuoteTypes_ProductTypes" />
-        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteStatuses" />
-        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteTypes" />
-        <EntityTypeShape EntityType="QuoteDBModel.HirePurchaseQuoteResult" Width="1.5" PointX="7.625" PointY="7.375" />
-        <AssociationConnector Association="QuoteDBModel.FK_HirePurchaseQuoteResults_Quotes" />
+      <Diagram DiagramId="a1b94a4bc5e7470ea0d8b1410db30050" Name="Diagram1" ZoomLevel="86">
+        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanQuote" Width="1.5" PointX="8.625" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanResult" Width="1.5" PointX="10.125" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.ProductType" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.QuoteDefault" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.Quote" Width="2.25" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.QuoteStatus" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.QuoteType" Width="1.5" PointX="3" PointY="9.625" IsExpanded="true" />
+        <AssociationConnector Association="QuoteDBModel.FK_HirePurchaseQuotes_HirePurchaseQuotes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_HirePurchaseQuoteResults_Quotes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_ProductTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_QuoteTypes_ProductTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_QuoteDefaults_QuoteTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteStatuses" ManuallyRouted="false" />
+        <AssociationConnector Association="QuoteDBModel.FK_Quotes_QuoteTypes" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

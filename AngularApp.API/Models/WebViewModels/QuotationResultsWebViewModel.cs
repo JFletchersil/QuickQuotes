@@ -2,7 +2,7 @@
 
 namespace AngularApp.API.Models.WebViewModels
 {
-    public class CarHirePurchaseWebQuotationResultViewModel
+    public class QuotationResultWebViewModel
     {
         [Required]
         public decimal MonthlyRepayable { get; set; }

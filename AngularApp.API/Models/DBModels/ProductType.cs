@@ -14,8 +14,20 @@ namespace AngularApp.API.Models.DBModels
     
     public partial class ProductType
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public ProductType()
+        {
+            this.Quotes = new HashSet<Quote>();
+            this.QuoteTypes = new HashSet<QuoteType>();
+        }
+    
         public int ProductTypeID { get; set; }
-        public string ACProductType { get; set; }
+        public string IncProductType { get; set; }
         public bool Enabled { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Quote> Quotes { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<QuoteType> QuoteTypes { get; set; }
     }
 }
