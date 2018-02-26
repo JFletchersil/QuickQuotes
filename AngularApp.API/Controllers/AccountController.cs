@@ -23,6 +23,12 @@ namespace AngularApp.API.Controllers
             _repo = new AuthRepository();
         }
 
+        [HttpGet]
+        public string TestMethod()
+        {
+            return "Test";
+        }
+
         [HttpPost]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
