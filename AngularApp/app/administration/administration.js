@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table", "ui.bootstrap"])
-    .controller("Administration", ["$scope", "$http", "UserService", "ModalService", function ($scope, $http, UserService, ModalService) {
+    .controller("Administration", ["$scope", "$http", "UserService", "ModalService", "__env", function ($scope, $http, UserService, ModalService, __env) {
         $scope.pagingModel = {
             PageNumber: 1,
             PageSize: 5
@@ -38,14 +38,14 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         $scope.pageChangeHandler = function (newPageNumber) {
             $scope.pagingModel.PageNumber = newPageNumber;
             $scope.promise =
-                $http.post("http://localhost:8080/api/Account/ReturnAllUsers", $scope.pagingModel).
+                $http.post(__env.apiUrl + "/Account/ReturnAllUsers", $scope.pagingModel).
                     then(function (response) {
                         success(response.data);
                     });
         }
 
         $scope.createNewUser = function () {
-            $http.post("http://localhost:8080/api/Account/Register", $scope.newUserModel).then(
+            $http.post(__env.apiUrl + "/Account/Register", $scope.newUserModel).then(
                 function (response) {
                     $scope.newUserModel = {
                         IsAdministrator: false
@@ -79,7 +79,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         }
 
         $scope.onChangeUserType = function () {
-            $http.post("http://localhost:8080/api/Account/ChangeUserType", {
+            $http.post(__env.apiUrl + "/Account/ChangeUserType", {
                 Guid: $scope.selected.Guid,
                 IsAdmin: $scope.selected.IsAdmin
             })
@@ -97,7 +97,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
                     if (result.UserName === undefined) {
                         alert("No changes saved");
                     } else {
-                        $http.post("http://localhost:8080/api/Account/AlterAccountLoginDetails",
+                        $http.post(__env.apiUrl + "/Account/AlterAccountLoginDetails",
                             {
                                 Guid: $scope.selected.Guid,
                                 UserName: result.UserName,

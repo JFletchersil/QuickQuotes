@@ -2,12 +2,12 @@
 
 angular.module("quoteTool.login")
     .factory("AuthenticationService",
-    ["Base64", "$http", "$cookies", "$rootScope", "$timeout",
-        function (Base64, $http, $cookies, $rootScope, $timeout) {
+    ["Base64", "$http", "$cookies", "$rootScope", "$timeout", "__env",
+        function (Base64, $http, $cookies, $rootScope, $timeout, __env) {
             var service = {};
 
             service.Login = function (Username, password, callback) {
-                $http.post("http://localhost:8080/api/Account/Login", { Email: Username, Password: password })
+                $http.post(__env.apiUrl + "/Account/Login", { Email: Username, Password: password })
                     .then(function (response) {
                         callback(response);
                     })

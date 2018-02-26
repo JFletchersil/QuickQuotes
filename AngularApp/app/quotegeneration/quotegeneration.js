@@ -1,6 +1,6 @@
 "use strict";
 angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "CurrencyDirective", "ngInputCurrency"])
-    .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", function ($scope, $http, $stateParams) {
+    .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", "__env", function ($scope, $http, $stateParams, __env) {
         $scope.hasChangedQuoteDetails = false;
         $scope.parentID = $stateParams.parentID;
         $scope.quoteID = $stateParams.quoteID;
@@ -13,7 +13,7 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
             $scope.submitData.QuotationDetails = JSON.stringify($scope.quotationDetails);
             $scope.submitData.ParentID = $scope.parentID;
             $scope.submitData.QuoteID = $scope.quoteID;
-            $http.post("http://localhost:8080/api/Quote/SaveQuote", $scope.submitData)
+            $http.post(__env.apiUrl + "/Quote/SaveQuote", $scope.submitData)
                 .then(function (response) {
                 })
                 .catch(function (error) {
@@ -32,7 +32,7 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
             var quoteDets = $scope.quotationDetails;
             quoteDets.Type = $scope.quoteID;
             var quoteText = JSON.stringify(quoteDets);
-            $http.post("http://localhost:8080/api/Quote/CalculateQuote", quoteText)
+            $http.post(__env.apiUrl + "/Quote/CalculateQuote", quoteText)
                 .then(function (response) {
                     $scope.quotationResult = response.data;
                     $scope.hasChangedQuoteDetails = true;
@@ -43,7 +43,7 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
         }
 
         $scope.retrieveWithQuoteReference = function () {
-            $http.post("http://localhost:8080/api/Quote/RetrieveWithQuoteReference", $scope.quoteReference)
+            $http.post(__env.apiUrl + "/Quote/RetrieveWithQuoteReference", $scope.quoteReference)
                 .then(function (response) {
                     $scope.guidRetrevial = response.data;
                     $scope.quotationResult = $scope.guidRetrevial.QuotationCalculation;
@@ -58,7 +58,7 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
         }
 
         $scope.retrieveElementConfiguration = function() {
-            $http.get("http://localhost:8080/api/Quote/GetElementConfiguration", { params: { quoteType: $scope.quoteID } })
+            $http.get(__env.apiUrl + "/Quote/GetElementConfiguration", { params: { quoteType: $scope.quoteID } })
                 .then(function (response) {
                     $scope.elements = response.data;
                     $scope.elements.forEach(function (element) {

@@ -1,4 +1,8 @@
 "use strict";
+var env = {};
+if (window) {
+    Object.assign(env, window.__env);
+}
 // Declare app level module which depends on views, and components
 var expireDate = new Date();
 // this will set the expiration to 1 day;
@@ -26,6 +30,7 @@ angular.module("quoteTool", [
     "quoteTool.adminmodal",
     "quoteTool.Userdetails"
 ])
+    .constant("__env", env)
     .config(["$locationProvider", "$stateProvider", "$urlRouterProvider", function ($locationProvider, $stateProvider, $urlRouterProvider) {
         $locationProvider.hashPrefix("!");
         $urlRouterProvider.otherwise("/login");

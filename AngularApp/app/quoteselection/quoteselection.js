@@ -1,11 +1,11 @@
 "use strict";
 
 angular.module("quoteTool.quoteselection", ["ui.router", "ngAnimate"])
-    .controller("QuoteSelection", ["$scope", "$http", "UserService", function ($scope, $http, UserService) {
+    .controller("QuoteSelection", ["$scope", "$http", "UserService", "__env", function ($scope, $http, UserService, __env) {
         $scope.productTypes = {};
         $scope.quoteTypes = {};
         if (UserService.getItem().quoteTypeData === undefined) {
-            $http.get("http://localhost:8080/api/ProductQuoteType/GetAllQuoteTypes")
+            $http.get(__env.apiUrl + "/ProductQuoteType/GetAllQuoteTypes")
                 .then(function(response) {
                     $scope.quoteTypes = response.data;
                     UserService.addItem({ quoteTypeData: $scope.quoteTypes });

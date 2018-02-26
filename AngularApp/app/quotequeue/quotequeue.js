@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])    
-    .controller("QuoteQueue", ["$scope", "$http", "$location", function ($scope, $http, $location) {
+    .controller("QuoteQueue", ["$scope", "$http", "$location", "__env", function ($scope, $http, $location, __env) {
         $scope.selected = [];
         $scope.quotes = [];
 
@@ -28,7 +28,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
         $scope.pageChangeHandler = function (newPageNumber) {
             $scope.pagingModel.PageNumber = newPageNumber;
             $scope.promise =
-                $http.post("http://localhost:8080/api/Queue/ShowPaginatedQuotes", $scope.pagingModel).
+                $http.post(__env.apiUrl + "/Queue/ShowPaginatedQuotes", $scope.pagingModel).
                 then(function(response) {
                     success(response.data);
                 });

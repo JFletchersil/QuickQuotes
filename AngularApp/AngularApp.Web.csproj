@@ -1558,6 +1558,8 @@
     <Content Include="app\components\directives\CurrencyDirective.js" />
     <Content Include="app\components\directives\GenericInputDirective.js" />
     <Content Include="app\components\directives\ng-input-currency.js" />
+    <Content Include="app\components\env\deployment_env.js" />
+    <Content Include="app\components\env\development_env.js" />
     <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\services\StorageService.js" />
     <Content Include="app\components\services\UserService.js" />
