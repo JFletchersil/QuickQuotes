@@ -21,17 +21,23 @@ namespace AngularApp.API.Controllers
         [HttpGet]
         public JObject GetAllProductTypes()
         {
-            var productContexts = new object();
-            var productTypes = _dbContext.ProductTypes.ToList();
-            var returnData = productTypes.Select(x => x.Enabled);
-            var approvedStructures = new JObject();
-            foreach(var product in productTypes)
+            try
             {
-                approvedStructures.Add(product.Enabled
-                    ? new JProperty(product.IncProductType, true)
-                    : new JProperty(product.IncProductType, false));
+                var productTypes = _dbContext.ProductTypes.ToList();
+                var approvedStructures = new JObject();
+                foreach (var product in productTypes)
+                {
+                    approvedStructures.Add(product.Enabled
+                        ? new JProperty(product.IncProductType, true)
+                        : new JProperty(product.IncProductType, false));
+                }
+
+                return approvedStructures;
             }
-            return approvedStructures;
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
 
         [HttpGet]
