@@ -1,6 +1,7 @@
 "use strict";
 angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "CurrencyDirective", "ngInputCurrency"])
-    .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", "__env", function ($scope, $http, $stateParams, __env) {
+    .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", "__env",
+        function ($scope, $http, $stateParams, __env) {
         $scope.hasChangedQuoteDetails = false;
         $scope.parentID = $stateParams.parentID;
         $scope.quoteID = $stateParams.quoteID;

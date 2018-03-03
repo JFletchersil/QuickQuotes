@@ -5,6 +5,13 @@ using System.Web;
 
 namespace AngularApp.API.Models.WebViewModels
 {
+    public class QuickSearch
+    {
+        public string QuoteReference { get; set; }
+        public string QuoteType { get; set; }
+        public string QuoteAuthor { get; set; }
+    }
+
     public class QueueDisplayWebViewModel
     {
         public string QuoteReference { get; set; }
