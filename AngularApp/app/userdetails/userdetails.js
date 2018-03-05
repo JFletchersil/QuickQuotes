@@ -6,7 +6,7 @@ angular.module("quoteTool.userdetails", ["ui.router", "ngAnimate"])
         $scope.hasChangedUserDetails = false;
 
         $scope.getUserDetails = function () {
-            $http.post(__env.apiUrl + "/Users/ReturnUserModel", UserService.getItem().fullName)
+            $http.post(__env.apiUrl + "/UserDetails/ReturnUserModel", UserService.getItem().fullName)
                 .then(function (response) {
                     $scope.userModel = response.data;
                 })

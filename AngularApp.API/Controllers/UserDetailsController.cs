@@ -13,7 +13,7 @@ using PetaPoco;
 namespace AngularApp.API.Controllers
 {
     [EnableCors("*", "*", "*")]
-    [RoutePrefix("api/Users")]
+    //[RoutePrefix("api/Users")]
     public class UserDetailsController : ApiController
     {
         [HttpPost]

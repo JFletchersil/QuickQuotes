@@ -1,4 +1,5 @@
-<div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-in" data-ng-controller="MainMenu as Menu">
+
+<div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay" data-ng-controller="MainMenu as Menu">
     <header class="bmd-layout-header">
         <div class="navbar navbar-light bg-faded">
             <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
@@ -7,9 +8,38 @@
             </button>
             <ul class="nav navbar-nav">
                 <li>
-                    <form class="form-inline">
-                        <i class="mi mi-search"></i>
-                        <input class="form-control mr-sm-2" placeholder="Quote Search" aria-label="Search" type="text" />
+                    <form class="form-inline row">
+                        <i class="mi mi-search col-1"></i>
+                        <md-content layout-padding layout="column" class="col-11">
+                            <md-autocomplete md-selected-item="selectedItem"
+                                             md-search-text="searchText"
+                                             md-items="item in querySearch(searchText)"
+                                             md-item-text="item.QuoteReference"
+                                             md-min-length="4"
+                                             placeholder="Quote Search"
+                                             ng-model-options="{debounce: 1000}"
+                                             md-menu-class="autocomplete-custom-template"
+                                             style="margin-top: -10px; width:22em;"
+                                             class="col-12 no-gutters">
+                                <md-item-template style="margin:5px;">
+                                    <div class="col-12 col-sm-4" style="margin-bottom: 5px; margin-top:5px;">
+                                        <span class="item-title">
+                                            <span> {{item.QuoteAuthor}} </span>
+                                        </span>
+                                        <span class="item-metadata">
+                                            <span>
+                                                <strong>{{item.QuoteType}}</strong>
+                                            </span>
+                                        </span>
+                                        <span class="item-metadata">
+                                            <span>
+                                                <strong>{{item.QuoteReference}}</strong>
+                                            </span>
+                                        </span>
+                                    </div>
+                                </md-item-template>
+                            </md-autocomplete>
+                        </md-content>
                     </form>
                 </li>
             </ul>
