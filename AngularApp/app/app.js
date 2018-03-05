@@ -18,7 +18,6 @@ angular.module("quoteTool", [
     "angularModalService",
     "GInputDirective",
     "User",
-    //'Authentication',
     "quoteTool.login",
     "quoteTool.mainmenu",
     "quoteTool.home",
@@ -28,7 +27,8 @@ angular.module("quoteTool", [
     "quoteTool.version",
     "quoteTool.administration",
     "quoteTool.adminmodal",
-    "quoteTool.Userdetails"
+    "quoteTool.userdetails",
+    "quoteTool.applicationconfiguration"
 ])
     .constant("__env", env)
     .config(["$locationProvider", "$stateProvider", "$urlRouterProvider", function ($locationProvider, $stateProvider, $urlRouterProvider) {
@@ -84,6 +84,11 @@ angular.module("quoteTool", [
                 url: "^/administration",
                 templateUrl: "../administration/administration.html",
                 controller: "Administration"
+            })
+            .state("mainmenu.applicationconfiguration", {
+                url: "^/configuration",
+                templateUrl: "../config/config.html",
+                controller: "AppConfiguration"
             });
     }])
     .run(["$rootScope", "$location", "$cookies", "$http",

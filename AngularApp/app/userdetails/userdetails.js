@@ -1,6 +1,6 @@
 "use strict";
 
-angular.module("quoteTool.Userdetails", ["ui.router", "ngAnimate"])
+angular.module("quoteTool.userdetails", ["ui.router", "ngAnimate"])
     .controller("UserDetails", ["$scope", "$http", "UserService", "__env", function ($scope, $http, UserService, __env) {
         $scope.userModel = {};
         $scope.hasChangedUserDetails = false;

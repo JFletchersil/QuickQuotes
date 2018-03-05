@@ -1585,6 +1585,9 @@
     <Content Include="app\quotegeneration\quotegeneration.html" />
     <Content Include="app\quotegeneration\quotegeneration.js" />
     <Content Include="app\quotegeneration\quotegeneration_test.js" />
+    <Content Include="app\config\config.html" />
+    <Content Include="app\config\config.js" />
+    <Content Include="app\config\config_test.js" />
     <Content Include="app\userdetails\userdetails.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
