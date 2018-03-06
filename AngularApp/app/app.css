@@ -146,7 +146,7 @@
 }
 
 md-autocomplete > md-autocomplete-wrap {
-    background: transparent !important;
+    background: #e0e0e0 !important;
     box-shadow: none !important;
 }
 
