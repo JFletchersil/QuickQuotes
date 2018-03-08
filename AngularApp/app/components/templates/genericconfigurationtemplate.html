@@ -1,0 +1,9 @@
+﻿<div>
+    <div ng-if="inputType !== 'textarea'">
+        <input type="{{inputType}}" name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control" ng-model="configData[elementHtmlName]" required />
+    </div>
+
+    <div ng-if="inputType === 'textarea'" class="md-form spread-boxes">
+        <textarea name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control fill-area msdElastic" ng-model="configData[elementHtmlName]" required></textarea>
+    </div>
+</div>

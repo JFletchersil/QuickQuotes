@@ -174,9 +174,9 @@ md-autocomplete-wrap > input {
     height: 60px !important;
 }
 
-.autocomplete-custom-template li:last-child {
-    border-bottom-width: 0;
-}
+    .autocomplete-custom-template li:last-child {
+        border-bottom-width: 0;
+    }
 
 .autocomplete-custom-template .item-title,
 .autocomplete-custom-template .item-metadata {
@@ -184,10 +184,10 @@ md-autocomplete-wrap > input {
     line-height: 1;
 }
 
-.autocomplete-custom-template .item-title md-icon {
-    height: 50px !important;
-    width: 50px !important;
-}
+    .autocomplete-custom-template .item-title md-icon {
+        height: 50px !important;
+        width: 50px !important;
+    }
 
 .md-virtual-repeat-container.autocomplete-custom-template {
     width: 700px !important;
@@ -201,4 +201,14 @@ md-autocomplete-wrap > .bmd-form-group.is-filled {
     min-height: 1px;
     padding-right: 15px;
     padding-left: 15px;
+}
+
+.fill-area {
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box; /* For IE and modern versions of Chrome */
+    -moz-box-sizing: border-box; /* For Firefox                          */
+    -webkit-box-sizing: border-box; /* For Safari                           */
+    overflow: auto;
 }

@@ -21,22 +21,27 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 Columns: {
                     ElementOne: {
                         Name: "ElementDescription",
-                        Type: "TextArea"
+                        Binding: "configData.ElementDescription",
+                        Type: "textarea"
                     }, 
                     ElementTwo: {
                         Name: "XMLTemplate",
-                        Type: "TextArea"
+                        Binding: "configData.XMLTemplate",
+                        Type: "textarea"
                     },
                     ElementThree: {
                         Name: "TotalRepayableTemplate",
-                        Type: "TextArea"
+                        Binding: "configData.TotalRepayableTemplate",
+                        Type: "textarea"
                     }, 
                     ElementFour: {
                         Name: "MonthlyRepayableTemplate",
-                        Type: "TextArea"
+                        Binding: "configData.MonthlyRepayableTemplate",
+                        Type: "textarea"
                     }, 
                     ElementFive: {
                         Name: "Enabled",
+                        Binding: "configData.Enabled",
                         Type: "Checkbox"
                     }
                 }
@@ -49,10 +54,12 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 Columns: {
                     ElementOne: {
                         Name: "State",
+                        Binding: "configData.State",
                         Type: "Text"
                     },
                     ElementTwo: {
                         Name: "Enabled",
+                        Binding: "configData.Enabled",
                         Type: "Checkbox"
                     }
                 }
@@ -65,14 +72,17 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 Columns: {
                     ElementOne: {
                         Name: "QuoteType",
+                        Binding: "configData.QuoteType",
                         Type: "Text"
                     },
                     ElementTwo: {
                         Name: "ProductParentID",
+                        Binding: "configData.ProductParentID",
                         Type: "Text"
                     },
                     ElementThree: {
                         Name: "Enabled",
+                        Binding: "configData.Enabled",
                         Type: "Checkbox"
                     }
                 }
@@ -85,10 +95,12 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 Columns: {
                     ElementOne: {
                         Name: "ProductType",
+                        Binding: "configData.ProductType",
                         Type: "Text"
                     },
                     ElementTwo: {
                         Name: "Enabled",
+                        Binding: "configData.Enabled",
                         Type: "Checkbox"
                     }
                 }
@@ -98,20 +110,25 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
         $scope.selected = {};
         $scope.TotalSize = 0;
         $scope.TotalItems = 0;
+        $scope.configurationValueDetails = 0;
 
         function success(returnData) {
             $scope.TotalSize = returnData.TotalPages;
             $scope.TotalItems = returnData.TotalItems;
-            $scope.configData = returnData.QueueDisplay;
+            $scope.configData = returnData.ConfigResult;
+            //$scope.configData.forEach(function (element) {
+            //    element.Value = $scope.selected[element.ElementName];
+            //});
         }
 
         $scope.pageChangeHandler = function (newPageNumber, configurationType) {
             $scope.pagingModel.PageNumber = newPageNumber;
-            //$scope.promise =
-            //    $http.post(__env.apiUrl + "/Configuration/" + configurationType, $scope.pagingModel).
-            //        then(function (response) {
-            //            success(response.data);
-            //        });
+            $scope.pagingModel.ConfigurationType = configurationType;
+            $scope.promise =
+                $http.post(__env.apiUrl + "/Configuration/DefaultConfigurations", $scope.pagingModel).
+                    then(function (response) {
+                        success(response.data);
+                    });
         }
 
         $scope.onTabSelected = function (tabSelected, configurationType) {

@@ -16,7 +16,8 @@
                             <tbody md-body ng-repeat="config in configData | orderBy: tab.QueryOrder">
                                 <tr md-row>
                                     <td md-cell ng-repeat="column in tab.Columns">
-                                        <input type="{{column.Type}}" name="{{column.Name}}" id="{{column.Name}}" class="form-control" ng-model="column.Name" required />
+                                        <dbconfig element-html-name="column.Name" config-data="config" input-type="column.Type"></dbconfig>
+                                        <!--<input type="{{column.Type}}" name="{{column.Name}}" id="{{column.Name}}" class="form-control" ng-model="column.Binding" required />-->
                                     </td>
                                 </tr>
                             </tbody>

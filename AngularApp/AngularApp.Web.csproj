@@ -217,6 +217,9 @@
     <Content Include="app\bower_components\angular-cookies\angular-cookies.js" />
     <Content Include="app\bower_components\angular-cookies\angular-cookies.min.js" />
     <Content Include="app\bower_components\angular-cookies\index.js" />
+    <Content Include="app\bower_components\angular-elastic\elastic.js" />
+    <Content Include="app\bower_components\angular-elastic\index.html" />
+    <Content Include="app\bower_components\angular-elastic\LICENCE.txt" />
     <Content Include="app\bower_components\angular-loader\angular-loader.js" />
     <Content Include="app\bower_components\angular-loader\angular-loader.min.js" />
     <Content Include="app\bower_components\angular-material-data-table\dist\md-data-table.css" />
@@ -717,6 +720,8 @@
     <Content Include="app\bower_components\angular-modal-service\dst\angular-modal-service.min.js" />
     <Content Include="app\bower_components\angular-modal-service\karma.config.js" />
     <Content Include="app\bower_components\angular-modal-service\webpack.config.js" />
+    <Content Include="app\bower_components\angular-pretty-xml\gulpfile.js" />
+    <Content Include="app\bower_components\angular-pretty-xml\src\angular-pretty-xml.js" />
     <Content Include="app\bower_components\angular-route\angular-route.js" />
     <Content Include="app\bower_components\angular-route\angular-route.min.js" />
     <Content Include="app\bower_components\angular-route\index.js" />
@@ -1556,6 +1561,7 @@
     <Content Include="app\bower_components\ui-bootstrap\template\typeahead\typeahead-match.html" />
     <Content Include="app\bower_components\ui-bootstrap\template\typeahead\typeahead-popup.html" />
     <Content Include="app\components\directives\CurrencyDirective.js" />
+    <Content Include="app\components\directives\GenericConfigurationDirective.js" />
     <Content Include="app\components\directives\GenericInputDirective.js" />
     <Content Include="app\components\directives\ng-input-currency.js" />
     <Content Include="app\components\env\deployment_env.js" />
@@ -1563,6 +1569,7 @@
     <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\services\StorageService.js" />
     <Content Include="app\components\services\UserService.js" />
+    <Content Include="app\components\templates\genericconfigurationtemplate.html" />
     <Content Include="app\components\templates\genericinputtemplate.html" />
     <Content Include="app\components\templates\paginatingselector.html" />
     <Content Include="app\components\version\interpolate-filter.js" />
@@ -12608,6 +12615,15 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="app\bower_components\bootstrap-material-design\js\bootstrap-material-design.js.map" />
+    <Content Include="app\bower_components\angular-pretty-xml\.bower.json" />
+    <Content Include="app\bower_components\angular-pretty-xml\bower.json" />
+    <Content Include="app\bower_components\angular-pretty-xml\LICENSE" />
+    <Content Include="app\bower_components\angular-pretty-xml\package.json" />
+    <Content Include="app\bower_components\angular-pretty-xml\README.md" />
+    <Content Include="app\bower_components\angular-elastic\.bower.json" />
+    <Content Include="app\bower_components\angular-elastic\bower.json" />
+    <Content Include="app\bower_components\angular-elastic\package.json" />
+    <Content Include="app\bower_components\angular-elastic\README.md" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
