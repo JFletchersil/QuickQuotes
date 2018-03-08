@@ -1566,6 +1566,10 @@
     <Content Include="app\components\directives\ng-input-currency.js" />
     <Content Include="app\components\env\deployment_env.js" />
     <Content Include="app\components\env\development_env.js" />
+    <Content Include="app\components\scripts\css\bootstrap-material-design.css" />
+    <Content Include="app\components\scripts\css\bootstrap-material-design.min.css" />
+    <Content Include="app\components\scripts\js\bootstrap-material-design.js" />
+    <Content Include="app\components\scripts\js\bootstrap-material-design.min.js" />
     <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\services\StorageService.js" />
     <Content Include="app\components\services\UserService.js" />
@@ -12624,6 +12628,7 @@
     <Content Include="app\bower_components\angular-elastic\bower.json" />
     <Content Include="app\bower_components\angular-elastic\package.json" />
     <Content Include="app\bower_components\angular-elastic\README.md" />
+	<Content Include="app\components\scripts\js\bootstrap-material-design.js.map" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
