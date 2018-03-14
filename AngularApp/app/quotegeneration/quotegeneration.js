@@ -11,11 +11,17 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
         $scope.submitForm = function () {
             $scope.submitData = {};
             $scope.submitData.QuotationCalculation = $scope.quotationResult;
-            $scope.submitData.QuotationDetails = JSON.stringify($scope.quotationDetails);
+            $scope.submitData.QuotationDetails = $scope.quotationDetails;
             $scope.submitData.ParentID = $scope.parentID;
             $scope.submitData.QuoteID = $scope.quoteID;
             $http.post(__env.apiUrl + "/Quote/SaveQuote", $scope.submitData)
                 .then(function (response) {
+                    $scope.hasChangedQuoteDetails = false;
+                    $scope.quotationDetails = {};
+                    $scope.quotationResult = {};
+                    $scope.submitData = {};
+                    $scope.elements = {};
+                    $scope.retrieveElementConfiguration();
                 })
                 .catch(function (error) {
 

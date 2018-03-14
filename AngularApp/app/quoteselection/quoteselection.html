@@ -3,7 +3,7 @@
     <p class="lead">Select the quote type that you wish to generate a quote for.</p>
     <br />
     <div class="col-12 no-gutters no-x-padding">
-        <div class="col-12" ng-repeat="(key, value) in quoteTypes track by $index">
+        <div class="col-12" ng-repeat="(key, value) in quoteTypes track by $index" style="margin-bottom:30px;">
             <h5 class="display-5 higher-heading">{{splitOnUpper(key)}} Selection</h5>
             <div class="row">
                 <div class="col-12 col-sm-4" ng-repeat="item in value track by $index">

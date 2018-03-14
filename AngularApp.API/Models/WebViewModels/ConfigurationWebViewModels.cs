@@ -12,6 +12,7 @@ namespace AngularApp.API.Models.WebViewModels
 
     public class QuoteTypesViewModel : ConfigurationWebViewModels
     {
+        public int TypeID { get; set; }
         public string QuoteType { get; set; }
         public int ProductParentID { get; set; }
         public bool Enabled { get; set; }
@@ -19,21 +20,24 @@ namespace AngularApp.API.Models.WebViewModels
 
     public class QuoteStatusesViewModel : ConfigurationWebViewModels
     {
+        public int StatusID { get; set; }
         public string State { get; set; }
         public bool Enabled { get; set; }
     }
 
     public class QuoteDefaultsViewModel : ConfigurationWebViewModels
     {
+        public int TypeID { get; set; }
         public string ElementDescription { get; set; }
         public string XMLTemplate { get; set; }
         public string TotalRepayableTemplate { get; set; }
-        public string MonthlyRepyableTemplate { get; set; }
+        public string MonthlyRepayableTemplate { get; set; }
         public bool Enabled { get; set; }
     }
 
     public class ProductTypesViewModel : ConfigurationWebViewModels
     {
+        public int ProductTypeID { get; set; }
         public string ProductType { get; set; }
         public bool Enabled { get; set; }
     }
@@ -43,5 +47,11 @@ namespace AngularApp.API.Models.WebViewModels
         public IEnumerable<JObject> ConfigResult;
         public int TotalPages;
         public int TotalItems { get; set; }
+    }
+
+    public class SaveConfigurationViewModel
+    {
+        public string ConfigType { get; set; }
+        public List<JObject> ConfigsToBeSaved { get; set; }
     }
 }

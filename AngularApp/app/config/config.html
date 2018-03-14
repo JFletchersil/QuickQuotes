@@ -6,6 +6,38 @@
         <md-tab label="{{tab.Label}}" md-on-select="onTabSelected($index, tab.OnSelect)" ng-repeat="tab in tabs track by $index">
             <md-content class="md-padding">
                 <div class="container col-12">
+                    <md-toolbar class="md-table-toolbar md-default" style="background-color: transparent !important" ng-hide="filter.show" aria-hidden="false">
+                        <div class="md-toolbar-tools">
+                            <h2 class="md-title">{{tab.Label}}</h2>
+                            <div flex="" class="flex"></div>
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="filter.show = true" aria-label="filter_list">
+                                <md-icon class="material-icons">filter_list</md-icon>
+                            </button>
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="addItem($event)" aria-label="add">
+                                <md-icon class="material-icons">add</md-icon>
+                            </button>
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="saveUpdatedValues(tab.OnSelect)"
+                                    ng-hide="!(hasNewItemOrUpdate)" aria-label="save">
+                                <md-icon class="material-icons md-light">save</md-icon>
+                            </button>
+                        </div>
+                    </md-toolbar>
+                    <md-toolbar class="md-table-toolbar md-default ng-hide" style="background-color: transparent !important" ng-show="filter.show"
+                                aria-hidden="true">
+                        <div class="md-toolbar-tools">
+                            <md-icon class="material-icons">search</md-icon>
+                            <form flex="" name="filter.form" class="ng-valid flex ng-pristine">
+                                <div class="md-form col-9 spread-boxes">
+                                    <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="search"
+                                           class="form-control" aria-invalid="false" ng-change="filterItems(tab.QueryOrder)">
+                                </div>
+                            </form>
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="removeFilter()" aria-label="close">
+                                <md-icon class="material-icons">close</md-icon>
+                                <div class="md-ripple-container"></div>
+                            </button>
+                        </div>
+                    </md-toolbar>
                     <md-table-container>
                         <table md-table md-progress="promise">
                             <thead md-head md-order="tab.QueryOrder" md-on-reorder="pageChangeHandler">
@@ -13,17 +45,17 @@
                                     <th md-column md-order-by="{{column.Name}}" ng-repeat="column in tab.Columns"><span>{{column.Name}}</span></th>
                                 </tr>
                             </thead>
-                            <tbody md-body ng-repeat="config in configData | orderBy: tab.QueryOrder">
+                            <tbody md-body ng-repeat="config in configData | orderBy: tab.QueryOrder" ng-init="sectionIndex = $index">
                                 <tr md-row>
-                                    <td md-cell ng-repeat="column in tab.Columns">
-                                        <dbconfig element-html-name="column.Name" config-data="config" input-type="column.Type"></dbconfig>
-                                        <!--<input type="{{column.Type}}" name="{{column.Name}}" id="{{column.Name}}" class="form-control" ng-model="column.Binding" required />-->
+                                    <td md-cell ng-repeat="column in $parent.tab.Columns">
+                                        <dbconfig element-html-name="column.Name" config-data="config" input-type="column.Type"
+                                                  has-changed="onChange" index="sectionIndex"></dbconfig>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </md-table-container>
-                    <md-table-pagination md-limit="query.limit" md-limit-options="[5, 10, 15]" md-page="query.page" md-total="{{TotalItems}}" md-on-paginate="pageChangeHandler" md-page-select></md-table-pagination>
+                    <md-table-pagination md-limit="pagingModel.PageSize" md-limit-options="[5, 10, 15]" md-page="pagingModel.PageNumber" md-total="{{TotalItems}}" md-on-paginate="onItemLimitChange" md-page-select></md-table-pagination>
                 </div>
             </md-content>
         </md-tab>

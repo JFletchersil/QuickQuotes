@@ -6,7 +6,9 @@
                 elementHtmlName: "<?",
                 binding: "=?",
                 inputType: "<?",
-                configData: "=?"
+                configData: "=?",
+                hasChanged: "=",
+                index: "="
             },
             priority: 1001,
             restrict: "E",

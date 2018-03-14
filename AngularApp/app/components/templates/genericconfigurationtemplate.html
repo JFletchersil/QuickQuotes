@@ -1,9 +1,15 @@
 ﻿<div>
-    <div ng-if="inputType !== 'textarea'">
-        <input type="{{inputType}}" name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control" ng-model="configData[elementHtmlName]" required />
+    <div ng-if="inputType !== 'textarea' && inputType !== 'checkbox'">
+        <input type="{{inputType}}" name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control" ng-model="$parent.configData[elementHtmlName]"
+               ng-change="hasChanged(configData, index)" required aria-label="{{elementHtmlName}}"/>
     </div>
-
+    <div ng-if="inputType === 'checkbox'">
+        <md-checkbox ng-model="$parent.configData[elementHtmlName]" ng-true-value="'true'" ng-false-value="'false'" ng-change="hasChanged(configData, index)"
+                     ng-checked="$parent.configData[elementHtmlName] === 'true' || $parent.configData[elementHtmlName] === true" aria-label="{{elementHtmlName}}">
+        </md-checkbox>
+    </div>
     <div ng-if="inputType === 'textarea'" class="md-form spread-boxes">
-        <textarea name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control fill-area msdElastic" ng-model="configData[elementHtmlName]" required></textarea>
+        <textarea name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control fill-area msdElastic" 
+                  ng-model="$parent.configData[elementHtmlName]" ng-change="hasChanged(configData, index)" required aria-label="{{elementHtmlName}}"></textarea>
     </div>
 </div>

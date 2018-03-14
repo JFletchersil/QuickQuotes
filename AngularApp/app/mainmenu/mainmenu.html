@@ -6,11 +6,12 @@
                 <span class="sr-only">Toggle drawer</span>
                 <i class="material-icons">menu</i>
             </button>
-            <ul class="nav navbar-nav">
-                <li>
-                    <form class="form-inline row">
-                        <i class="mi mi-search col-1"></i>
-                        <md-content layout-padding layout="column" class="col-11">
+            <ul class="nav navbar-nav"></ul>
+            <div class="float-right">
+                <form class="form-inline">
+                    <div class="row">
+                        <i class="mi mi-search col-sm-1 col-1" style="margin-top: 10px;margin-bottom: 15px;"></i>
+                        <div class="col-sm-11 col-12" style="margin-top: 10px; padding-right: 0px; padding-left: 0px;">
                             <md-autocomplete md-selected-item="selectedItem"
                                              md-search-text="searchText"
                                              md-items="item in querySearch(searchText)"
@@ -19,8 +20,8 @@
                                              placeholder="Quote Search"
                                              ng-model-options="{debounce: 1000}"
                                              md-menu-class="autocomplete-custom-template"
-                                             style="margin-top: -10px; width:22em;"
-                                             class="col-12 no-gutters">
+                                             style="margin-top: -10px; width:21em; padding-right: 0px;"
+                                             class="col-sm-12 col-11">
                                 <md-item-template style="margin:5px;">
                                     <div class="col-12 col-sm-4" style="margin-bottom: 5px; margin-top:5px;">
                                         <span class="item-title">
@@ -39,10 +40,10 @@
                                     </div>
                                 </md-item-template>
                             </md-autocomplete>
-                        </md-content>
-                    </form>
-                </li>
-            </ul>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </header>
     <div id="dw-s1" class="bmd-layout-drawer bg-faded hidden-flow" aria-hidden="false">
