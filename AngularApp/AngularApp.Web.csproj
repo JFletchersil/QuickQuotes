@@ -12628,7 +12628,7 @@
     <Content Include="app\bower_components\angular-elastic\bower.json" />
     <Content Include="app\bower_components\angular-elastic\package.json" />
     <Content Include="app\bower_components\angular-elastic\README.md" />
-	<Content Include="app\components\scripts\js\bootstrap-material-design.js.map" />
+    <Content Include="app\components\scripts\js\bootstrap-material-design.js.map" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

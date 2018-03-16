@@ -1,13 +1,23 @@
 "use strict";
 
-angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])    
-    .controller("QuoteQueue", ["$scope", "$http", "$location", "__env", function ($scope, $http, $location, __env) {
+angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])
+    .controller("QuoteQueue", ["$scope", "$http", "$filter", "$location", "$stateParams", "__env", function ($scope, $http, $filter, $location, $stateParams, __env) {
+        $scope.referenceId = $stateParams.quoteReference;
+
         $scope.selected = [];
         $scope.quotes = [];
+        $scope.oldItems = [];
 
         $scope.pagingModel = {
             PageNumber: 1,
             PageSize: 5
+        };
+
+        $scope.filter = {
+            options: {
+                debounce: 500
+            },
+            hasFiltered: false
         };
 
         $scope.query = {
@@ -23,19 +33,53 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
             $scope.TotalSize = returnData.TotalPages;
             $scope.TotalItems = returnData.TotalItems;
             $scope.quotes = returnData.QueueDisplay;
+            if ($scope.referenceId !== undefined) {
+                $scope.filter.show = true;
+                $scope.query.filter = $scope.referenceId;
+                $scope.filterItems();
+            }
         }
 
         $scope.pageChangeHandler = function (newPageNumber) {
-            $scope.pagingModel.PageNumber = newPageNumber;
+            if (!isNaN(newPageNumber)) {
+                $scope.pagingModel.PageNumber = newPageNumber;
+            }
             $scope.promise =
                 $http.post(__env.apiUrl + "/Queue/ShowPaginatedQuotes", $scope.pagingModel).
-                then(function(response) {
-                    success(response.data);
-                });
+                    then(function (response) {
+                        success(response.data);
+                    });
         }
 
+        $scope.removeFilter = function () {
+            if ($scope.filter.hasFiltered) {
+                $scope.filter.show = false;
+                $scope.query.filter = '';
+
+                if ($scope.filter.form.$dirty) {
+                    $scope.filter.form.$setPristine();
+                }
+                $scope.quotes = $scope.oldItems;
+                $scope.oldItems = [];
+            } else {
+                $scope.filter.show = false;
+            }
+        };
+
+        $scope.filterItems = function () {
+            if ($scope.oldItems.length === 0) {
+                $scope.oldItems = $scope.quotes;
+                $scope.quotes = $filter('filter')($scope.quotes, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
+            } else {
+                $scope.quotes = $scope.oldItems;
+                $scope.quotes = $filter('filter')($scope.quotes, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
+            }
+        };
+
         $scope.moveToQuote = function () {
-            $location.path("/hirepurchase/" + $scope.selected[0].QuoteReference);
+            $location.path("/quoteretrieval/" + $scope.selected[0].QuoteType + "/" + $scope.selected[0].QuoteReference);
         }
 
         $scope.splitOnUpper = function (string) {

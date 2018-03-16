@@ -3,8 +3,33 @@
     <br />
     <div class="md-padding" style="background-color:rgb(250,250,250); color: black;">
         <div class="container col-12">
+            <md-toolbar class="md-table-toolbar md-default" style="background-color: transparent !important" ng-hide="filter.show" aria-hidden="false">
+                <div class="md-toolbar-tools">
+                    <h2 class="md-title">{{tab.Label}}</h2>
+                    <div flex="" class="flex"></div>
+                    <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="filter.show = true" aria-label="filter_list">
+                        <md-icon class="material-icons">filter_list</md-icon>
+                    </button>
+                </div>
+            </md-toolbar>
+            <md-toolbar class="md-table-toolbar md-default ng-hide" style="background-color: transparent !important" ng-show="filter.show"
+                        aria-hidden="true">
+                <div class="md-toolbar-tools">
+                    <md-icon class="material-icons">search</md-icon>
+                    <form flex="" name="filter.form" class="ng-valid flex ng-pristine">
+                        <div class="md-form col-9 spread-boxes">
+                            <input type="text" ng-model="query.filter" ng-model-options="filter.options" placeholder="search"
+                                   class="form-control" aria-invalid="false" ng-change="filterItems(tab.QueryOrder)">
+                        </div>
+                    </form>
+                    <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="removeFilter()" aria-label="close">
+                        <md-icon class="material-icons">close</md-icon>
+                        <div class="md-ripple-container"></div>
+                    </button>
+                </div>
+            </md-toolbar>
             <md-table-container>
-                <table md-table md-row-select ng-model="selected" ng-model-options="{ debounce: 1500 }" md-progress="promise">
+                <table md-table md-row-select ng-model="selected" ng-model-options="{ debounce: 1500 }" md-progress="promise" class="table-hover">
                     <thead md-head md-order="query.order" md-on-reorder="pageChangeHandler">
                         <tr md-row>
                             <th md-column md-order-by="QuoteReference"><span>Quote Reference</span></th>
@@ -15,8 +40,8 @@
                         </tr>
                     </thead>
                     <tbody md-body>
-                    <tr md-row md-auto-select md-select="quote" md-select-id="QuoteReference" md-on-select="moveToQuote" 
-                        ng-repeat="quote in quotes | orderBy: query.order">
+                        <tr md-row md-auto-select md-select="quote" md-select-id="QuoteReference" md-on-select="moveToQuote"
+                            ng-repeat="quote in quotes | orderBy: query.order">
                             <td md-cell>{{quote.QuoteReference}}</td>
                             <td md-cell>{{splitOnUpper(quote.QuoteType)}}</td>
                             <td md-cell>{{quote.QuoteStatus}}</td>

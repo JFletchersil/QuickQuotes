@@ -60,6 +60,11 @@ angular.module("quoteTool", [
                 templateUrl: "../quotequeue/quotequeue.html",
                 controller: "QuoteQueue"
             })
+            .state("mainmenu.quotesearch", {
+                url: "^/quotequeue/{quoteReference}",
+                templateUrl: "../quotequeue/quotequeue.html",
+                controller: "QuoteQueue"
+            })
             .state("mainmenu.quoteselection", {
                 url: "^/quoteselection",
                 templateUrl: "../quoteselection/quoteselection.html",
@@ -72,7 +77,7 @@ angular.module("quoteTool", [
             })
             .state("mainmenu.quoteedit",
             {
-                url: "^/hirepurchase/{quoteReference}",
+                url: "^/quoteretrieval/{quoteType}/{quoteReference}",
                 templateUrl: "../quotegeneration/quotegeneration.html",
                 controller: "QuoteGeneration"
             })

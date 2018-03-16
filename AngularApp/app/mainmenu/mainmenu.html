@@ -17,6 +17,7 @@
                                              md-items="item in querySearch(searchText)"
                                              md-item-text="item.QuoteReference"
                                              md-min-length="4"
+                                             md-selected-item-change="selectedItemChanged(item)"
                                              placeholder="Quote Search"
                                              ng-model-options="{debounce: 1000}"
                                              md-menu-class="autocomplete-custom-template"
@@ -32,9 +33,14 @@
                                                 <strong>{{item.QuoteType}}</strong>
                                             </span>
                                         </span>
-                                        <span class="item-metadata">
+                                        <span class="item-metadata" ng-hide="(item.hideLast === true && item.hideLast !== undefined)">
                                             <span>
                                                 <strong>{{item.QuoteReference}}</strong>
+                                            </span>
+                                        </span>
+                                        <span class="item-metadata" ng-show="(item.hideLast === true && item.hideLast !== undefined)">
+                                            <span>
+                                                <strong>Please click here</strong>
                                             </span>
                                         </span>
                                     </div>

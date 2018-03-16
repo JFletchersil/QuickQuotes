@@ -122,7 +122,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
         $scope.filter = {
             options: {
                 debounce: 500
-            }
+            },
+            hasFiltered: false
         };
 
         $scope.oldItems = [];
@@ -209,23 +210,29 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
         }
 
         $scope.removeFilter = function () {
-            $scope.filter.show = false;
-            $scope.query.filter = '';
+            if ($scope.filter.hasFiltered) {
+                $scope.filter.show = false;
+                $scope.query.filter = '';
 
-            if ($scope.filter.form.$dirty) {
-                $scope.filter.form.$setPristine();
+                if ($scope.filter.form.$dirty) {
+                    $scope.filter.form.$setPristine();
+                }
+                $scope.configData = $scope.oldItems;
+                $scope.oldItems = [];
+            } else {
+                $scope.filter.show = false;
             }
-            $scope.configData = $scope.oldItems;
-            $scope.oldItems = {};
         };
 
         $scope.filterItems = function () {
             if ($scope.oldItems.length === 0) {
                 $scope.oldItems = $scope.configData;
                 $scope.configData = $filter('filter')($scope.configData, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
             } else {
                 $scope.configData = $scope.oldItems;
                 $scope.configData = $filter('filter')($scope.configData, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
             }
         };
 

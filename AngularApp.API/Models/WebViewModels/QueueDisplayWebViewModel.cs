@@ -12,6 +12,12 @@ namespace AngularApp.API.Models.WebViewModels
         public string QuoteAuthor { get; set; }
     }
 
+    public class QuickSearchRequest
+    {
+        public int ResultNumber { get; set; }
+        public string SearchText { get; set; }
+    }
+
     public class QueueDisplayWebViewModel
     {
         public string QuoteReference { get; set; }
@@ -28,4 +34,5 @@ namespace AngularApp.API.Models.WebViewModels
         public int TotalPages;
         public int TotalItems { get; set; }
     }
+
 }

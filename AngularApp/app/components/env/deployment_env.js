@@ -3,4 +3,5 @@
     window.__env.apiUrl = "https://quickquotesprojectapi.azurewebsites.net/api";
     window.__env.baseUrl = "/";
     window.__env.enableDebug = false;
+    window.__env.baseSearch = 9;
 }(this));

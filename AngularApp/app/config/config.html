@@ -39,8 +39,8 @@
                         </div>
                     </md-toolbar>
                     <md-table-container>
-                        <table md-table md-progress="promise">
-                            <thead md-head md-order="tab.QueryOrder" md-on-reorder="pageChangeHandler">
+                        <table md-table md-progress="promise" class="table-hover">
+                            <thead md-head md-order="tab.QueryOrder" md-on-reorder="pageChangeHandler" class="thead-light">
                                 <tr md-row>
                                     <th md-column md-order-by="{{column.Name}}" ng-repeat="column in tab.Columns"><span>{{column.Name}}</span></th>
                                 </tr>
@@ -58,67 +58,6 @@
                     <md-table-pagination md-limit="pagingModel.PageSize" md-limit-options="[5, 10, 15]" md-page="pagingModel.PageNumber" md-total="{{TotalItems}}" md-on-paginate="onItemLimitChange" md-page-select></md-table-pagination>
                 </div>
             </md-content>
-        </md-tab>
-        <md-tab>
-            <md-tab-label><md-icon class="material-icons">add</md-icon></md-tab-label>
-            <md-tab-body>
-                <md-content class="md-padding">
-                    <div class="card-body">
-                        <form name="newconfigform" ng-submit="createNewUser()">
-                            <!--<h4 class="card-title">New User</h4>
-                            <div class="row">
-                                <div class="md-form col-9">
-                                    <div class="md-form col-9">
-                                        <input type="text" id="UserName" name="UserName" class="form-control" ng-model="newUserModel.UserName"
-                                               ng-class="{ 'has-error': newuserform.UserName.$dirty && newuserform.UserName.$error.required }" required>
-                                        <label for="UserName">Username</label>
-                                        <span ng-show="newuserform.UserName.$dirty && newuserform.UserName.$error.required"
-                                              class="help-block alert-danger">A Username is Required</span>
-                                    </div>
-                                    <div class="md-form col-9">
-                                        <input type="email" id="Email" name="Email" class="form-control" ng-model="newUserModel.Email"
-                                               ng-class="{ 'has-error': newuserform.Email.$dirty && newuserform.Email.$error.required }" required>
-                                        <label for="Email">Email Address</label>
-                                        <span ng-show="newuserform.Email.$dirty && newuserform.Email.$error.required"
-                                              class="help-block alert-danger">An Email Address is Required</span>
-                                    </div>
-                                    <div class="md-form col-9 checkbox-heading">
-                                        <div class="checkbox" ng-if="(isSuperAdmin)">
-                                            <label>
-                                                <input type="checkbox" ng-model="newUserModel.IsAdministrator"> Is Administrator
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="md-form col-3">
-                                    <div class="md-form">
-                                        <input type="password" id="Password" name="Password" class="form-control" ng-model="newUserModel.Password"
-                                               ng-class="{ 'has-error': newuserform.Password.$dirty && newuserform.Password.$error.required }" required>
-                                        <label for="Password">Password</label>
-                                        <span ng-show="newuserform.Password.$dirty && newuserform.Password.$error.required"
-                                              class="help-block alert-danger">A Password is Required</span>
-                                    </div>
-                                    <div class="md-form">
-                                        <input type="password" id="ConfirmPassword" name="ConfirmPassword" class="form-control" ng-model="newUserModel.ConfirmPassword"
-                                               ng-class="{ 'has-error': ((newuserform.ConfirmPassword.$dirty && newuserform.ConfirmPassword.$error.required) || (newUserModel.Password !== newUserModel.ConfirmPassword))}" required>
-                                        <label for="ConfirmPassword">Confirm Password</label>
-                                        <br />
-                                        <span ng-show="newuserform.ConfirmPassword.$dirty && newuserform.ConfirmPassword.$error.required"
-                                              class="help-block alert-danger">A Confirm Password is Required</span>
-                                        <br />
-                                        <span ng-show="(newUserModel.Password !== newUserModel.ConfirmPassword)"
-                                              class="help-block alert-danger">The confirm password must match the password</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-9"></div>
-                                <button type="submit" class="btn btn-raised btn-primary col-md-3">Create User</button>
-                            </div>-->
-                        </form>
-                    </div>
-                </md-content>
-            </md-tab-body>
         </md-tab>
     </md-tabs>
 </div>

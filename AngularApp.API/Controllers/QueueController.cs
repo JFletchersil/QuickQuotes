@@ -45,10 +45,9 @@ namespace AngularApp.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult ReturnSearchResults(HttpRequestMessage request)
+        public IHttpActionResult ReturnSearchResults(QuickSearchRequest request)
         {
-            var searchText = request.Content.ReadAsStringAsync().Result;
-
+            var searchText = request.SearchText;
             var quoteStatus = _dbContext.QuoteStatuses.ToList();
             var productType = _dbContext.ProductTypes.ToList();
             var quoteType = _dbContext.QuoteTypes.ToList();
@@ -65,7 +64,14 @@ namespace AngularApp.API.Controllers
                                              QuoteReference = x.QuoteReference.ToString(),
                                              QuoteType = quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType
                                          });
-            return Ok(query.ToList());
+            var queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
+            queryList.Add(new QuickSearch
+            {
+                QuoteAuthor = "If you wish to see",
+                QuoteType = "Additional quotes present",
+                QuoteReference = "ExecuteOrder66"
+            });
+            return Ok(queryList);
         }
     }
 }

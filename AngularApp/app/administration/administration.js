@@ -1,7 +1,7 @@
 "use strict";
 
 angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table", "ui.bootstrap"])
-    .controller("Administration", ["$scope", "$http", "UserService", "ModalService", "__env", function ($scope, $http, UserService, ModalService, __env) {
+    .controller("Administration", ["$scope", "$http", "$filter", "UserService", "ModalService", "__env", function ($scope, $http, $filter, UserService, ModalService, __env) {
         $scope.pagingModel = {
             PageNumber: 1,
             PageSize: 5
@@ -12,6 +12,15 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             limit: $scope.pagingModel.PageSize,
             page: $scope.pagingModel.PageNumber
         };
+
+        $scope.filter = {
+            options: {
+                debounce: 500
+            },
+            hasFiltered: false
+        };
+
+        $scope.oldItems = [];
 
         $scope.newUserModel = {
             IsAdministrator: false
@@ -144,5 +153,32 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
                     }
                 });
             });
+        };
+
+        $scope.removeFilter = function () {
+            if ($scope.filter.hasFiltered) {
+                $scope.filter.show = false;
+                $scope.query.filter = '';
+
+                if ($scope.filter.form.$dirty) {
+                    $scope.filter.form.$setPristine();
+                }
+                $scope.users = $scope.oldItems;
+                $scope.oldItems = [];
+            } else {
+                $scope.filter.show = false;
+            }
+        };
+
+        $scope.filterItems = function () {
+            if ($scope.oldItems.length === 0) {
+                $scope.oldItems = $scope.users;
+                $scope.users = $filter('filter')($scope.users, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
+            } else {
+                $scope.users = $scope.oldItems;
+                $scope.users = $filter('filter')($scope.users, $scope.query.filter)
+                $scope.filter.hasFiltered = true;
+            }
         };
     }]);
