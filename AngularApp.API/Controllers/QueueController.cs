@@ -39,31 +39,33 @@ namespace AngularApp.API.Controllers
             };
         }
 
-        private bool TestFunction(string str1, string str2)
+        [HttpPost]
+        public IHttpActionResult SearchQueueSearchResults(QuickSearchRequest request)
         {
-            return str1 != null && str1.ToUpper().Contains(str2.ToUpper());
+            var quotes = SearchQueryFiltering(request.SearchText);
+            var returnItems = quotes.Select(x => new QueueDisplayWebViewModel()
+            {
+                QuoteReference = x.QuoteReference.ToString(),
+                QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
+                QuoteAuthor = x.QuoteAuthor,
+                QuoteDate = x.QuoteDate,
+                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.TypeID == x.QuoteType)?.IncQuoteType
+            });
+            return Ok(returnItems);
         }
 
         [HttpPost]
         public IHttpActionResult ReturnSearchResults(QuickSearchRequest request)
         {
-            var searchText = request.SearchText;
-            var quoteStatus = _dbContext.QuoteStatuses.ToList();
-            var productType = _dbContext.ProductTypes.ToList();
             var quoteType = _dbContext.QuoteTypes.ToList();
 
-            var query = _dbContext.Quotes.ToList().Where(x => TestFunction(x.QuoteAuthor, searchText) ||
-                                                     TestFunction(x.QuoteReference.ToString(), searchText) ||
-                                                     TestFunction(x.QuoteAuthor, searchText) ||
-                                                     TestFunction(quoteStatus.FirstOrDefault(y => y.StatusID == x.QuoteStatus && y.Enabled).State, searchText) ||
-                                                     TestFunction(productType.FirstOrDefault(y => y.ProductTypeID == x.ProductType && y.Enabled).IncProductType, searchText) ||
-                                                     TestFunction(quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType, searchText))
-                                         .Select(x => new QuickSearch
-                                         {
-                                             QuoteAuthor = x.QuoteAuthor,
-                                             QuoteReference = x.QuoteReference.ToString(),
-                                             QuoteType = quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType
-                                         });
+            var query = SearchQueryFiltering(request.SearchText).Select(x => new QuickSearch
+            {
+                QuoteAuthor = x.QuoteAuthor,
+                QuoteReference = x.QuoteReference.ToString(),
+                QuoteType = quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType
+            });
+
             var queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
             queryList.Add(new QuickSearch
             {
@@ -73,5 +75,26 @@ namespace AngularApp.API.Controllers
             });
             return Ok(queryList);
         }
+
+        private List<Quote> SearchQueryFiltering(string searchText)
+        {
+            var quoteStatus = _dbContext.QuoteStatuses.ToList();
+            var productType = _dbContext.ProductTypes.ToList();
+            var quoteType = _dbContext.QuoteTypes.ToList();
+
+            var query = _dbContext.Quotes.ToList().Where(x => TestFunction(x.QuoteAuthor, searchText) ||
+                                                     TestFunction(x.QuoteReference.ToString(), searchText) ||
+                                                     TestFunction(x.QuoteAuthor, searchText) ||
+                                                     TestFunction(quoteStatus.FirstOrDefault(y => y.StatusID == x.QuoteStatus && y.Enabled).State, searchText) ||
+                                                     TestFunction(productType.FirstOrDefault(y => y.ProductTypeID == x.ProductType && y.Enabled).IncProductType, searchText) ||
+                                                     TestFunction(quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType, searchText)).ToList();
+            return query;
+        }
+
+        private bool TestFunction(string str1, string str2)
+        {
+            return str1 != null && str1.ToUpper().Contains(str2.ToUpper());
+        }
+
     }
 }

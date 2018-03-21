@@ -7,6 +7,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
         $scope.selected = [];
         $scope.quotes = [];
         $scope.oldItems = [];
+        $scope.searchData = [];
 
         $scope.pagingModel = {
             PageNumber: 1,
@@ -40,6 +41,17 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
             }
         }
 
+        $scope.generalSearch = function (searchTerm) {
+            var searchModel = {
+                SearchText: searchTerm,
+                ResultNumber: __env.baseSearch
+            }
+            $http.post(__env.apiUrl + "/Queue/SearchQueueSearchResults", searchModel).
+                then(function (response) {
+                    $scope.quotes = response.data;
+                });
+        }
+
         $scope.pageChangeHandler = function (newPageNumber) {
             if (!isNaN(newPageNumber)) {
                 $scope.pagingModel.PageNumber = newPageNumber;
@@ -49,6 +61,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
                     then(function (response) {
                         success(response.data);
                     });
+
         }
 
         $scope.removeFilter = function () {
@@ -75,6 +88,10 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
                 $scope.quotes = $scope.oldItems;
                 $scope.quotes = $filter('filter')($scope.quotes, $scope.query.filter)
                 $scope.filter.hasFiltered = true;
+            }
+
+            if ($scope.quotes.length === 0) {
+                $scope.generalSearch($scope.query.filter);
             }
         };
 
