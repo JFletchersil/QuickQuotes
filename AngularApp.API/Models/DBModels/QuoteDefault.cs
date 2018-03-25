@@ -21,6 +21,6 @@ namespace AngularApp.API.Models.DBModels
         public string TotalRepayableTemplate { get; set; }
         public string MonthlyRepayableTemplate { get; set; }
     
-        public virtual QuoteType QuoteType { get; set; }
+        public virtual QuoteType QuoteTypeID { get; set; }
     }
 }

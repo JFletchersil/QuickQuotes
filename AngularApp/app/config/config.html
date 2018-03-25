@@ -3,20 +3,20 @@
     <p class="lead">Select the quote type that you wish to generate a quote for.</p>
     <br />
     <md-tabs md-dynamic-height="" md-border-bottom="">
-        <md-tab label="{{tab.Label}}" md-on-select="onTabSelected($index, tab.OnSelect)" ng-repeat="tab in tabs track by $index">
+        <md-tab label="{{tab.Label}}" md-on-select="onTabSelected($index, tab.OnSelect)" ng-repeat="tab in tabs track by $index" ng-disabled="tab.Disabled">
             <md-content class="md-padding">
                 <div class="container col-12">
                     <md-toolbar class="md-table-toolbar md-default" style="background-color: transparent !important" ng-hide="filter.show" aria-hidden="false">
                         <div class="md-toolbar-tools">
                             <h2 class="md-title">{{tab.Label}}</h2>
                             <div flex="" class="flex"></div>
-                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="filter.show = true" aria-label="filter_list">
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="activateFilter()" aria-label="filter_list">
                                 <md-icon class="material-icons">filter_list</md-icon>
                             </button>
-                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="addItem($event)" aria-label="add">
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="addItem($event)" aria-label="add" ng-disabled="tab.Disabled">
                                 <md-icon class="material-icons">add</md-icon>
                             </button>
-                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="saveUpdatedValues(tab.OnSelect)"
+                            <button class="md-icon-button md-button md-ink-ripple" type="button" ng-click="saveUpdatedValues(tab.OnSelect)" ng-disabled="tab.Disabled"
                                     ng-hide="!(hasNewItemOrUpdate)" aria-label="save">
                                 <md-icon class="material-icons md-light">save</md-icon>
                             </button>
@@ -55,7 +55,7 @@
                             </tbody>
                         </table>
                     </md-table-container>
-                    <md-table-pagination md-limit="pagingModel.PageSize" md-limit-options="[5, 10, 15]" md-page="pagingModel.PageNumber" md-total="{{TotalItems}}" md-on-paginate="onItemLimitChange" md-page-select></md-table-pagination>
+                    <md-table-pagination md-limit="pagingModel.PageSize" md-limit-options="[5, 10, 15]" md-page="pagingModel.PageNumber" md-total="{{TotalItems}}" ng-disabled="filter.show" md-on-paginate="pageChangeHandler" md-page-select></md-table-pagination>
                 </div>
             </md-content>
         </md-tab>

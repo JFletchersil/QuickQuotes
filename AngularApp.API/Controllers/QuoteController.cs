@@ -16,6 +16,8 @@ using AngularApp.API.Models.WebViewModels;
 using Microsoft.Ajax.Utilities;
 using Newtonsoft.Json.Linq;
 using PetaPoco;
+using AutoMapper;
+using System.Web.Configuration;
 
 namespace AngularApp.API.Controllers
 {
@@ -35,39 +37,57 @@ namespace AngularApp.API.Controllers
         public List<ElementConfigurationWebViewModel> GetElementConfiguration(string quoteType)
         {
             var configuration = _dbContext.QuoteDefaults.FirstOrDefault(x =>
-                x.TypeID == _dbContext.QuoteTypes.FirstOrDefault(y => y.IncQuoteType == quoteType).TypeID);
+                x.TypeID == _dbContext.QuoteTypes.FirstOrDefault(y => y.IncQuoteType == quoteType).QuoteTypeID);
 
             return configuration != null ?
                 JsonConvert.DeserializeObject<List<ElementConfigurationWebViewModel>>(configuration.ElementDescription) : null;
         }
 
         [HttpPost]
-        public QuotationResultWebViewModel CalculateQuote(HttpRequestMessage request)
+        public async System.Threading.Tasks.Task<QuotationResultWebViewModel> CalculateQuoteAsync(HttpRequestMessage request)
         {
             var dataText = request.Content.ReadAsStringAsync().Result;
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataText);
             var objType = JsonConvert.DeserializeObject<JObject>(dataText).GetValue("Type").Value<string>();
-            var quoteDefaults = _dbContext.QuoteDefaults.FirstOrDefault(x => x.QuoteType.IncQuoteType == objType);
+            var quoteDefaults = _dbContext.QuoteDefaults.FirstOrDefault(x => x.QuoteTypeID.IncQuoteType == objType);
             var interestRate = 5d;
-            //var retVal = PopularDefaultsWithString(dict, quoteDefaults.XMLTemplate);
-            //var quoteGenerationModel = JsonConvert.DeserializeObject<PersonalLoanWebViewModel>(dataText);
             dict.Add("InterestRate", "5");
+
+
+            if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CommissionCalculatorCall"]))
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // TODO - Requires more information about how the ComissionCalculator Works, as well as conversion methods.
+                    var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CommissionCalculatorCall"]);
+                    var returnRequest = await client.SendAsync(httpRequest);
+                    var returnValue = returnRequest.Content.ReadAsStringAsync().Result;
+                    dict.Add("ComissionValue", "500");
+                }
+            }
+
+            if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CalculatorAPICall"]))
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    // TODO - Requires more information about how the Calculator Works, as well as conversion methods, but basically done except for transformation function
+                    var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CalculatorAPICall"]);
+                    return Mapper.Map<QuotationResultWebViewModel>(await client.SendAsync(httpRequest));
+                }
+            }
+
             var retVal = PopularDefaultsWithString(dict, quoteDefaults.TotalRepayableTemplate);
-
-
             var totalRepayable = Convert.ToDecimal(new DataTable().Compute(retVal, null));
-
 
             return new QuotationResultWebViewModel()
             {
                 Fees = 50.00m,
                 InterestRate = interestRate,
-                MonthlyRepayable = (totalRepayable / Convert.ToDecimal(dict["TermInMonths"])),
-                TotalRepayable = totalRepayable
+                MonthlyRepayable = Math.Round((totalRepayable / Convert.ToDecimal(dict["TermInMonths"])), 2),
+                TotalRepayable = Math.Round(totalRepayable, 2)
             };
         }
 
-        // TODO - We need to make a generic view model that can handle all the finance types.
         [HttpPost]
         public IHttpActionResult SaveQuote(QuotationSaveWebViewModels saveModel)
         {
@@ -79,7 +99,7 @@ namespace AngularApp.API.Controllers
             var quoteType = _dbContext.QuoteTypes.ToList()
                 .FirstOrDefault(x => x.IncQuoteType != null && string.Equals(x.IncQuoteType, saveModel.QuoteId,
                                          StringComparison.CurrentCultureIgnoreCase));
-            var quoteTypeId = quoteType?.TypeID;
+            var quoteTypeId = quoteType?.QuoteTypeID;
 
             var quoteGuid = Guid.NewGuid();
             _dbContext.Quotes.Add(new Quote()
@@ -117,7 +137,7 @@ namespace AngularApp.API.Controllers
 
             if (quote == null) return InternalServerError(new Exception("Unable to Perform Table Operations"));
             {
-                var quoteResult = _dbContext.QuoteTypes.FirstOrDefault(x => x.TypeID == quote.QuoteType);
+                var quoteResult = _dbContext.QuoteTypes.FirstOrDefault(x => x.QuoteTypeID == quote.QuoteType);
 
                 var returnResult = new QuotationSaveWebViewModels
                 {

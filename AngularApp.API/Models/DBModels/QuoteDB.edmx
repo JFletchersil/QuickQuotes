@@ -235,7 +235,7 @@
           <Property Name="ElementDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="XMLTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="QuoteType" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteDefaults" ToRole="QuoteTypes" />
+          <NavigationProperty Name="QuoteTypeID" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteDefaults" ToRole="QuoteTypes" />
           <Property Name="TotalRepayableTemplate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MonthlyRepayableTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
@@ -266,9 +266,9 @@
         </EntityType>
         <EntityType Name="QuoteType">
           <Key>
-            <PropertyRef Name="TypeID" />
+            <PropertyRef Name="QuoteTypeID" />
           </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="QuoteTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IncQuoteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="ProductParentID" Type="Int32" Nullable="false" />
           <Property Name="Enabled" Type="Boolean" Nullable="false" />
@@ -329,7 +329,7 @@
           <End Role="QuoteDefaults" Type="Self.QuoteDefault" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="QuoteTypes">
-              <PropertyRef Name="TypeID" />
+              <PropertyRef Name="QuoteTypeID" />
             </Principal>
             <Dependent Role="QuoteDefaults">
               <PropertyRef Name="TypeID" />
@@ -353,7 +353,7 @@
           <End Role="Quotes" Type="Self.Quote" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="QuoteTypes">
-              <PropertyRef Name="TypeID" />
+              <PropertyRef Name="QuoteTypeID" />
             </Principal>
             <Dependent Role="Quotes">
               <PropertyRef Name="QuoteType" />
@@ -469,7 +469,7 @@
           <EntitySetMapping Name="QuoteTypes">
             <EntityTypeMapping TypeName="QuoteDBModel.QuoteType">
               <MappingFragment StoreEntitySet="QuoteTypes">
-                <ScalarProperty Name="TypeID" ColumnName="TypeID" />
+                <ScalarProperty Name="QuoteTypeID" ColumnName="TypeID" />
                 <ScalarProperty Name="IncQuoteType" ColumnName="QuoteType" />
                 <ScalarProperty Name="ProductParentID" ColumnName="ProductParentID" />
                 <ScalarProperty Name="Enabled" ColumnName="Enabled" />

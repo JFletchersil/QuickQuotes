@@ -20,7 +20,7 @@ namespace AngularApp.API.Models.DBModels
             this.Quotes = new HashSet<Quote>();
         }
     
-        public int TypeID { get; set; }
+        public int QuoteTypeID { get; set; }
         public string IncQuoteType { get; set; }
         public int ProductParentID { get; set; }
         public bool Enabled { get; set; }

@@ -314,7 +314,7 @@
     <Compile Include="Models\DBModels\IdentityModels.cs" />
     <Compile Include="Models\WebViewModels\ManageViewModels.cs" />
     <Compile Include="Models\PetaPoco.cs" />
-    <Compile Include="Models\WebViewModels\PagingParameterWebViewModel.cs" />
+    <Compile Include="Models\WebViewModels\PagingParameterWebViewModels.cs" />
     <Compile Include="Models\WebViewModels\QueueDisplayWebViewModel.cs" />
     <Compile Include="Models\WebViewModels\QuotationDetailWebViewModels.cs" />
     <Compile Include="Models\WebViewModels\QuotationResultsWebViewModel.cs" />

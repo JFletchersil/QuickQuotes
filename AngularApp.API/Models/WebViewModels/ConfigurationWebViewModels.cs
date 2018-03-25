@@ -54,4 +54,10 @@ namespace AngularApp.API.Models.WebViewModels
         public string ConfigType { get; set; }
         public List<JObject> ConfigsToBeSaved { get; set; }
     }
+
+    public class DefaultConfigurationSearchWebViewModel
+    {
+        public string ConfigType { get; set; }
+        public string FilterText { get; set; }
+    }
 }

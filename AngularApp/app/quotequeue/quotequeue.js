@@ -42,19 +42,15 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
         }
 
         $scope.generalSearch = function (searchTerm) {
-            var searchModel = {
-                SearchText: searchTerm,
-                ResultNumber: __env.baseSearch
-            }
-            $http.post(__env.apiUrl + "/Queue/SearchQueueSearchResults", searchModel).
+            $http.post(__env.apiUrl + "/Queue/SearchQueueSearchResults", searchTerm).
                 then(function (response) {
                     $scope.quotes = response.data;
                 });
         }
 
         $scope.pageChangeHandler = function (newPageNumber) {
-            if (!isNaN(newPageNumber)) {
-                $scope.pagingModel.PageNumber = newPageNumber;
+            if (isNaN(newPageNumber)) {
+                $scope.pagingModel.OrderBy = newPageNumber;
             }
             $scope.promise =
                 $http.post(__env.apiUrl + "/Queue/ShowPaginatedQuotes", $scope.pagingModel).
@@ -77,23 +73,28 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
             } else {
                 $scope.filter.show = false;
             }
+
+            $scope.filter.hasFiltered = false;
         };
 
         $scope.filterItems = function () {
             if ($scope.oldItems.length === 0) {
                 $scope.oldItems = $scope.quotes;
                 $scope.quotes = $filter('filter')($scope.quotes, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
             } else {
                 $scope.quotes = $scope.oldItems;
                 $scope.quotes = $filter('filter')($scope.quotes, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
             }
 
             if ($scope.quotes.length === 0) {
                 $scope.generalSearch($scope.query.filter);
             }
         };
+
+        $scope.activateFilter = function () {
+            $scope.filter.show = true;
+            $scope.filter.hasFiltered = true;
+        }
 
         $scope.moveToQuote = function () {
             $location.path("/quoteretrieval/" + $scope.selected[0].QuoteType + "/" + $scope.selected[0].QuoteReference);

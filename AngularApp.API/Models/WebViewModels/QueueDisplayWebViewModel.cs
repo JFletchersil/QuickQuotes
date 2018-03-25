@@ -34,5 +34,4 @@ namespace AngularApp.API.Models.WebViewModels
         public int TotalPages;
         public int TotalItems { get; set; }
     }
-
 }

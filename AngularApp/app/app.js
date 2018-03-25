@@ -20,6 +20,7 @@ angular.module("quoteTool", [
     "monospaced.elastic",
     "GInputDirective",
     "GConfigDirective",
+    "MinMaxDirective",
     "User",
     "quoteTool.login",
     "quoteTool.mainmenu",

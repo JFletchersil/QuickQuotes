@@ -115,4 +115,10 @@ namespace AngularApp.API.Models.WebViewModels
         [Display(Name = "Email")]
         public string Email { get; set; }
     }
+
+    public class SearchAccounthWebViewModel
+    {
+        public string FilterTerm { get; set; }
+        public bool ReturnAll { get; set; }
+    }
 }

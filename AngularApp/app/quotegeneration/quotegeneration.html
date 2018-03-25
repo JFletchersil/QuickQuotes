@@ -1,57 +1,4 @@
 <h2 class="display-3">{{splitOnUpper(quoteID)}}</h2>
-<!--<div class="card">
-    <div class="card-body">
-        <form name="hirepurchaseform" ng-submit="submitForm()" style="margin-bottom:0px;">
-            <div class="row">
-                <h4 class="card-title col-sm-6">Purchase Details</h4>
-                <h4 class="card-title col-sm-6">Quotation Results</h4>
-            </div>
-            <div class="row">
-                <div class="md-form col-sm-6 col-12 card-body">
-                    <div class="md-form col-sm-6 col-12" ng-repeat="element in elements track by $index">
-                        <dbinput element-html-name="element.ElementName" label="element.LabelName"
-                                 form="hirepurchaseform" binding="element.Value" warning-label="element.WarningLabel" description="element.ElementDescription"></dbinput>
-                    </div>
-                </div>
-                <div class="md-form col-sm-6 col-12 card-body">
-                    <div class="row mt-0 mt-sm-4">
-                        <div class="md-form col-sm-6 col-12">
-                            <label for="form1">Monthly Amount:</label>
-                            <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.MonthlyRepayable}}</label>
-                        </div>
-                        <div class="md-form col-sm-6 col-12">
-                            <label for="form1">Total Repayable:</label>
-                            <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.TotalRepayable}}</label>
-                        </div>
-                    </div>
-                    <div class="row mt-0 mt-sm-4">
-                        <div class="md-form col-sm-6 col-12">
-                            <label for="form1">Fees:</label>
-                            <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.Fees}}</label>
-                        </div>
-                        <div class="md-form col-sm-6 col-12">
-                            <label for="form1">Interest Rate:</label>
-                            <label class="label label-left col-sm-5 col-12 no-x-padding">{{quotationResult.InterestRate}} %</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-9"></div>
-                <button type="submit" class="btn btn-raised btn-primary col-md-3 box-one ml-2 mr-2 mr-sm-0 ml-sm-0" ng-hide="!(hirepurchaseform.$valid && hasChangedQuoteDetails)"
-                        ng-disabled="hirepurchaseform.$invalid">
-                    Save
-                </button>
-                <div class="col-9"></div>
-                <button type="button" class="btn btn-raised btn-secondary col-md-3 box-one ml-2 mr-2 mr-sm-0 ml-sm-0" ng-hide="(hasChangedQuoteDetails)"
-                        ng-disabled="hirepurchaseform.$invalid" ng-click="generateQuote()">
-                    Generate
-                </button>
-            </div>
-        </form>
-    </div>
-</div>-->
-
 <div class="row no-x-margin">
     <div class="card col-12 col-sm mt-2 mt-sm-4 mr-sm-2">
         <div class="card-body">
@@ -61,45 +8,69 @@
                     <dbinput element-html-name="element.ElementName" label="element.LabelName"
                              form="hirepurchaseform" binding="element.Value" warning-label="element.WarningLabel" description="element.ElementDescription"></dbinput>
                 </div>
+                <div class="row">
+                    <div class="col-9"></div>
+                    <button type="submit" class="btn btn-raised btn-primary col-md-3 box-one ml-2 mr-2 mr-sm-0 ml-sm-0" ng-hide="!(hirepurchaseform.$valid && hasChangedQuoteDetails)"
+                            ng-disabled="hirepurchaseform.$invalid">
+                        Save
+                    </button>
+                    <div class="col-9"></div>
+                    <button type="button" class="btn btn-raised btn-secondary col-md-3 box-one ml-2 mr-2 mr-sm-0 ml-sm-0" ng-hide="(hasChangedQuoteDetails)"
+                            ng-disabled="hirepurchaseform.$invalid" ng-click="generateQuote()">
+                        Generate
+                    </button>
+                </div>
             </form>
         </div>
     </div>
     <div class="card col-12 col-sm mt-2 mt-sm-4 ml-sm-2">
         <div class="card-body">
-            <h4 class="card-title">Quotation Results</h4>
-            <div class="row mt-0 mt-sm-5">
-                <div class="md-form col-sm-6 col-12">
-                    <label for="form1">Monthly Amount:</label>
-                    <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.MonthlyRepayable}}</label>
-                </div>
-                <div class="md-form col-sm-6 col-12">
-                    <label for="form1">Total Repayable:</label>
-                    <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.TotalRepayable}}</label>
-                </div>
+            <h4 class="card-title mb-4">Payment Schedules</h4>
+            <div class="md-form col-12 mt-2 pl-0">
+                <h5 class="card-subtitle mb-1 text-muted">
+                    Monthly Term
+                </h5>
+                <p class="label label-left col-12 no-x-padding card-text mb-1 ml-2">
+                    You have {{quotationDetails.TermInMonths - 1}} Regular Monthly Payments
+                </p>
             </div>
-            <div class="row mt-0 mt-sm-4">
-                <div class="md-form col-sm-6 col-12">
-                    <label for="form1">Fees:</label>
-                    <label class="label label-left col-sm-5 col-12 no-x-padding">&pound;     {{quotationResult.Fees}}</label>
-                </div>
-                <div class="md-form col-sm-6 col-12">
-                    <label for="form1">Interest Rate:</label>
-                    <label class="label label-left col-sm-5 col-12 no-x-padding">{{quotationResult.InterestRate}} %</label>
-                </div>
+            <div class="md-form col-12 mt-2 pl-0">
+                <h5 class="card-subtitle mb-1 text-muted">
+                    Monthly Payments
+                </h5>
+                <p class="label label-left col-12 no-x-padding card-text mb-1 ml-2">
+                    You pay &pound;{{quotationResult.MonthlyRepayable}} each month
+                </p>
+            </div>
+            <div class="md-form col-12 mt-2 pl-0">
+                <h5 class="card-subtitle mb-1 text-muted">
+                    Total Repayable
+                </h5>
+                <p class="label label-left col-12 no-x-padding card-text mb-1 ml-2">
+                    In total you will pay &pound;{{quotationResult.TotalRepayable + quotationDetails.Deposit}}
+                </p>
+            </div>
+            <div class="md-form col-12 mt-2 pl-0">
+                <h5 class="card-subtitle mb-1 text-muted">
+                    Fees
+                </h5>
+                <p class="label label-left col-12 no-x-padding card-text mb-1 ml-2">
+                    An additional fee of &pound;{{quotationResult.Fees}} is included in the price
+                </p>
+            </div>
+            <div class="md-form col-12 mt-2 pl-0">
+                <h5 class="card-subtitle mb-1 text-muted">
+                    Final Monthly Payment
+                </h5>
+                <p class="label label-left col-12 no-x-padding card-text mb-1 ml-2">
+                    You will pay &pound;{{quotationResult.MonthlyRepayable + quotationResult.Fees}} on the last month
+                </p>
             </div>
         </div>
     </div>
 </div>
 
 <div class="row no-x-margin">
-    <div class="card col-12 col-sm mt-2 mt-sm-4 mr-sm-2">
-        <div class="card-body">
-            <h4 class="card-title">Payment Schedules</h4>
-            <div>
-                Insert Schedules Here
-            </div>
-        </div>
-    </div>
     <div class="card col-12 col-sm mt-2 mt-sm-4 ml-sm-2">
         <div class="card-body">
             <h4 class="card-title">Quotation Options</h4>

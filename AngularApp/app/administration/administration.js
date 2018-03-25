@@ -31,7 +31,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         $scope.isSuperAdmin = UserService.getItem().isSuperAdmin;
         $scope.isAdmin = UserService.getItem().isAdmin;
 
-        $scope.tabs = ($scope.isSuperAdmin) ? [1, 2] : [1];
+        $scope.tabs = ($scope.isSuperAdmin) ? [{ Disabled: false }, { Disabled: false }] : [{ Disabled: false }];
         $scope.tabLabels = ["Administrators", "Users"];
 
         $scope.selected = {};
@@ -44,8 +44,20 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             $scope.users = returnData.QueueDisplay;
         }
 
+        $scope.generalSearch = function (searchTerm) {
+            var searchModel = {
+                FilterTerm: searchTerm,
+                ReturnAll: $scope.pagingModel.ReturnAll
+            };
+            $http.post(__env.apiUrl + "/Account/ReturnAllUsersAtLevelForSearch", searchModel).
+                then(function (response) {
+                    $scope.users = response.data;
+                });
+        }
+
         $scope.pageChangeHandler = function (newPageNumber) {
-            $scope.pagingModel.PageNumber = newPageNumber;
+            if (isNaN(newPageNumber))
+                $scope.pagingModel.OrderBy = newPageNumber;
             $scope.promise =
                 $http.post(__env.apiUrl + "/Account/ReturnAllUsers", $scope.pagingModel).
                     then(function (response) {
@@ -71,6 +83,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         }
 
         $scope.onTabSelected = function (tabSelected) {
+            $scope.tabNumber = tabSelected;
             $scope.pagingModel.ReturnAll = tabSelected === 0;
             $scope.pageChangeHandler(1);
         }
@@ -126,7 +139,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
         };
 
         $scope.onDeleteUser = function () {
-            $http.post("http://localhost:8080/api/Account/DeleteUser", { Guid: $scope.selected.Guid, IsDeleting: true }).then(
+            $http.post(__env.apiUrl + "/Account/DeleteUser", { Guid: $scope.selected.Guid, IsDeleting: true }).then(
                 function (response) {
                 })
                 .catch(function (error) {
@@ -141,7 +154,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
                     if (result.UserName === undefined || result.EmailAddress === undefined || result.Password === undefined || result.ConfirmPassword === undefined) {
                         alert("No changes saved");
                     } else {
-                        $http.post("http://localhost:8080/api/Account/CloneUser", {
+                        $http.post(__env.apiUrl + "/Account/CloneUser", {
                             Guid: $scope.selected.Guid, UserName: result.UserName, EmailAddress: result.EmailAddress,
                             Password: result.Password, ConfirmPassword: result.ConfirmPassword
                         })
@@ -168,17 +181,41 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             } else {
                 $scope.filter.show = false;
             }
+
+            if ($scope.isSuperAdmin || $scope.isAdmin) {
+                if ($scope.tabNumber === 0) {
+                    $scope.tabs[1].Disabled = false;
+                } else {
+                    $scope.tabs[0].Disabled = false;
+                }
+            }
+
+            $scope.filter.hasFiltered = false;
         };
 
         $scope.filterItems = function () {
             if ($scope.oldItems.length === 0) {
                 $scope.oldItems = $scope.users;
                 $scope.users = $filter('filter')($scope.users, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
             } else {
                 $scope.users = $scope.oldItems;
                 $scope.users = $filter('filter')($scope.users, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
+            }
+
+            if ($scope.users.length === 0) {
+                $scope.generalSearch($scope.query.filter);
             }
         };
+
+        $scope.activateFilter = function () {
+            $scope.filter.show = true;
+            if ($scope.isSuperAdmin || $scope.isAdmin) {
+                if ($scope.tabNumber === 0) {
+                    $scope.tabs[1].Disabled = true;
+                } else {
+                    $scope.tabs[0].Disabled = true;
+                }
+            }
+            $scope.filter.hasFiltered = true;
+        }
     }]);

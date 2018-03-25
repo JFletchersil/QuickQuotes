@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Configuration;
@@ -70,17 +71,27 @@ namespace AngularApp.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult ReturnAllUsers(PagingParameterWebViewModel parameterWebView)
+        public IHttpActionResult ReturnAllUsers(AccountPagingParameterWebViewModel parameterWebView)
         {
             var users = _repo.GetAllUsers();
 
-            var totalPages = (int)Math.Ceiling(users.Count() / (double)parameterWebView.PageSize);
-            var pagedQuotes = users.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
+            if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
+            {
+                if (parameterWebView.OrderBy.Contains("-"))
+                {
+                    users.OrderByDescending(x => x.GetType().GetProperty(parameterWebView.OrderBy.Split('-')[1]));
+                }
+                else
+                {
+                    users.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
+                }
+            }
+            var pagedQuotes = !parameterWebView.ReturnAll ?
+                users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
+                users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
 
-            pagedQuotes = !parameterWebView.ReturnAll ?
-                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
-                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
-
+            var totalPages = (int)Math.Ceiling(pagedQuotes.Count() / (double)parameterWebView.PageSize);
+            pagedQuotes = pagedQuotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
 
             var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
             {
@@ -96,8 +107,18 @@ namespace AngularApp.API.Controllers
             {
                 QueueDisplay = returnItems,
                 TotalPages = totalPages,
-                TotalItems = users.Count
+                TotalItems = pagedQuotes.Count
             });
+        }
+
+        [HttpPost]
+        public IHttpActionResult ReturnAllUsersAtLevelForSearch(SearchAccounthWebViewModel viewModel)
+        {
+            var users = _repo.GetAllUsers();
+            var returnItems = ConvertToWebViewModel(users, viewModel.ReturnAll);
+            var returnItem = returnItems.Where(x => TestFunction(x.UserName, viewModel.FilterTerm) || TestFunction(x.EmailAddress, viewModel.FilterTerm) ||
+                                                    TestFunction(x.Guid, viewModel.FilterTerm) || TestFunction(x.PhoneNumber, viewModel.FilterTerm)).ToList();
+            return Ok(returnItem);
         }
 
         [HttpPost]
@@ -206,6 +227,32 @@ namespace AngularApp.API.Controllers
             }
 
             return null;
+        }
+
+        private List<QueueUserWebViewModel> ConvertToWebViewModel(List<IdentityUser> pagedQuotes, bool returnAll)
+        {
+            pagedQuotes = !returnAll ?
+                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
+                pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
+
+
+            var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
+            {
+                Guid = x.Id,
+                UserName = x.UserName,
+                AccountLocked = !x.LockoutEndDateUtc.HasValue,
+                EmailAddress = x.Email,
+                PhoneNumber = string.IsNullOrEmpty(x.PhoneNumber) ? "00000 000000" : x.PhoneNumber,
+                EmailConfirmed = x.EmailConfirmed,
+                IsAdmin = x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"] || y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])
+            }).ToList();
+
+            return returnItems;
+        }
+
+        private bool TestFunction(string str1, string str2)
+        {
+            return str1 != null && str1.ToUpper().Contains(str2.ToUpper());
         }
     }
 }

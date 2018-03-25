@@ -12,9 +12,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             page: $scope.pagingModel.PageNumber
         };
 
-        $scope.tabs = {
-            QuoteDefaults:
-            {
+        $scope.tabs = [{
                 Label: "Quote Defaults",
                 OnSelect: "QuoteDefaults",
                 QueryOrder: "ElementDescription",
@@ -29,7 +27,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                         Name: "ElementDescription",
                         Binding: "configData.ElementDescription",
                         Type: "textarea"
-                    }, 
+                    },
                     ElementThree: {
                         Name: "XMLTemplate",
                         Binding: "configData.XMLTemplate",
@@ -39,20 +37,20 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                         Name: "TotalRepayableTemplate",
                         Binding: "configData.TotalRepayableTemplate",
                         Type: "textarea"
-                    }, 
+                    },
                     ElementFive: {
                         Name: "MonthlyRepayableTemplate",
                         Binding: "configData.MonthlyRepayableTemplate",
                         Type: "textarea"
-                    }, 
+                    },
                     ElementSix: {
                         Name: "Enabled",
                         Binding: "configData.Enabled",
                         Type: "checkbox"
                     }
-                }
+                },
+                Disabled: false
             },
-            QuoteStatuses:
             {
                 Label: "Quote Statuses",
                 OnSelect: "QuoteStatuses",
@@ -68,9 +66,9 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                         Binding: "configData.Enabled",
                         Type: "checkbox"
                     }
-                }
+                },
+                Disabled: false
             },
-            QuoteTypes:
             {
                 Label: "Quote Types",
                 OnSelect: "QuoteTypes",
@@ -97,9 +95,9 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                         Binding: "configData.Enabled",
                         Type: "checkbox"
                     }
-                }
+                },
+                Disabled: false
             },
-            ProductTypes:
             {
                 Label: "Product Types",
                 OnSelect: "ProductTypes",
@@ -115,9 +113,10 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                         Binding: "configData.Enabled",
                         Type: "checkbox"
                     }
-                }
+                },
+                Disabled: false
             }
-        }
+        ]
 
         $scope.filter = {
             options: {
@@ -142,8 +141,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
         }
 
         $scope.pageChangeHandler = function (newPageNumber, configurationType, newLimit) {
-            if (!isNaN(newPageNumber))
-                $scope.pagingModel.PageNumber = newPageNumber;
+            if (isNaN(newPageNumber))
+                $scope.pagingModel.OrderBy = newPageNumber;
             if (configurationType !== null && configurationType !== undefined)
                 $scope.pagingModel.ConfigurationType = configurationType;
             if (configurationType !== null && configurationType !== undefined && !isNaN(newLimit))
@@ -156,15 +155,26 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                     });
         }
 
+        $scope.generalSearch = function (searchTerm) {
+            var model = {
+                ConfigType: $scope.pagingModel.ConfigurationType,
+                FilterText: searchTerm
+            };
+            $http.post(__env.apiUrl + "/Configuration/SearchDefaultConfigurations", model).
+                then(function (response) {
+                    $scope.configData = response.data;
+                });
+        }
+
         $scope.saveUpdatedValues = function (configType) {
-            var updateModel = { ConfigType: configType, ConfigsToBeSaved: $scope.configData}
+            var updateModel = { ConfigType: configType, ConfigsToBeSaved: $scope.configData }
             $http.post(__env.apiUrl + "/Configuration/SaveDefaultConfigurations", updateModel)
                 .then(function (response) {
                     $scope.hasNewItemOrUpdate = false;
                     console.log(response);
                 })
                 .catch(function (error) {
-
+                    alert("Item Save Failed, Please Check the Item and Try Again");
                 });
         }
 
@@ -195,14 +205,16 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
         }
 
         $scope.addItem = function () {
-            $scope.configData.push({newOrModified: true});
+            $scope.configData.push({ newOrModified: true });
             $scope.hasNewItemOrUpdate = true;
         }
 
         $scope.onTabSelected = function (tabSelected, configurationType) {
             $scope.stateTrack = [];
-            $scope.pagingModel.ReturnAll = tabSelected === 0;
             $scope.pageChangeHandler(1, configurationType);
+            if ($scope.hasNewItemOrUpdate) {
+                $scope.hasNewItemOrUpdate = false;
+            }
         }
 
         $scope.onItemLimitChange = function (newPageNumber, newLimit) {
@@ -222,33 +234,36 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             } else {
                 $scope.filter.show = false;
             }
+
+            $scope.tabs.forEach(function (element) {
+                if (!($scope.pagingModel.ConfigurationType === element.OnSelect)) {
+                    element.Disabled = false;
+                }
+            });
+
+            $scope.filter.hasFiltered = false;
         };
 
         $scope.filterItems = function () {
             if ($scope.oldItems.length === 0) {
                 $scope.oldItems = $scope.configData;
                 $scope.configData = $filter('filter')($scope.configData, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
             } else {
                 $scope.configData = $scope.oldItems;
                 $scope.configData = $filter('filter')($scope.configData, $scope.query.filter)
-                $scope.filter.hasFiltered = true;
+            }
+            if ($scope.configData.length === 0) {
+                $scope.generalSearch($scope.query.filter);
             }
         };
 
-        //$scope.$watch('query.filter', function (newValue, oldValue) {
-        //    if (!oldValue) {
-        //        bookmark = $scope.query.page;
-        //    }
-
-        //    if (newValue !== oldValue) {
-        //        $scope.query.page = 1;
-        //    }
-
-        //    if (!newValue) {
-        //        $scope.query.page = bookmark;
-        //    }
-
-        //    $scope.onTabSelected($scope.pagingModel.PageNumber, $scope.pagingModel.ConfigurationType);
-        //});
+        $scope.activateFilter = function () {
+            $scope.filter.show = true;
+            $scope.tabs.forEach(function (element) {
+                if (!($scope.pagingModel.ConfigurationType === element.OnSelect)) {
+                    element.Disabled = true;
+                }
+            });
+            $scope.filter.hasFiltered = true;
+        }
     }]);

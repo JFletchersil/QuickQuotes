@@ -17,10 +17,20 @@ namespace AngularApp.API.Controllers
         Func<string, string, bool> containsString = (x, y) => x != null && x.ToUpper().Contains(y.ToUpper());
 
         [HttpPost]
-        public PaginatedQueueResult ShowPaginatedQuotes(PagingParameterWebViewModel parameterWebView)
+        public PaginatedQueueResult ShowPaginatedQuotes(QueuePagingParameterWebViewModel parameterWebView)
         {
             var quotes = _dbContext.Quotes.ToList();
-
+            if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
+            {
+                if (parameterWebView.OrderBy.Contains("-"))
+                {
+                    quotes.OrderByDescending(x => x.GetType().GetProperty(parameterWebView.OrderBy.Split('-')[1]));
+                }
+                else
+                {
+                    quotes.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
+                }
+            }
             var totalPages = (int)Math.Ceiling(quotes.Count() / (double)parameterWebView.PageSize);
             var pagedQuotes = quotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
             var returnItems = pagedQuotes.Select(x => new QueueDisplayWebViewModel()
@@ -29,7 +39,7 @@ namespace AngularApp.API.Controllers
                 QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
                 QuoteAuthor = x.QuoteAuthor,
                 QuoteDate = x.QuoteDate,
-                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.TypeID == x.QuoteType)?.IncQuoteType
+                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
             });
             return new PaginatedQueueResult()
             {
@@ -40,16 +50,17 @@ namespace AngularApp.API.Controllers
         }
 
         [HttpPost]
-        public IHttpActionResult SearchQueueSearchResults(QuickSearchRequest request)
+        public IHttpActionResult SearchQueueSearchResults(HttpRequestMessage request)
         {
-            var quotes = SearchQueryFiltering(request.SearchText);
+            var dataText = request.Content.ReadAsStringAsync().Result;
+            var quotes = SearchQueryFiltering(dataText);
             var returnItems = quotes.Select(x => new QueueDisplayWebViewModel()
             {
                 QuoteReference = x.QuoteReference.ToString(),
                 QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
                 QuoteAuthor = x.QuoteAuthor,
                 QuoteDate = x.QuoteDate,
-                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.TypeID == x.QuoteType)?.IncQuoteType
+                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
             });
             return Ok(returnItems);
         }
@@ -63,7 +74,7 @@ namespace AngularApp.API.Controllers
             {
                 QuoteAuthor = x.QuoteAuthor,
                 QuoteReference = x.QuoteReference.ToString(),
-                QuoteType = quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType
+                QuoteType = quoteType.FirstOrDefault(y => y.QuoteTypeID == x.QuoteType && y.Enabled).IncQuoteType
             });
 
             var queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
@@ -87,7 +98,7 @@ namespace AngularApp.API.Controllers
                                                      TestFunction(x.QuoteAuthor, searchText) ||
                                                      TestFunction(quoteStatus.FirstOrDefault(y => y.StatusID == x.QuoteStatus && y.Enabled).State, searchText) ||
                                                      TestFunction(productType.FirstOrDefault(y => y.ProductTypeID == x.ProductType && y.Enabled).IncProductType, searchText) ||
-                                                     TestFunction(quoteType.FirstOrDefault(y => y.TypeID == x.QuoteType && y.Enabled).IncQuoteType, searchText)).ToList();
+                                                     TestFunction(quoteType.FirstOrDefault(y => y.QuoteTypeID == x.QuoteType && y.Enabled).IncQuoteType, searchText)).ToList();
             return query;
         }
 
