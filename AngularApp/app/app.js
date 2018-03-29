@@ -7,7 +7,6 @@ if (window) {
 var expireDate = new Date();
 // this will set the expiration to 1 day;
 expireDate.setDate(expireDate.getDate() + 1);
-//angular.module('Authentication', []);
 angular.module("quoteTool", [
     "ui.router",
     "ngStorage",

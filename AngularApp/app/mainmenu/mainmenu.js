@@ -38,7 +38,7 @@ angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
             }
 
             $scope.logOut = function () {
-                UserService.setItem() = {};
+                UserService.addItem({});
                 AuthenticationService.ClearCredentials();
             };
         }]);

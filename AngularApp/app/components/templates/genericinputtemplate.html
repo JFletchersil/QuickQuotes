@@ -9,6 +9,14 @@
         <input type="{{::description.Type}}" name="{{::elementHtmlName}}" id="{{::elementHtmlName}}" class="form-control" ng-model="$parent.binding"
                required="{{description.Required}}" min="{{::description.Min}}" max="{{::description.Max}}" />
     </div>
+    <div ng-if="description.Type == dropdown">
+        <md-input-container>
+            <label>State</label>
+            <md-select ng-model="$parent.binding" required md-no-asterisk="{{description.Required}}">
+                <md-option ng-value="opt" ng-repeat="opt in description.Options">{{ opt }}</md-option>
+            </md-select>
+        </md-input-container>
+    </div>
     <div ng-if="description.Required">
         <span ng-show="(form[elementHtmlName].$dirty && form[elementHtmlName].$error.required)" class="help-block">{{::warningLabel}} is required</span>
     </div>

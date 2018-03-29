@@ -1,0 +1,56 @@
+{
+  "_from": "angular-auth0",
+  "_id": "angular-auth0@3.0.0",
+  "_inBundle": false,
+  "_integrity": "sha512-wU7CI0YybpHeKfrleUV/LK+0iVHZeWbrpwsj6d+kRUpHetPBdRMWcTsYNLcxFZ04esmIBgmuAyZ6qZSkJHsfpA==",
+  "_location": "/angular-auth0",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "angular-auth0",
+    "name": "angular-auth0",
+    "escapedName": "angular-auth0",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/angular-auth0/-/angular-auth0-3.0.0.tgz",
+  "_shasum": "8837178182774639d46a1f6a9a92dec644a42699",
+  "_spec": "angular-auth0",
+  "_where": "C:\\Users\\Gmandam\\source\\repos\\QuickQuotes\\AngularApp",
+  "author": {
+    "name": "Auth0"
+  },
+  "bugs": {
+    "url": "https://github.com/auth0/angular-auth0/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "angular": "^1.6.8",
+    "auth0-js": "^9.0.0"
+  },
+  "deprecated": false,
+  "description": "Auth0.js v9 wrapper for Angular.js",
+  "devDependencies": {
+    "babili-webpack-plugin": "^0.1.2",
+    "webpack": "^3.1.0"
+  },
+  "homepage": "https://github.com/auth0/angular-auth0#readme",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "angular-auth0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/auth0/angular-auth0.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "build:watch": "webpack --progress --colors --watch"
+  },
+  "version": "3.0.0"
+}

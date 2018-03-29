@@ -153,6 +153,15 @@ namespace AngularApp.API.Controllers
             }
         }
 
+        [HttpGet]
+        public IHttpActionResult UpdateQuoteReference(string quoteGuid, string quoteType)
+        {
+            var quote = _dbContext.Quotes.ToList().FirstOrDefault(x => x.QuoteReference == new Guid(quoteGuid));
+            var status = _dbContext.QuoteStatuses.ToList().FirstOrDefault(x => x.State == quoteType && x.Enabled == true);
+            quote.QuoteStatus = status.StatusID;
+            return Ok();
+        }
+
         private string PopularDefaultsWithString(Dictionary<string, string> frontEndData, string templateXML)
         {
             return Regex.Replace(templateXML, @"\{(.+?)\}", m => frontEndData[m.Groups[1].Value]);
