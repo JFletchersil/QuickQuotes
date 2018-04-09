@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
@@ -10,20 +9,46 @@ using AngularApp.API.Models.WebViewModels;
 
 namespace AngularApp.API.Controllers
 {
+    /// <summary>
+    /// Manages aspects related to the Quotes and how they work with the Queues
+    /// </summary>
+    /// <remarks>
+    /// This focuses primarily on the Quotes Queue, as functionality such as Quote searching across a 
+    /// general area is tied into the Queue this functionality is also present.
+    /// </remarks>
     [EnableCors("*", "*", "*")]
     public class QueueController : ApiController
     {
+        /// <summary>
+        /// Creates a private, readonly connection to the database for gathering the details required for the Quote Queue
+        /// </summary>
         private readonly Entities _dbContext = new Entities();
-        Func<string, string, bool> containsString = (x, y) => x != null && x.ToUpper().Contains(y.ToUpper());
 
+        /// <summary>
+        /// Returns quotes in a paginated format, ordered according how the active column was ordered
+        /// </summary>
+        /// <param name="parameterWebView">The model containing the PageNumber, Size and Ordering for the paginated results</param>
+        /// <returns>The paginated results to be returned from the database</returns>
+        /// <remarks>
+        /// Differently from how some of the others work, this only works with returning quotes.
+        /// This is a rather standard paginated system, it used via Post.
+        /// OrderBy is not required, however it is advised to be present.
+        /// </remarks>
         [HttpPost]
         public PaginatedQueueResult ShowPaginatedQuotes(QueuePagingParameterWebViewModel parameterWebView)
         {
             var quotes = _dbContext.Quotes.ToList();
+
+            // Checks if OrderBy is present
             if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
             {
+                // The orderBy is expected to be a valid parameter type for a module, with potentially a - on it.
+                // If - is on it, descending order is presumed, else the order is presumed to be ascending.
                 if (parameterWebView.OrderBy.Contains("-"))
                 {
+                    // Getting the type, then the property allows us to set the property by specifying a 
+                    // string parameter rather than specifying a specific parameter to order by.
+                    // This allows the code to be used in a generic fashion.
                     quotes.OrderByDescending(x => x.GetType().GetProperty(parameterWebView.OrderBy.Split('-')[1]));
                 }
                 else
@@ -31,8 +56,15 @@ namespace AngularApp.API.Controllers
                     quotes.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
                 }
             }
+
+            // Calculates the total number of pages in the database, based off the number of items and the page size
             var totalPages = (int)Math.Ceiling(quotes.Count() / (double)parameterWebView.PageSize);
+            // Gathers the items for the given page location and size for return.
             var pagedQuotes = quotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
+
+            // Porcesses the results from the database view model to the web view model
+            // As per other instances of this, this is important to remove references and data that is not needed
+            // on the front end
             var returnItems = pagedQuotes.Select(x => new QueueDisplayWebViewModel()
             {
                 QuoteReference = x.QuoteReference.ToString(),
@@ -41,6 +73,8 @@ namespace AngularApp.API.Controllers
                 QuoteDate = x.QuoteDate,
                 QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
             });
+
+            // Returns the values for usage on the front end
             return new PaginatedQueueResult()
             {
                 QueueDisplay = returnItems,
@@ -49,6 +83,16 @@ namespace AngularApp.API.Controllers
             };
         }
 
+        /// <summary>
+        /// Performs a database search for matching results to the filter result given by the user
+        /// </summary>
+        /// <param name="request">The filter/search text that is being searched for in the quotation table</param>
+        /// <returns>A list of all potential matches to the filter/search text from the quotation table</returns>
+        /// <remarks>
+        /// This is normally only going to be used in cases where we do not have the value already present within
+        /// the front end. This works only in the context of the front end queue screen, rather than the hot search bar
+        /// in the top right of the user interface.
+        /// </remarks>
         [HttpPost]
         public IHttpActionResult SearchQueueSearchResults(HttpRequestMessage request)
         {
@@ -65,6 +109,20 @@ namespace AngularApp.API.Controllers
             return Ok(returnItems);
         }
 
+        /// <summary>
+        /// Returns a list of truncated search results that are used to quickly find the correct search result
+        /// </summary>
+        /// <param name="request">Contains the maximum number of search results to return, as well as the search text that is being searched for</param>
+        /// <returns>
+        /// A list of search results which are heavily redacted, along with a potential final search result prompting the user back to the main quote queue page
+        /// </returns>
+        /// <remarks>
+        /// This is to be used only within the context of the hot bar in the top right of the user interface. 
+        /// It is designed to provide only the quote type as well as the author and reference to allow the main search function, 
+        /// SearchQueueSearchResults.
+        /// At the end of each return from this function, it is expected that a dummy object which redirects the user to the
+        /// main quote menu will be added.
+        /// </remarks>
         [HttpPost]
         public IHttpActionResult ReturnSearchResults(QuickSearchRequest request)
         {
@@ -77,6 +135,8 @@ namespace AngularApp.API.Controllers
                 QuoteType = quoteType.FirstOrDefault(y => y.QuoteTypeID == x.QuoteType && y.Enabled).IncQuoteType
             });
 
+            // This places the very last item, no matter what case, as this dummy item is used by the 
+            // front end to force users to the main quote menu if the result they want is not present
             var queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
             queryList.Add(new QuickSearch
             {
@@ -87,6 +147,16 @@ namespace AngularApp.API.Controllers
             return Ok(queryList);
         }
 
+        /// <summary>
+        /// Returns a list of possible quotes that match a given search text
+        /// </summary>
+        /// <param name="searchText">The search text/filter text that is the user is searching for</param>
+        /// <returns>A list of matching quotes that one or more of their columns/properties matches the search text</returns>
+        /// <remarks>
+        /// This follows a similar pattern to the ones present in the account and configuration setup. 
+        /// In this instance, other details are pulled in, in order to give textual representations of the quote and product types,
+        /// rather than an ID.
+        /// </remarks>
         private List<Quote> SearchQueryFiltering(string searchText)
         {
             var quoteStatus = _dbContext.QuoteStatuses.ToList();
@@ -102,10 +172,17 @@ namespace AngularApp.API.Controllers
             return query;
         }
 
+        /// <summary>
+        /// Compares two strings, and checks if the value of str1 contains a string or sub string of str2
+        /// </summary>
+        /// <param name="str1">The value which is being searched, normally a database model</param>
+        /// <param name="str2">The search or filter text, which the user is searching for, generally a string.</param>
+        /// <returns>A true or false value which signals if the str2 value is present within str1</returns>
         private bool TestFunction(string str1, string str2)
         {
+            // Checks if the string is null, prior to doing a search, then forces both strings to upper for 
+            // true comparison.
             return str1 != null && str1.ToUpper().Contains(str2.ToUpper());
         }
-
     }
 }
