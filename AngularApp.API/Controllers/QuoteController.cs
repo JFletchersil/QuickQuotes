@@ -337,6 +337,16 @@ namespace AngularApp.API.Controllers
         /// In future, work maybe done in order to more fully secure the hole that is presented here.
         /// The JObject is the biggest hole due to the fact that it is difficult to check.
         /// </remarks>
+        /// <example>
+        /// The basic functionality of this function works by taking the columns of a valid table, the valid
+        /// table is picked up from the database based on user input.
+        /// Once the columns have been found, a pattern match between the entries inside the resultsObj
+        /// and the column names are done, this prevents any old random resultsObj from being accepted.
+        /// This pattern match occurs in a loop, and creates the statement needed to insert the values into the
+        /// table.
+        /// At the end, the statement is created, turned into a string and then executed and the results of such
+        /// returned back to the user.
+        /// </example>
         private bool InsertIntoTables(string quoteType, Guid quoteGuid, JObject resultsObj, TableType type)
         {
             try
