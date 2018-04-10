@@ -22,7 +22,7 @@ namespace AngularApp.API.Controllers
     public class QueueController : ApiController
     {
         /// <summary>
-        /// Creates a private, readonly connection to the database for gathering the details required for the Quote Queue
+        /// Creates a private, read only connection to the database for gathering the details required for the Quote Queue
         /// </summary>
         private readonly Entities _dbContext = new Entities();
 
@@ -66,7 +66,7 @@ namespace AngularApp.API.Controllers
             // Gathers the items for the given page location and size for return.
             var pagedQuotes = quotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
 
-            // Porcesses the results from the database view model to the web view model
+            // Processes the results from the database view model to the web view model
             // As per other instances of this, this is important to remove references and data that is not needed
             // on the front end
             var returnItems = pagedQuotes.Select(x => new QueueDisplayWebViewModel()

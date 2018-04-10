@@ -9,16 +9,22 @@ using AngularApp.API.Models.WebViewModels.AccountViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-/// <summary>
-/// A collection of repositories that allow the user to work with the various databases that are
-/// associated with the project
-/// </summary>
-/// <remarks>
-/// At present, there is only one repository that is used.
-/// This repository is the Auth Repository
-/// </remarks>
 namespace AngularApp.API.Repository
 {
+    /// <summary>
+    /// A collection of repositories that allow the user to work with the various databases that are
+    /// associated with the project
+    /// </summary>
+    /// <remarks>
+    /// At present, there is only one repository that is used.
+    /// This repository is the Auth Repository
+    /// </remarks>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// A repository for handling Authentication and User Management
     /// </summary>
@@ -26,7 +32,7 @@ namespace AngularApp.API.Repository
     public class AuthRepository : IDisposable
     {
         /// <summary>
-        /// The Authorisation Context that the Repository uses
+        /// The Authorization Context that the Repository uses
         /// </summary>
         private AuthContext _ctx;
 
@@ -46,7 +52,7 @@ namespace AngularApp.API.Repository
         /// <summary>
         /// Initializes a new instance of the <see cref="AuthRepository"/> class.
         /// </summary>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public AuthRepository()
         {
             _ctx = new AuthContext();
@@ -65,7 +71,7 @@ namespace AngularApp.API.Repository
         /// </remarks>
         /// <param name="userModel">The user model.</param>
         /// <returns>If the creation of the user was successful or not</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
         {
             // Gives the new user an identifier
@@ -96,7 +102,7 @@ namespace AngularApp.API.Repository
         /// Clones the user.
         /// </summary>
         /// <remarks>
-        /// This used to clone a user, with a new username and email address and password.
+        /// This used to clone a user, with a new user name and email address and password.
         /// Effectively, this makes this method a copy of the roles a user has.
         /// In future, if there are custom roles aside from the admin/user distinction
         /// this method would allow for the easy creation of new users with these
@@ -104,7 +110,7 @@ namespace AngularApp.API.Repository
         /// </remarks>
         /// <param name="cloneUserViewModel">The clone user view model.</param>
         /// <returns>If the clone of the user was successful or not</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public IdentityResult CloneUser(UserEditViewModel cloneUserViewModel)
         {
             // Validates the user model to ensure that the user has a password and user name
@@ -151,7 +157,7 @@ namespace AngularApp.API.Repository
         /// <param name="userId">The user identifier.</param>
         /// <param name="phoneNumber">The phone number.</param>
         /// <returns>If the edit of the user details was successful or not</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> EditUser(RegisterViewModel userModel, string userId, string phoneNumber)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
@@ -180,8 +186,8 @@ namespace AngularApp.API.Repository
         /// </summary>
         /// <param name="userName">Name of the user.</param>
         /// <param name="password">The password.</param>
-        /// <returns>A single user who matches the username and password</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <returns>A single user who matches the user name and password</returns>
+        /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
             var user = await _userManager.FindAsync(userName, password);
@@ -212,7 +218,7 @@ namespace AngularApp.API.Repository
         /// Gets all users.
         /// </summary>
         /// <returns>A list of all users currently within the database</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public List<IdentityUser> GetAllUsers()
         {
             var users = _userManager.Users.ToList();
@@ -224,7 +230,7 @@ namespace AngularApp.API.Repository
         /// </summary>
         /// <param name="userId">The user identifier.</param>
         /// <returns>Confirmation if the user was successfully deleted or not</returns>
-        /// <see cref="Controllers.AccountController"/>
+        /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> DeleteUser(string userId)
         {
             var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);

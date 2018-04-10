@@ -22,10 +22,10 @@ namespace AngularApp.API.Controllers
     /// <remarks>
     /// This API is missing several features that would fully account for all the functionality in the account
     /// controller, however those features are not required for the full running of the account system
-    /// In future the API must be secured via the Auth0 middlewear and OWIN in order to fully complete the
+    /// In future the API must be secured via the Auth0 middle wear and OWIN in order to fully complete the
     /// transition to Auth0 and it's authentication.
     /// This API is disabled via an APIDiasabled attribute, this attribute must be removed prior to using the
-    /// Auth0 controller. This will require another compliation
+    /// Auth0 controller. This will require another compilation
     /// </remarks>
     [EnableCors("*", "*", "*")]
     [APIDisabled]
@@ -39,7 +39,7 @@ namespace AngularApp.API.Controllers
         // Locations to store the Tokens for Authentication and management API
         // TODO - Must place these as configuration options inside the Web.config area
         /// <summary>
-        /// The authentication exten bearer token
+        /// The authentication extension bearer token
         /// </summary>
         private string AuthenticationExtenBearerToken = "";
         /// <summary>
@@ -51,7 +51,7 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// The connection
         /// </summary>
-        private readonly string Connection = "Username-Password-Authentication";
+        private readonly string Connection = "User name-Password-Authentication";
         // Sets the ClientID for the front end app being used for communication
         // TODO - Must place this as configuration option inside the Web.config area
         /// <summary>
@@ -60,7 +60,7 @@ namespace AngularApp.API.Controllers
         private readonly string ClientIDFrontEndApp = "cxX97IXqqTE0ziE4w5MfG4GJD1DayIBA";
 
         /// <summary>
-        /// Intialises the Auth0 Controller with a entity context, allowing access to the Quote Database.
+        /// Initializes the Auth0 Controller with a entity context, allowing access to the Quote Database.
         /// Constructs the default details for the controller on start up.
         /// </summary>
         /// <remarks>
@@ -72,7 +72,7 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Returns a full list of all users containted within the User Database stored in Auth0 Database.
+        /// Returns a full list of all users contained within the User Database stored in Auth0 Database.
         /// Requires a paging parameter model in order to set the correct ordering and paging for the client.
         /// </summary>
         /// <param name="param">A Paging parameter model, this is used to configure the paging on the server,
@@ -81,7 +81,7 @@ namespace AngularApp.API.Controllers
         /// A list of users, and their details. Including role, and meta-data.
         /// </returns>
         /// <remarks>
-        /// This is used to return users for the admininstration screen, otherwise it should not be
+        /// This is used to return users for the administration screen, otherwise it should not be
         /// used for any other purpose.
         /// </remarks>
         /// <example>
@@ -92,7 +92,7 @@ namespace AngularApp.API.Controllers
         {
             // Gather all roles prior to forming the users.
             var roles = ReturnAllRoles();
-            // Gather all users, in a multiuser web view model for processing.
+            // Gather all users, in a multi user web view model for processing.
             var users = JsonConvert.DeserializeObject<Auth0MultiUserWebViewModel>(RequestWithStringReturn("users", Method.GET, AuthenticationExtenBearerToken));
             // Creates a list object to hold all the processed single users.
             var singleUsers = new List<Auth0SingleUserWebViewModel>();
@@ -105,7 +105,7 @@ namespace AngularApp.API.Controllers
                                                 ((x.Name == "SuperAdministrator") && x.Users.Any(y => y == user.User_Id))));
                 singleUsers.Add(saUser);
             }
-            // Maps the values back to the expected format for the webpage, can be removed if the need for conversion
+            // Maps the values back to the expected format for the web page, can be removed if the need for conversion
             // is removed.
             var trueRetVal = Mapper.Map<List<QueueUserWebViewModel>>(singleUsers);
 
@@ -151,10 +151,10 @@ namespace AngularApp.API.Controllers
         /// </summary>
         /// <param name="email">The email address of the user whose password is being reset</param>
         /// <returns>
-        /// A bool that determines if the reset was successful or not
+        /// A <see langword="bool"/> that determines if the reset was successful or not
         /// </returns>
         /// <remarks>
-        /// This is to be used by the administrator if the administrator wishes to forcably reset a users
+        /// This is to be used by the administrator if the administrator wishes to forcibly reset a users
         /// password. This should only be used by administrators, users have alternate methods for forcing a reset.
         /// </remarks>
         /// <example>
@@ -167,7 +167,7 @@ namespace AngularApp.API.Controllers
             var client = new RestClient($"https://quickquotes.eu.auth0.com/dbconnections/change_password");
             // Sets it to a post request
             var request = new RestRequest(Method.POST);
-            // Adds the content type as well as authorisation token
+            // Adds the content type as well as authorization token
             request.AddHeader("authorization", $"Bearer {AuthenticationExtenBearerToken}");
             request.AddHeader("Content-type", "application/json; charset=utf-8");
             // Adds the JSON to the body to be posted, includes email, blank password and connection type
@@ -198,7 +198,7 @@ namespace AngularApp.API.Controllers
             {
                 { parameterSet, parameterValue }
             };
-            // Adds the dictonary to the request data
+            // Adds the dictionary to the request data
             request.AddJsonBody(dict);
             // Makes the request and evaluates the success of the response
             IRestResponse response = client.Execute(request);
@@ -227,11 +227,11 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Updates a single users meta data via JSON Object
         /// Is limited in scope in how much can be changed at once, and so it should try to keep the number
-        /// of simulatonius changes down.
+        /// of simultaneous changes down.
         /// </summary>
         /// <param name="metaUpdate">The JSON Representation of the data being changed</param>
         /// <returns>
-        /// A bool notifying if the user has successfully altered their meta-data or not
+        /// A <see langword="bool"/> notifying if the user has successfully altered their meta-data or not
         /// </returns>
         /// <remarks>
         /// This is used to handle the standard user meta-data, and not root level data.
@@ -251,7 +251,7 @@ namespace AngularApp.API.Controllers
             // Adds the headers to the request to allow the data to be sent and authenticated
             request.AddHeader("content-type", "application/json");
             request.AddHeader("authorization", $"Bearer {ManagementBearerToken}");
-            // Seralises the JObject to string for patching to the server
+            // Serializes the JObject to string for patching to the server
             request.AddParameter("application/json", $"{{\"user_metadata\": {JsonConvert.SerializeObject(metaUpdate)}}}", ParameterType.RequestBody);
             // Makes the request and evaluates the success of the response
             IRestResponse response = client.Execute(request);
@@ -263,10 +263,10 @@ namespace AngularApp.API.Controllers
         /// </summary>
         /// <param name="newModel">A model for the new user that is being created</param>
         /// <returns>
-        /// A bool notifying if the user has successfully created a new user or not
+        /// A <see langword="bool"/> notifying if the user has successfully created a new user or not
         /// </returns>
         /// <remarks>
-        /// Allows the creation of a new user, must present at least email and username for successful user creation.
+        /// Allows the creation of a new user, must present at least email and user name for successful user creation.
         /// </remarks>
         /// <example>
         /// Post [websitename]/api/CreateNewUser [newModel]
@@ -293,7 +293,7 @@ namespace AngularApp.API.Controllers
         /// </summary>
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
         /// <param name="methodType">What type the method is, such as POST</param>
-        /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
+        /// <param name="bearerToken">The correct bearer token needed to authenticate the request</param>
         /// <returns>
         /// The return string value for evaluation later
         /// </returns>
@@ -310,7 +310,7 @@ namespace AngularApp.API.Controllers
         /// Makes a single patch request to a target endpoint on the authentication extension API
         /// </summary>
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
-        /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
+        /// <param name="bearerToken">The correct bearer token needed to authenticate the request</param>
         /// <param name="roleId">The role id for a given user, used to change the roles of a user</param>
         /// <returns>
         /// The return string value for evaluation later
@@ -330,7 +330,7 @@ namespace AngularApp.API.Controllers
         /// Makes a single delete request to a target endpoint on the authentication extension API
         /// </summary>
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
-        /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
+        /// <param name="bearerToken">The correct bearer token needed to authenticate the request</param>
         /// <param name="roleId">The role id for a given user, used to change the roles of a user</param>
         /// <returns>
         /// The return string value for evaluation later
@@ -359,7 +359,7 @@ namespace AngularApp.API.Controllers
 
         /// <summary>
         /// Gets the Authentication Extension token when provided with the correct details.
-        /// Needeed to refresh the AuthToken when required.
+        /// Needed to refresh the AuthToken when required.
         /// </summary>
         private void GetExtensionAuthToken()
         {
@@ -373,7 +373,7 @@ namespace AngularApp.API.Controllers
 
         /// <summary>
         /// Gets the Management API token when provided with the correct details.
-        /// Needeed to refresh the AuthToken when required.
+        /// Needed to refresh the AuthToken when required.
         /// </summary>
         private void GetManagementBearerAuthToken()
         {

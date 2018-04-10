@@ -1,16 +1,22 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// Provides a collection of models designed to provide examples on how data should be structured
-/// within the Quotation Detail table
-/// </summary>
 namespace AngularApp.API.Models.WebViewModels.ExampleModels
 {
+    /// <summary>
+    /// Provides a collection of models designed to provide examples on how data should be structured
+    /// within the Quotation Detail table
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// An example class used to showcase how the details of a quotation should be stored.
     /// </summary>
     /// <remarks>
-    /// This class has since been superceded by the need for complete generification, as such
+    /// This class has since been superseded by the need for complete generification, as such
     /// it is no longer actively used.
     /// This should be considered an example class, used to help visualise how the generic
     /// objects would look.

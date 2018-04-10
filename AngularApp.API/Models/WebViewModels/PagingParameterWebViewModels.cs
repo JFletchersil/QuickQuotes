@@ -1,29 +1,35 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// Provides a collection of models to manage the pagination required within the application
-/// </summary>
-/// <remarks>
-/// These pagination models are used in several different contexts, and are arranged here
-/// due to the ease that comes with ensuring that all the paging models are together.
-/// Pagination view models are used to manage the number of pages, as well
-/// as what page to return, they are DISTINCT from other models
-/// which RETURN the results of pagination. These models are more
-/// thought of how you describe what kind of pagination you need.
-/// </remarks>
 namespace AngularApp.API.Models.WebViewModels.PagingModels
 {
+    /// <summary>
+    /// Provides a collection of models to manage the pagination required within the application
+    /// </summary>
+    /// <remarks>
+    /// These pagination models are used in several different contexts, and are arranged here
+    /// due to the ease that comes with ensuring that all the paging models are together.
+    /// Pagination view models are used to manage the number of pages, as well
+    /// as what page to return, they are DISTINCT from other models
+    /// which RETURN the results of pagination. These models are more
+    /// thought of how you describe what kind of pagination you need.
+    /// </remarks>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// The basic Paging view model, these are the basic items needed to
     /// manage pagination within the application
     /// </summary>
-    /// <see cref="AccountPagingParameterWebViewModel" />
+    /// <seealso cref="AccountPagingParameterWebViewModel" />
     /// <seealso cref="QueuePagingParameterWebViewModel" />
     /// <seealso cref="ConfigurationPagingParameterWebViewModel" />
     public class PagingParameterWebViewModel
     {
         /// <summary>
-        /// The page number, once the items have been paginated, that you wish to recieve
+        /// The page number, once the items have been paginated, that you wish to receive
         /// </summary>
         /// <value>
         /// The page number.
@@ -68,7 +74,7 @@ namespace AngularApp.API.Models.WebViewModels.PagingModels
     /// parameter which determines if all the items should be returned or not.
     /// This overrides the standard paging system.
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     public class AccountPagingParameterWebViewModel : PagingParameterWebViewModel
     {
         /// <summary>
@@ -90,7 +96,7 @@ namespace AngularApp.API.Models.WebViewModels.PagingModels
     /// however it exists so that if it needs specific pagination functionality
     /// that this functionality can be added.
     /// </remarks>
-    /// <see cref="Controllers.QueueController" />
+    /// <seealso cref="Controllers.QueueController" />
     public class QueuePagingParameterWebViewModel : PagingParameterWebViewModel
     {
     }
@@ -100,7 +106,7 @@ namespace AngularApp.API.Models.WebViewModels.PagingModels
     /// </summary>
     /// <seealso cref="AngularApp.API.Models.WebViewModels.PagingModels.PagingParameterWebViewModel" />
     /// <remarks>
-    /// This enahances the standard model by giving it the ability to specify the ConfigurationType
+    /// This enhances the standard model by giving it the ability to specify the ConfigurationType
     /// that is being operated on. This allows us to search only the relevant table, as well as
     /// preventing the mixing of table results
     /// </remarks>

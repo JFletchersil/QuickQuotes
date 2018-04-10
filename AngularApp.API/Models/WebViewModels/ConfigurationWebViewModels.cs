@@ -1,19 +1,24 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
-/// <summary>
-/// Provides a collection of models to manage the configuration of the web application
-/// </summary>
 namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
 {
+    /// <summary>
+    /// Provides a collection of models to manage the configuration of the web application
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+    }
+
     /// <summary>
     /// An abstract class establishing that other classes are related to this class
     /// </summary>
     /// <remarks>
-    /// This class remains empty due to the fact that it is used soley to group the following
-    /// clsses together inside the same overall class structure.
+    /// This class remains empty due to the fact that it is used solely to group the following
+    /// classes together inside the same overall class structure.
     /// </remarks>
-    /// <see cref="QuoteTypesViewModel" />
+    /// <seealso cref="QuoteTypesViewModel" />
     /// <seealso cref="QuoteStatusesViewModel" />
     /// <seealso cref="QuoteDefaultsViewModel" />
     /// <seealso cref="ProductTypesViewModel" />
@@ -29,9 +34,9 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// <remarks>
     /// This is used to manage QuoteTypes within the application, it is the main focus
     /// of adding new QuoteTypes as well as deleting them from the database.
-    /// It is also used in the startup to allow for mapping via AutoMap.
+    /// It is also used in the start up to allow for mapping via AutoMap.
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     /// <seealso cref="Startup" />
     /// <seealso cref="AutoMapper" />
     public class QuoteTypesViewModel : ConfigurationWebViewModels
@@ -78,7 +83,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// This provides a model for the QuoteStatues configuration table to allow
     /// easy edits, deletions and additions to the QuoteStatuses configuration table.
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     /// <seealso cref="Startup" />
     public class QuoteStatusesViewModel : ConfigurationWebViewModels
     {
@@ -120,7 +125,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// additions, deletions and edits to be made using the class.
     /// Strips data from the database row if it is not needed for operations elsewhere
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     /// <seealso cref="Startup" />
     public class QuoteDefaultsViewModel : ConfigurationWebViewModels
     {
@@ -153,7 +158,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
         /// </value>
         /// <remarks>
         /// This would only be used in cases where we would be using an external quotation
-        /// calculator that would expect an XML Tempalte response. As such, it may
+        /// calculator that would expect an XML Template response. As such, it may
         /// not be needed if no external quotation calculator is used.
         /// </remarks>
         public string XMLTemplate { get; set; }
@@ -192,7 +197,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// additions, deletions and edits to be made using the class.
     /// Strips data from the database row if it is not needed for operations elsewhere
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     /// <seealso cref="Startup" />
     public class ProductTypesViewModel : ConfigurationWebViewModels
     {
@@ -210,7 +215,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
         /// The type of the product.
         /// </value>
         /// <remarks>
-        /// Used to help users identiy which product type is being used or worked on at any one time.
+        /// Used to help users identity which product type is being used or worked on at any one time.
         /// </remarks>
         public string ProductType { get; set; }
         /// <summary>
@@ -235,7 +240,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// from other configuration types. Do not expect to see QuoteDefaults and ProductTypes
     /// in the same list even if technically possible.
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     public class PaginatedConfigResult
     {
         /// <summary>
@@ -266,7 +271,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// even if there's no particular restriction that prevents you from adding
     /// multiple configurations inside the same save object.
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     public class SaveConfigurationViewModel
     {
         /// <summary>
@@ -280,7 +285,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
         /// The list of configuration types to be saved
         /// </summary>
         /// <value>
-        /// The configs to be saved.
+        /// The configuration to be saved.
         /// </value>
         /// <remarks>
         /// To make the view model generic, these are saved as JObjects,
@@ -295,10 +300,10 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
     /// </summary>
     /// <remarks>
     /// Effectively, this is used to dictate what to search for, and where
-    /// witin the Configuration Controller. It will then respond with
+    /// within the Configuration Controller. It will then respond with
     /// appropriate models later on.
     /// </remarks>
-    /// <see cref="Controllers.ConfigurationController" />
+    /// <seealso cref="Controllers.ConfigurationController" />
     public class DefaultConfigurationSearchWebViewModel
     {
         /// <summary>
@@ -309,8 +314,9 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
         /// The type of the configuration.
         /// </value>
         public string ConfigType { get; set; }
+
         /// <summary>
-        /// The parameter within all of the tables which is being searched for
+        /// The filter text.
         /// </summary>
         /// <value>
         /// The filter text.

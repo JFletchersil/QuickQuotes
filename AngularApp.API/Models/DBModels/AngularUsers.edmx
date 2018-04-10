@@ -169,59 +169,198 @@
     <edmx:ConceptualModels>
       <Schema Namespace="AngularUsersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="AspNetRole">
+          <Documentation>
+            <Summary>A representation of all the roles within the database</Summary>
+            <LongDescription>A collection of roles that grant a user certain specific permissions and access rights</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The unique identifier of the role</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The human readable string of the role</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="AspNetUserClaim">
+          <Documentation>
+            <Summary>Claims that users have</Summary>
+            <LongDescription>Claims that the various different users have and can make on permissions</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" >
+            <Documentation>
+              <Summary>A unique identifier for each claim</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The user id of the user who has made the claim</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The type of claim that the user has made</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The value of the claim made</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="AspNetUserDetail">
+          <Documentation>
+            <Summary>User meta data</Summary>
+            <LongDescription>A collection of items that provides additional
+context about the user, as well as his
+position and roles within a company
+</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Business" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="BoundCustomers" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The user id of the user whose details are recorded</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The first name of the user whose details are recorded</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The last name of the user whose details are recorded</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="FullName" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The full and complete name of the user whose details are recorded</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Business" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The business that the user whose details are recorded works for</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The title of the user whose details are recorded at the business they work for</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="BoundCustomers" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The customers that the user whose details are recorded is responsible for</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="AspNetUserLogin">
+          <Documentation>
+            <Summary>Different methods by which a user may log in</Summary>
+            <LongDescription>A collection of different methods by which a user may log in, 
+this may include items such as Facebook or Twitter</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="LoginProvider" />
             <PropertyRef Name="ProviderKey" />
             <PropertyRef Name="UserId" />
           </Key>
-          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The login provider providing the login claim</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The provider key that ensures that the provider is a valid provider</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The userid of users who have logged in via a given login provider</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="AspNetUser">
+          <Documentation>
+            <Summary>A representation of a user</Summary>
+            <LongDescription>A collection of all valid users within the system,
+as well as when they logged in, their username 
+and email address as well as if they are locked
+out from the system</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>A unique identifier for a user</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>A user's email address</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the user has successfully confirmed their email or not</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The encrypted, salted and hashed password for a given user</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The security stamp of the password</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The phone number of a user</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>A check to show if the user has confirmed their phone number or not</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>A check to show if a user has enabled two factor authentication or not</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" >
+            <Documentation>
+              <Summary>When an account lockout will end on a given user account</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the user has had their account locked out or not</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The number of times someone has unsuccessfully attempted to access a user account</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The username of a user</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="1">

@@ -1,14 +1,22 @@
-﻿/// <summary>
-/// Provides data models designed to configure single HTML elements
-/// </summary>
-/// <remarks>
-/// This model collection is designed to model HTML elements to allow for
-/// a single generic quotation page to operate. Due to the fact that the configuration
-/// is driven from the database, this allows the user of the application to configure the quote
-/// type.
-/// </remarks>
+﻿using AngularApp.API.Models.WebViewModels.ConfigurationViewModels;
+
 namespace AngularApp.API.Models.WebViewModels.ElementConfigurationModels
 {
+    /// <summary>
+    /// Provides data models designed to configure single HTML elements
+    /// </summary>
+    /// <remarks>
+    /// This model collection is designed to model HTML elements to allow for
+    /// a single generic quotation page to operate. Due to the fact that the configuration
+    /// is driven from the database, this allows the user of the application to configure the quote
+    /// type.
+    /// </remarks>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// Provides a class representation of the configuration of a single HTML element of a single quote type
     /// </summary>
@@ -21,9 +29,9 @@ namespace AngularApp.API.Models.WebViewModels.ElementConfigurationModels
     /// each new quote type, instead we can describe how the page will look and the
     /// the angular front end will make provide the elements.
     /// </remarks>
-    /// <see cref="Controllers.QuoteController" />
+    /// <seealso cref="Controllers.QuoteController" />
     /// <seealso cref="QuoteDefaultsViewModel" />
-    /// <seealso cref="WebViewModels.ElementDescription" />
+    /// <seealso cref="ElementDescription" />
     public class ElementConfigurationWebViewModel
     {
         /// <summary>
@@ -73,12 +81,12 @@ namespace AngularApp.API.Models.WebViewModels.ElementConfigurationModels
     /// Describes how a HTML element should be configured for a given single HTML element
     /// </summary>
     /// <remarks>
-    /// This is used soley in conjuction with ElementConfigurationWebViewModel in order
+    /// This is used solely in conjunction with ElementConfigurationWebViewModel in order
     /// to completely describe the behaviour of a single HTML element that is provided
     /// to the front end in order to capture all the information needed to calculate
     /// a quote.
     /// </remarks>
-    /// <see cref="ElementConfigurationWebViewModel" />
+    /// <seealso cref="ElementConfigurationWebViewModel" />
     /// <seealso cref="Controllers.QuoteController" />
     public class ElementDescription
     {
@@ -103,7 +111,7 @@ namespace AngularApp.API.Models.WebViewModels.ElementConfigurationModels
         /// if an element is a currency element, then TYPE must be set to "text"
         /// as quoted.
         /// </remarks>
-        /// <see cref="Type" />
+        /// <seealso cref="Type" />
         public bool IsCurrency { get; set; }
         /// <summary>
         /// Denotes if an element is required to filled in or not before submitting

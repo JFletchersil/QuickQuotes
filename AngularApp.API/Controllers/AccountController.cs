@@ -17,16 +17,31 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace AngularApp.API.Controllers
 {
     //[RoutePrefix("api/Account")]
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
+        /// <summary>
+        /// The Authentication Repository
+        /// </summary>
         private readonly AuthRepository _repo = null;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AccountController"/> class.
+        /// </summary>
         public AccountController()
         {
             _repo = new AuthRepository();
         }
 
+        /// <summary>
+        /// Logins the specified login view model.
+        /// </summary>
+        /// <param name="loginViewModel">The login view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -57,6 +72,11 @@ namespace AngularApp.API.Controllers
         }
 
         // POST api/Account/Register
+        /// <summary>
+        /// Registers the specified user model.
+        /// </summary>
+        /// <param name="userModel">The user model.</param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
@@ -73,6 +93,11 @@ namespace AngularApp.API.Controllers
             return errorResult ?? Ok();
         }
 
+        /// <summary>
+        /// Returns all users.
+        /// </summary>
+        /// <param name="parameterWebView">The parameter web view.</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult ReturnAllUsers(AccountPagingParameterWebViewModel parameterWebView)
         {
@@ -114,6 +139,11 @@ namespace AngularApp.API.Controllers
             });
         }
 
+        /// <summary>
+        /// Returns all users at level for search.
+        /// </summary>
+        /// <param name="viewModel">The view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult ReturnAllUsersAtLevelForSearch(SearchAccounthWebViewModel viewModel)
         {
@@ -124,6 +154,11 @@ namespace AngularApp.API.Controllers
             return Ok(returnItem);
         }
 
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="deleteModel">The delete model.</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult DeleteUser(UserDeleteViewModel deleteModel)
         {
@@ -132,6 +167,11 @@ namespace AngularApp.API.Controllers
             return result.Succeeded ? Ok() : GetErrorResult(result);
         }
 
+        /// <summary>
+        /// Alters the account login details.
+        /// </summary>
+        /// <param name="editViewModel">The edit view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IHttpActionResult> AlterAccountLoginDetails(UserEditViewModel editViewModel)
         {
@@ -156,6 +196,11 @@ namespace AngularApp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Clones the user.
+        /// </summary>
+        /// <param name="cloneUserViewModel">The clone user view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult CloneUser(UserEditViewModel cloneUserViewModel)
         {
@@ -171,6 +216,11 @@ namespace AngularApp.API.Controllers
             return errorResult ?? Ok();
         }
 
+        /// <summary>
+        /// Changes the type of the user.
+        /// </summary>
+        /// <param name="typeViewModel">The type view model.</param>
+        /// <returns></returns>
         [HttpPost]
         public IHttpActionResult ChangeUserType(UserTypeViewModel typeViewModel)
         {
@@ -193,6 +243,10 @@ namespace AngularApp.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Releases the unmanaged resources that are used by the object and, optionally, releases the managed resources.
+        /// </summary>
+        /// <param name="disposing">true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -203,6 +257,11 @@ namespace AngularApp.API.Controllers
             base.Dispose(disposing);
         }
 
+        /// <summary>
+        /// Gets the error result.
+        /// </summary>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
@@ -232,6 +291,12 @@ namespace AngularApp.API.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Converts to web view model.
+        /// </summary>
+        /// <param name="pagedQuotes">The paged quotes.</param>
+        /// <param name="returnAll">if set to <c>true</c> [return all].</param>
+        /// <returns></returns>
         private List<QueueUserWebViewModel> ConvertToWebViewModel(List<IdentityUser> pagedQuotes, bool returnAll)
         {
             pagedQuotes = !returnAll ?
@@ -253,6 +318,12 @@ namespace AngularApp.API.Controllers
             return returnItems;
         }
 
+        /// <summary>
+        /// Tests the function.
+        /// </summary>
+        /// <param name="str1">The STR1.</param>
+        /// <param name="str2">The STR2.</param>
+        /// <returns></returns>
         private bool TestFunction(string str1, string str2)
         {
             return str1 != null && str1.ToUpper().Contains(str2.ToUpper());

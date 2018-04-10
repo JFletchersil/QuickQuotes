@@ -9,11 +9,10 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
     /// Models a collection of multiple users in a form that allows the string value to be deserialised
     /// </summary>
     /// <remarks>
-    /// To handle the issues provided with deserialising text data, I have had to encase the the 
-    /// List<Auth0LightUserWebViewModel> inside another model to provide easy deserialisation. 
-    /// This makes this class purely a wrapper class.
+    /// To handle the issues provided with deserialising text data, I have had to encase the
+    /// List of Auth0LightUserWebViewModel inside another model to provide easy deserialisation
     /// </remarks>
-    /// <see cref="Auth0LightUserWebViewModel"/>
+    /// <seealso cref="Auth0LightUserWebViewModel"/>
     public class Auth0MultiUserWebViewModel
     {
         /// <summary>

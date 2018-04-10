@@ -287,3 +287,4 @@ __pycache__/
 *.odx.cs
 *.xsd.cs
 /AngularApp/app/bower_components
+/Sandcastle Documentation/Help

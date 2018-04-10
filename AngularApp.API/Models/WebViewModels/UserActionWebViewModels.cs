@@ -1,14 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// A collection of models designed to allow operations upon the account details of a user
-/// </summary>
 namespace AngularApp.API.Models.WebViewModels.UserActionModels
 {
     /// <summary>
+    /// A collection of models designed to allow operations upon the account details of a user
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
+    /// <summary>
     /// A class designed to represent what type of user a user is
     /// </summary>
-    /// <see cref="Controllers.AccountController"/>
+    /// <seealso cref="Controllers.AccountController"/>
     public class UserTypeViewModel
     {
         /// <summary>
@@ -32,7 +38,7 @@ namespace AngularApp.API.Models.WebViewModels.UserActionModels
     /// A class designed represent a single request that a user be deleted from the
     /// database
     /// </summary>
-    /// <see cref="Controllers.AccountController"/>
+    /// <seealso cref="Controllers.AccountController"/>
     public class UserDeleteViewModel
     {
         /// <summary>
@@ -58,7 +64,7 @@ namespace AngularApp.API.Models.WebViewModels.UserActionModels
     /// This class has more parameters than the other two classes due to the fact
     /// that all of the parameters of this class could be edited upon request.
     /// </remarks>
-    /// <see cref="Controllers.AccountController"/>
+    /// <seealso cref="Controllers.AccountController"/>
     /// <seealso cref="Repository.AuthRepository"/>
     public class UserEditViewModel
     {

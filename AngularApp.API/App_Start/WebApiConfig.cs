@@ -5,8 +5,16 @@ using System.Web.Http;
 
 namespace AngularApp.API
 {
+    /// <summary>
+    /// The configuration file that stores the configurations for the various
+    /// web api's inside the project
+    /// </summary>
     public static class WebApiConfig
     {
+        /// <summary>
+        /// Registers the specified configuration.
+        /// </summary>
+        /// <param name="config">The configuration.</param>
         public static void Register(HttpConfiguration config)
         {
 

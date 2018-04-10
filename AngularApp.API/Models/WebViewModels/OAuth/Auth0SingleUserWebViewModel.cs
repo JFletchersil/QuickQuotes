@@ -14,7 +14,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         public string Guid { get; set; }
 
         /// <summary>
-        /// The username of a given user
+        /// The user name of a given user
         /// </summary>
         [JsonProperty("nickname")]
         public string UserName { get; set; }
@@ -29,7 +29,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         /// The phone number of a given user
         /// </summary>
         /// <remarks>
-        /// Retreieves the data from the meta data, and returns an empty string if it doesn't exist
+        /// Retrieves the data from the meta data, and returns an empty string if it doesn't exist
         /// </remarks>
         public string PhoneNumber
         {
@@ -88,7 +88,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         /// <remarks>
         /// More details about the model can be found in Auth0UserMetaDataWebViewModel
         /// </remarks>
-        /// <see cref="Auth0UserMetaDataWebViewModel"/>
+        /// <seealso cref="Auth0UserMetaDataWebViewModel"/>
         [JsonProperty("user_metadata")]
         public Auth0UserMetaDataWebViewModel UserMetaData { get; set; }
 
@@ -98,7 +98,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         /// <remarks>
         /// More details about the model can be found in Auth0AppMetaDataWebViewModel
         /// </remarks>
-        /// <see cref="Auth0AppMetaDataWebViewModel"/>
+        /// <seealso cref="Auth0AppMetaDataWebViewModel"/>
         [JsonProperty("app_metadata")]
         public Auth0AppMetaDataWebViewModel AppMetaData { get; set; }
 

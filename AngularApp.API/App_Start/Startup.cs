@@ -1,7 +1,7 @@
 ﻿using System.Web.Http;
 using AngularApp.API;
 using AngularApp.API.Models.DBModels;
-using AngularApp.API.Models.WebViewModels;
+using AngularApp.API.Models.WebViewModels.ConfigurationViewModels;
 using AutoMapper;
 using Microsoft.Owin;
 using Owin;
@@ -10,8 +10,15 @@ using Owin;
 
 namespace AngularApp.API
 {
+    /// <summary>
+    /// The start up class that is run when the Api starts
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Configurations the specified application.
+        /// </summary>
+        /// <param name="app">The application.</param>
         public void Configuration(IAppBuilder app)
         {
             var config = new HttpConfiguration();
@@ -32,6 +39,5 @@ namespace AngularApp.API
                 .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
             });
         }
-
     }
 }

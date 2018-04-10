@@ -1,24 +1,30 @@
 ﻿using Newtonsoft.Json.Linq;
 using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// Provides a collection of models designed to make saving and updating
-/// the quotations within the database easier.
-/// </summary>
 namespace AngularApp.API.Models.WebViewModels.QuotationSaveModels
 {
+    /// <summary>
+    /// Provides a collection of models designed to make saving and updating
+    /// the quotations within the database easier.
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// A class representing a full quote from the database
     /// </summary>
     /// <remarks>
-    /// This class represnets a complete quote, including Calculations, details
+    /// This class represents a complete quote, including Calculations, details
     /// as well as the parent id and it's own id.
     /// This is used in cases when the full quote details are needed, in most cases
     /// only part of this model is needed and thus is further broken down elsewhere in
     /// the application.
     /// </remarks>
-    /// <see cref="Controllers.QuoteController"/>
-    /// <seealso cref="QueueDisplay"/>
+    /// <seealso cref="Controllers.QuoteController"/>
+    /// <seealso cref="QueueDisplayModels"/>
     public class QuotationSaveWebViewModels
     {
         /// <summary>

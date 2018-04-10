@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-/// <summary>
-/// Provides a collection of view models for managing user accounts within the system
-/// </summary>
+
 namespace AngularApp.API.Models.WebViewModels.AccountViewModels
 {
+    /// <summary>
+    /// Provides a collection of view models for managing user accounts within the system
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+    }
+
     /// <summary>
     /// View model for external login via 0Auth Service
     /// </summary>
@@ -34,52 +40,12 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
     public class ExternalLoginListViewModel
     {
         /// <summary>
-        /// The return url the user should be returned to
+        /// The return URL the user should be returned to
         /// </summary>
         /// <value>
         /// The return URL.
         /// </value>
         public string ReturnUrl { get; set; }
-    }
-
-    /// <summary>
-    /// A model meant for storing a log in request via a code of some kind
-    /// </summary>
-    /// <remarks>
-    /// This class is not used in this project, and can be safely ignored until needed.
-    /// This class would mainly be used in contexts such as mobile authentication or the like, where
-    /// a code would be provided.
-    /// </remarks>
-    public class SendCodeViewModel
-    {
-        /// <summary>
-        /// The provider of a given third party code
-        /// </summary>
-        /// <value>
-        /// The selected provider.
-        /// </value>
-        public string SelectedProvider { get; set; }
-        /// <summary>
-        /// A list of valid providers that could be used for authentication
-        /// </summary>
-        /// <value>
-        /// The providers.
-        /// </value>
-        public ICollection<System.Web.Mvc.SelectListItem> Providers { get; set; }
-        /// <summary>
-        /// The return url the user should be returned to
-        /// </summary>
-        /// <value>
-        /// The return URL.
-        /// </value>
-        public string ReturnUrl { get; set; }
-        /// <summary>
-        /// If the user should be remembered by logging in using the third party code
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [remember me]; otherwise, <c>false</c>.
-        /// </value>
-        public bool RememberMe { get; set; }
     }
 
     /// <summary>
@@ -110,7 +76,7 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         [Display(Name = "Code")]
         public string Code { get; set; }
         /// <summary>
-        /// The return url to which the user should be returned to
+        /// The return URL to which the user should be returned to
         /// </summary>
         /// <value>
         /// The return URL.
@@ -123,7 +89,7 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         ///   <c>true</c> if [remember browser]; otherwise, <c>false</c>.
         /// </value>
         /// <remarks>
-        /// I.e. Make it a valid autenticated location for access.
+        /// I.e. Make it a valid authenticated location for access.
         /// </remarks>
         [Display(Name = "Remember this browser?")]
         public bool RememberBrowser { get; set; }
@@ -137,7 +103,7 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
     }
 
     /// <summary>
-    /// A model used to request a reset email to the authetication service
+    /// A model used to request a reset email to the authentication service
     /// </summary>
     /// <remarks>
     /// This class is not used in this project, and can be safely ignored until needed.
@@ -160,13 +126,13 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
     }
 
     /// <summary>
-    /// The model used to log a user in, including both a username/email and password
+    /// The model used to log a user in, including both a user name/email and password
     /// </summary>
     /// <remarks>
     /// This is actually used inside the project, and as such should not be altered.
     /// It is used inside the AccountController.
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     /// <seealso cref="Controllers.Auth0Controller" />
     public class LoginViewModel
     {
@@ -209,13 +175,13 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
     /// the registration model.
     /// This model is used within the program, at Controllers.AccountController and Repository.AuthRepository
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     /// <seealso cref="Repository.AuthRepository" />
     /// <seealso cref="Controllers.Auth0Controller" />
     public class RegisterViewModel
     {
         /// <summary>
-        /// The email with which the user will be using as both username and email address for the account system
+        /// The email with which the user will be using as both user name and email address for the account system
         /// </summary>
         /// <value>
         /// The email.
@@ -247,31 +213,31 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         /// This must match the Password property, otherwise it will be rejected out of hand, this is to
         /// prevent typos inside the password entry
         /// </remarks>
-        /// <see cref="Password" />
+        /// <seealso cref="Password" />
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
         /// <summary>
-        /// Sets the intial configuration for if the user is an Admin user
+        /// Sets the initial configuration for if the user is an Administration user
         /// </summary>
         /// <value>
         ///   <c>true</c> if this instance is administrator; otherwise, <c>false</c>.
         /// </value>
         /// <remarks>
-        /// By default, the user is assumed to not be an Admin level user.
+        /// By default, the user is assumed to not be an Administration level user.
         /// </remarks>
-        [Display(Name = "Is Admin")]
+        [Display(Name = "Is Administration")]
         public bool IsAdministrator { get; set; } = false;
 
         /// <summary>
-        /// The username that the user will have within the system, this is also used in conjunction with email
+        /// The user name that the user will have within the system, this is also used in conjunction with email
         /// </summary>
         /// <value>
         /// The name of the user.
         /// </value>
-        /// <see cref="Email" />
+        /// <seealso cref="Email" />
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         public string UserName { get; set; }
@@ -321,7 +287,7 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         /// <remarks>
         /// This must match the previous property.
         /// </remarks>
-        /// <see cref="Password" />
+        /// <seealso cref="Password" />
         [DataType(DataType.Password)]
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
@@ -366,9 +332,9 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
     /// in the administration screen.
     /// </summary>
     /// <remarks>
-    /// This is used wholy to manage large collections of users by allowing a direct database serach.
+    /// This is used wholly to manage large collections of users by allowing a direct database search.
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     public class SearchAccounthWebViewModel
     {
         /// <summary>

@@ -19,10 +19,10 @@ namespace AngularApp.API.Controllers
     public class ProductQuoteTypeController : ApiController
     {
         /// <summary>
-        /// Creates a private, readonly connection to the database for gathering the quote and product types
+        /// Creates a private, read only connection to the database for gathering the quote and product types
         /// </summary>
         /// <remarks>
-        /// Unless this changes due to developer actions, this should readonly as there is no need for
+        /// Unless this changes due to developer actions, this should read only as there is no need for
         /// this controller to have write permissions to the database.
         /// </remarks>
         private readonly Entities _dbContext = new Entities();

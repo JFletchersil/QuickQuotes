@@ -1,11 +1,17 @@
 ﻿using System.Collections.Generic;
 
-/// <summary>
-/// A collection of models representing the User Queue, this is the queue that 
-/// forms the focus of the administration screen.
-/// </summary>
 namespace AngularApp.API.Models.WebViewModels.UserQueueDisplayModels
 {
+    /// <summary>
+    /// A collection of models representing the User Queue, this is the queue that 
+    /// forms the focus of the administration screen.
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
     /// <summary>
     /// A class representation of a single user row from within the identification
     /// database
@@ -14,7 +20,7 @@ namespace AngularApp.API.Models.WebViewModels.UserQueueDisplayModels
     /// This class represents a single user within the database, it stores all of their
     /// relevant data so that the application can adjust the user as needed.
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     /// <seealso cref="PaginatedQueueUserResult"/>
     public class QueueUserWebViewModel
     {
@@ -77,7 +83,7 @@ namespace AngularApp.API.Models.WebViewModels.UserQueueDisplayModels
     /// This holds all of the relevant information needed to fully manage the 
     /// pagination of the contents of the user table within the database
     /// </remarks>
-    /// <see cref="Controllers.AccountController"/>
+    /// <seealso cref="Controllers.AccountController"/>
     public class PaginatedQueueUserResult
     {
         /// <summary>

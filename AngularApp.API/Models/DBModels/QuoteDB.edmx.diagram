@@ -5,8 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="a1b94a4bc5e7470ea0d8b1410db30050" Name="Diagram1" ZoomLevel="86">
-        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanQuote" Width="1.5" PointX="8.625" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanResult" Width="1.5" PointX="10.125" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanQuote" Width="2.25" PointX="8.625" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="QuoteDBModel.PersonalLoanResult" Width="2.625" PointX="8.5" PointY="7.125" IsExpanded="true" />
         <EntityTypeShape EntityType="QuoteDBModel.ProductType" Width="1.5" PointX="0.75" PointY="4.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QuoteDBModel.QuoteDefault" Width="1.5" PointX="5.25" PointY="9.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QuoteDBModel.Quote" Width="2.25" PointX="5.25" PointY="5.5" IsExpanded="true" />

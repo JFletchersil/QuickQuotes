@@ -7,10 +7,19 @@ using PetaPoco;
 namespace AngularApp.API.Models.DBModels
 {
     /// <summary>
+    /// A collection of models designed to help operate the database modelling of the system.
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
+    /// <summary>
     /// Provides a class to map the information schema of a table, this is used to generically gather
     /// the parameters within a table.
     /// </summary>
-    /// <see cref="Controllers.QuoteController" />
+    /// <seealso cref="Controllers.QuoteController" />
     [TableName("INFORMATION_SCHEMA.COLUMNS")]
     public class ColumnMapper
     {

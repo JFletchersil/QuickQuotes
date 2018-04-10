@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/// <summary>
-/// This is a collection of models that are used to manage how the main quote queue screen is displayed
-/// </summary>
-/// <remarks>
-/// In this case, it is used solely in conjunction with the the QueueController in order to
-/// manage how the Queue is displayed and functions relating to the queue
-/// </remarks>
 namespace AngularApp.API.Models.WebViewModels.QueueDisplayModels
 {
     /// <summary>
-    /// Provides a model for responses to seach requests
+    /// This is a collection of models that are used to manage how the main quote queue screen is displayed
+    /// </summary>
+    /// <remarks>
+    /// In this case, it is used solely in conjunction with the QueueController in order to
+    /// manage how the Queue is displayed and functions relating to the queue
+    /// </remarks>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
+    /// <summary>
+    /// Provides a model for responses to search requests
     /// </summary>
     /// <remarks>
     /// This models a simple amount of information to allow the front end 
@@ -20,7 +26,7 @@ namespace AngularApp.API.Models.WebViewModels.QueueDisplayModels
     /// This quick search is displayed on the top right hand side of the graphical interface
     /// in the program.
     /// </remarks>
-    /// <see cref="Controllers.QueueController"/>
+    /// <seealso cref="Controllers.QueueController"/>
     public class QuickSearchResult
     {
         /// <summary>
@@ -55,7 +61,7 @@ namespace AngularApp.API.Models.WebViewModels.QueueDisplayModels
     /// This hook then searches based off the quote reference, and displays this quote
     /// inside the quote table queue.
     /// </remarks>
-    /// <see cref="Controllers.QueueController"/>
+    /// <seealso cref="Controllers.QueueController"/>
     /// <seealso cref="QuickSearchResult"/>
     public class QuickSearchRequest
     {
@@ -87,7 +93,7 @@ namespace AngularApp.API.Models.WebViewModels.QueueDisplayModels
     /// This represents a single row within the table that contains all quotes within
     /// the database. A collection of these is used to display all the results.
     /// </remarks>
-    /// <see cref="Controllers.QueueController"/>
+    /// <seealso cref="Controllers.QueueController"/>
     /// <seealso cref="PaginatedQueueResult"/>
     public class QueueDisplayWebViewModel
     {
@@ -136,7 +142,7 @@ namespace AngularApp.API.Models.WebViewModels.QueueDisplayModels
     /// This is used to hold the result of performing pagination onto the quotes within the 
     /// database
     /// </remarks>
-    /// <see cref="Controllers.QueueController"/>
+    /// <seealso cref="Controllers.QueueController"/>
     public class PaginatedQueueResult
     {
         /// <summary>

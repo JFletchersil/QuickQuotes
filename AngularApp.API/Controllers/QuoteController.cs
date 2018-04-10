@@ -32,7 +32,7 @@ namespace AngularApp.API.Controllers
     public class QuoteController : ApiController
     {
         /// <summary>
-        /// Creates a private, readonly connection to the database for gathering the details required for the management
+        /// Creates a private, read only connection to the database for gathering the details required for the management
         /// of quotes themselves.
         /// </summary>
         private readonly Entities _dbContext = new Entities();
@@ -63,7 +63,7 @@ namespace AngularApp.API.Controllers
         /// A list of elements to be displayed on the page as well as their validation information
         /// </returns>
         /// <remarks>
-        /// This is used to generically configure the quote page, based off JSON data, so as to avoid needing mutliple
+        /// This is used to generically configure the quote page, based off JSON data, so as to avoid needing multiple
         /// different pages in order to cover multiple different quote types.
         /// Returned is an item for each element that must be on the page, as well as the associated form validation data.
         /// </remarks>
@@ -87,11 +87,11 @@ namespace AngularApp.API.Controllers
         /// <remarks>
         /// This function is highly specialised, it is designed to use configuration data from the database
         /// in order to calculate the values to be returned to the user.
-        /// Alternately, rather than using a given calcuation formula stored within the database,
+        /// Alternately, rather than using a given calculation formula stored within the database,
         /// it can use an external calculator in order to get the result.
-        /// Additionally, should a commission calculator be given, it can also use that to calculate basic comission
+        /// Additionally, should a commission calculator be given, it can also use that to calculate basic commission
         /// structures.
-        /// If the database calculation is used, then it takes it in a string format and converts it into a mathmatical
+        /// If the database calculation is used, then it takes it in a string format and converts it into a mathematical
         /// formula after inserting/replacing the values in the string formula with the values inside the request object.
         /// If this database calculation is used, then you must ensure that the names for the elements across all
         /// parts of the quote configuration match, otherwise inconsistent or wrong results will be returned.
@@ -100,7 +100,7 @@ namespace AngularApp.API.Controllers
         public async Task<QuotationResultWebViewModel> CalculateQuoteAsync(HttpRequestMessage request)
         {
             // Breaks down and converts the request into a dict as well as JObject
-            // The JObject is used to assertain the type, in order to get the defaults
+            // The JObject is used to ascertain the type, in order to get the defaults
             // The Dict is used to perform the calculations later on
             var dataText = request.Content.ReadAsStringAsync().Result;
             var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataText);
@@ -141,7 +141,7 @@ namespace AngularApp.API.Controllers
             // calculate the Total Repayable, the values within the template that need to be replaced
             // are replaced within the function below
             var retVal = PopularDefaultsWithString(dict, quoteDefaults.TotalRepayableTemplate);
-            // Uses the datatable functionality to compute strings as if they were mathmatical formulas to get
+            // Uses the data table functionality to compute strings as if they were mathematical formulas to get
             // a value for the total repayable. From this, we can calculate the other parameters
             var totalRepayable = Convert.ToDecimal(new DataTable().Compute(retVal, null));
 
@@ -157,9 +157,9 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Saves the quote to the main quote table, as well as the specifc quote tables
+        /// Saves the quote to the main quote table, as well as the specific quote tables
         /// </summary>
-        /// <param name="saveModel">Contains the quote details as well as calulation, parent product id and it's own id</param>
+        /// <param name="saveModel">Contains the quote details as well as calculation, parent product id and it's own id</param>
         /// <returns>
         /// A 200 or 500 server response depending on if the action was successful or not
         /// </returns>
@@ -208,13 +208,13 @@ namespace AngularApp.API.Controllers
             if (!success)
                 return InternalServerError(new Exception("Unable to Perform Table Operations"));
 
-            // Inserts into the quote specifc quote table the details of the quotation
+            // Inserts into the quote specific quote table the details of the quotation
             // More information about the function can be found in the function description
             success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, saveModel.QuotationDetails, TableType.Quotes);
             if (!success)
                 return InternalServerError(new Exception("Unable to Perform Table Operations"));
 
-            // Inserts into the quote specifc results table the details of the quotation result
+            // Inserts into the quote specific results table the details of the quotation result
             var resultsObj = JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(saveModel.QuotationCalculation));
             success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, resultsObj, TableType.Results);
             if (!success)
@@ -282,18 +282,18 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Searches via a regex for signs of replacable text and then replaces them with string representations
-        /// of the value that the replacable text should be
+        /// Searches via a regex for signs of replaceable text and then replaces them with string representations
+        /// of the value that the replaceable text should be
         /// </summary>
         /// <param name="frontEndData">A Key Value representation of the parameters sourced from the front end</param>
         /// <param name="templateXML">The Template XML/Calculation that has the strings that are to be replaced</param>
         /// <returns>
-        /// A string containing an XML/Calculation template with the replacable text replaced with
+        /// A string containing an XML/Calculation template with the replaceable text replaced with
         /// the values from the front end
         /// </returns>
         /// <remarks>
-        /// Effectively, this seeks to replace {axnx} with the value axnx from the KeyValue pair dictonary.
-        /// This allows us to substitue the empty text place holders with actual text values from the front
+        /// Effectively, this seeks to replace {axnx} with the value axnx from the KeyValue pair dictionary.
+        /// This allows us to substitute the empty text place holders with actual text values from the front
         /// end.
         /// This makes templating XML for sending to calculators, or doing a generic calculation from the database
         /// in text format possible and or easier.
@@ -328,7 +328,7 @@ namespace AngularApp.API.Controllers
         {
             // Makes a connection to the database via PetaPoco
             var db = new Database("QuoteDB");
-            // Formats the table name according to the type of table we are working on as well as the the quote type
+            // Formats the table name according to the type of table we are working on as well as the quote type
             var tablename = $"{quoteType}{type.ToString()}";
             // Fetches, using PetaPoco, all of the row details where there is matching quote reference
             // This is converted into a String, Object relation to be further converted into a JObject later
@@ -348,7 +348,7 @@ namespace AngularApp.API.Controllers
         /// <param name="resultsObj">A JObject representation of the quote details being saved to either the Results or quotes table</param>
         /// <param name="type">The table type being operated on, either a Calculations or a Quote Result table</param>
         /// <returns>
-        /// A bool signifying if the save operation amanged to succeed or not
+        /// A bool signifying if the save operation managed to succeed or not
         /// </returns>
         /// <remarks>
         /// This is the most tricky of all the functions in the API, changes here should be made with great care.
@@ -375,9 +375,9 @@ namespace AngularApp.API.Controllers
             {
                 // Makes a connection to the database via PetaPoco
                 var db = new Database("QuoteDB");
-                // Formats the table name according to the type of table we are working on as well as the the quote type
+                // Formats the table name according to the type of table we are working on as well as the quote type
                 var tablename = $"{quoteType}{type.ToString()}";
-                // Selects the column configurations based off sql string configuration, preventing SQL attacks
+                // Selects the column configurations based off SQL string configuration, preventing SQL attacks
                 var returnValuesExecute =
                     db.Fetch<ColumnMapper>("WHERE TABLE_NAME = @tablename", new{ tablename });
                 // Removes the quote reference column, it doesn't make sense to add it here as we'll be working that 
@@ -388,7 +388,7 @@ namespace AngularApp.API.Controllers
                 // Loops over the Columns in order to fill the values in
                 foreach (var col in returnValuesExecute)
                 {
-                    // Iterates over the the columns and places them correctly depending on
+                    // Iterates over the columns and places them correctly depending on
                     // if they are either an int, string or double value.
                     var value = resultsObj.Value<string>(col.ColumnName);
                     if (int.TryParse(value, out var result))

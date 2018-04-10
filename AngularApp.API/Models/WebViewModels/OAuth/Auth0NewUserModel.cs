@@ -21,8 +21,8 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         /// The connection.
         /// </value>
         /// <remarks>
-        /// In the case of a standard username/email password authenticate, this will be displayed as
-        /// Username-Password-Authentication
+        /// In the case of a standard user name/email password authenticate, this will be displayed as
+        /// User name-Password-Authentication
         /// </remarks>
         public string connection { get; set; }
         /// <summary>
@@ -34,10 +34,10 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         [Required]
         public string email { get; set; }
         /// <summary>
-        /// The username for the new user
+        /// The user name for the new user
         /// </summary>
         /// <value>
-        /// The username.
+        /// The user name.
         /// </value>
         [Required]
         public string username { get; set; }

@@ -3,11 +3,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace AngularApp.API.Models.WebViewModels
+namespace AngularApp.API.Models.WebViewModels.IdentityModels
 {
     /// <summary>
+    /// A collection of models designed to help operate the identity system
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
+    /// <summary>
     /// Provides a basic model of an application user within our application
-    /// This inherates from the standard asp.net Identity User and otherwise remains untouched
+    /// This inherits from the standard asp.net Identity User and otherwise remains untouched
     /// </summary>
     /// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityUser" />
     /// <remarks>
@@ -16,11 +25,11 @@ namespace AngularApp.API.Models.WebViewModels
     public class ApplicationUser : IdentityUser
     {
         /// <summary>
-        /// Generates a single user identit
+        /// Generates a single user identity
         /// </summary>
         /// <param name="manager">a User Manager that is filled with application users</param>
         /// <returns>
-        /// An async with an identity claim
+        /// An <see langword="async"/> with an identity claim
         /// </returns>
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -34,7 +43,6 @@ namespace AngularApp.API.Models.WebViewModels
     /// <summary>
     /// Creates an User Database Context for accessing the user database
     /// </summary>
-    /// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext{AngularApp.API.Models.WebViewModels.ApplicationUser}" />
     /// <remarks>
     /// Legacy generated code from the creation of the database, this can be safely ignored.
     /// </remarks>

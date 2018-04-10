@@ -29,7 +29,7 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Returns a given User Model when given a correct full name
         /// </summary>
-        /// <param name="request">The fullname/guid of a given user</param>
+        /// <param name="request">The full name/guid of a given user</param>
         /// <returns>
         /// A model representing the user details of a given user
         /// </returns>

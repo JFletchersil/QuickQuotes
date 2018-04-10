@@ -14,7 +14,7 @@ namespace AngularApp.API.Models.DBModels
     /// This is used in the user details section of the project, it contains meta data such as the
     /// assigned business/businesses, as well first name, last name and middle name.
     /// </remarks>
-    /// <see cref="Controllers.AccountController" />
+    /// <seealso cref="Controllers.AccountController" />
     /// <seealso cref="Controllers.UserDetailsController" />
     /// <seealso cref="Controllers.Auth0Controller" />
     public class UserDetails

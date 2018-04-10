@@ -197,84 +197,291 @@
     <edmx:ConceptualModels>
       <Schema Namespace="QuoteDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="PersonalLoanQuote">
+          <Documentation>
+            <Summary>A collection of quote details</Summary>
+            <LongDescription>This table holds the personal loan quote details that were used to generate a specific quote</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="QuoteReference" />
           </Key>
-          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
-          <Property Name="TermInMonths" Type="Int32" Nullable="false" />
-          <Property Name="LoanAmount" Type="Double" Nullable="false" />
-          <Property Name="Deposit" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Quote" Relationship="Self.FK_HirePurchaseQuotes_HirePurchaseQuotes" FromRole="PersonalLoanQuotes" ToRole="Quotes" />
+          <Property Name="QuoteReference" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>A unique identifier for the overall quote</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TermInMonths" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The length in months that a quote will take time over</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="LoanAmount" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>The amount, in monitary units, that the loan was for</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Deposit" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>The amount of money, in monitary units, that the person requesting the quote provided</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Quote" Relationship="Self.FK_HirePurchaseQuotes_HirePurchaseQuotes" FromRole="PersonalLoanQuotes" ToRole="Quotes" >
+            <Documentation>
+              <Summary>A reference back to the main quote table</Summary>
+            </Documentation>
+          </NavigationProperty>
         </EntityType>
         <EntityType Name="PersonalLoanResult">
+          <Documentation>
+            <Summary>A table containing the results from quote calculations</Summary>
+            <LongDescription>This table contains a collection of 
+personal loan quote results in order to ensure that
+they can be passed on to other services
+</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="QuoteReference" />
           </Key>
-          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
-          <Property Name="TotalRepayable" Type="Double" Nullable="false" />
-          <Property Name="Fees" Type="Double" Nullable="false" />
-          <Property Name="InterestRate" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Quote" Relationship="Self.FK_HirePurchaseQuoteResults_Quotes" FromRole="PersonalLoanResults" ToRole="Quotes" />
-          <Property Name="MonthlyRepayable" Type="Double" Nullable="false" />
+          <Property Name="QuoteReference" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>The unique quote reference for the given quote</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="TotalRepayable" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>The total amount to be repaid by the user</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Fees" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>Any fees that the user might have acrewed when making the loan</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="InterestRate" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>The interest rate on the loan</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Quote" Relationship="Self.FK_HirePurchaseQuoteResults_Quotes" FromRole="PersonalLoanResults" ToRole="Quotes" >
+            <Documentation>
+              <Summary>A navigation reference back to the main quote container</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="MonthlyRepayable" Type="Double" Nullable="false" >
+            <Documentation>
+              <Summary>The monthly repayable on the loan</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="ProductType">
+          <Documentation>
+            <Summary>The product types within the system</Summary>
+            <LongDescription>A collection of product types that a user may choose when applying for finance</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="ProductTypeID" />
           </Key>
-          <Property Name="ProductTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IncProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_ProductTypes" FromRole="ProductTypes" ToRole="Quotes" />
-          <NavigationProperty Name="QuoteTypes" Relationship="Self.FK_QuoteTypes_ProductTypes" FromRole="ProductTypes" ToRole="QuoteTypes" />
+          <Property Name="ProductTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" >
+            <Documentation>
+              <Summary>The unique identifier of the product type</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IncProductType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The human readable format of the product type</Summary>
+              <LongDescription>Basically just a string name for the product type</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="Enabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the product type is enabled or not</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_ProductTypes" FromRole="ProductTypes" ToRole="Quotes" >
+            <Documentation>
+              <Summary>A navigation reference to the main quote table</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="QuoteTypes" Relationship="Self.FK_QuoteTypes_ProductTypes" FromRole="ProductTypes" ToRole="QuoteTypes" >
+            <Documentation>
+              <Summary>A navigation reference to the quote types associated with each product type</Summary>
+            </Documentation>
+          </NavigationProperty>
         </EntityType>
         <EntityType Name="QuoteDefault">
+          <Documentation>
+            <Summary>The default configurations for a given quote type</Summary>
+            <LongDescription>Contains the visual default configurations for a given quote type
+as well as the valdiations needed on each quote type</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="TypeID" />
           </Key>
-          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ElementDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="XMLTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="QuoteTypeID" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteDefaults" ToRole="QuoteTypes" />
-          <Property Name="TotalRepayableTemplate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="MonthlyRepayableTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="TypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" >
+            <Documentation>
+              <Summary>The unique identifier of the quote defaults</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ElementDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The html configuration of each quote as well as it's visual defaults and validations</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="XMLTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The XML template that the quote should use when being sent away to a calculation engine</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Enabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the quote default is enabled or not</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="QuoteTypeID" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteDefaults" ToRole="QuoteTypes" >
+            <Documentation>
+              <Summary>A navigation reference to the associated quote type that the default is for</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <Property Name="TotalRepayableTemplate" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The template to be used to calculate the total repayable over the period of the loan</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="MonthlyRepayableTemplate" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" >
+            <Documentation>
+              <Summary>The template used to calculate the monthly payments to be made over the course of the loan</Summary>
+            </Documentation>
+          </Property>
         </EntityType>
         <EntityType Name="Quote">
+          <Documentation>
+            <Summary>The main quote table containing all active quotes</Summary>
+            <LongDescription>The complete iteration of all quotes within the table as well as their
+status, product type, author and date</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="QuoteReference" />
           </Key>
-          <Property Name="QuoteReference" Type="Guid" Nullable="false" />
-          <Property Name="QuoteType" Type="Int32" Nullable="false" />
-          <Property Name="QuoteStatus" Type="Int32" Nullable="false" />
-          <Property Name="ProductType" Type="Int32" Nullable="false" />
-          <Property Name="QuoteDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="QuoteAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="PersonalLoanQuote" Relationship="Self.FK_HirePurchaseQuotes_HirePurchaseQuotes" FromRole="Quotes" ToRole="PersonalLoanQuotes" />
-          <NavigationProperty Name="PersonalLoanResult" Relationship="Self.FK_HirePurchaseQuoteResults_Quotes" FromRole="Quotes" ToRole="PersonalLoanResults" />
-          <NavigationProperty Name="NaviProductType" Relationship="Self.FK_Quotes_ProductTypes" FromRole="Quotes" ToRole="ProductTypes" />
-          <NavigationProperty Name="NaviQuoteStatus" Relationship="Self.FK_Quotes_QuoteStatuses" FromRole="Quotes" ToRole="QuoteStatuses" />
-          <NavigationProperty Name="NaviQuoteType" Relationship="Self.FK_Quotes_QuoteTypes" FromRole="Quotes" ToRole="QuoteTypes" />
+          <Property Name="QuoteReference" Type="Guid" Nullable="false" >
+            <Documentation>
+              <Summary>The unique identifier for the quote</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="QuoteType" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The unique identifier for the type of quote</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="QuoteStatus" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>A unique identifier for the type of status the quote is in</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="ProductType" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>A unique identifier for the product type that the quote is a child of</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="QuoteDate" Type="DateTime" Nullable="false" Precision="3" >
+            <Documentation>
+              <Summary>The date when the quote was created</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="QuoteAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The author of the quote</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="NaviProductType" Relationship="Self.FK_Quotes_ProductTypes" FromRole="Quotes" ToRole="ProductTypes" >
+            <Documentation>
+              <Summary>A navigation reference to the table containing all the product types</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="NaviQuoteStatus" Relationship="Self.FK_Quotes_QuoteStatuses" FromRole="Quotes" ToRole="QuoteStatuses" >
+            <Documentation>
+              <Summary>A navigation reference to the database table containing all the quote statuses</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="NaviQuoteType" Relationship="Self.FK_Quotes_QuoteTypes" FromRole="Quotes" ToRole="QuoteTypes" >
+            <Documentation>
+              <Summary>A navigation reference to the table containing all the quote types</Summary>
+            </Documentation>
+          </NavigationProperty>
         </EntityType>
         <EntityType Name="QuoteStatus">
+          <Documentation>
+            <Summary>The statuses that quote may be in</Summary>
+            <LongDescription>A collection of statuses that the loan may be in, 
+determining the age of the quote as well as if it should be deleted</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="StatusID" />
           </Key>
-          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_QuoteStatuses" FromRole="QuoteStatuses" ToRole="Quotes" />
+          <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" >
+            <Documentation>
+              <Summary>The unique identifier of the status</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="State" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>The human readable name of the status</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Enabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the status is enabled or not for usage</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_QuoteStatuses" FromRole="QuoteStatuses" ToRole="Quotes" >
+            <Documentation>
+              <Summary>A navigation reference to the main quote table</Summary>
+            </Documentation>
+          </NavigationProperty>
         </EntityType>
         <EntityType Name="QuoteType">
+          <Documentation>
+            <Summary>The quote types within the application</Summary>
+            <LongDescription>A collection of different quote types that a user may select when applying for finance, 
+they have a parent product type</LongDescription>
+          </Documentation>
           <Key>
             <PropertyRef Name="QuoteTypeID" />
           </Key>
-          <Property Name="QuoteTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IncQuoteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="ProductParentID" Type="Int32" Nullable="false" />
-          <Property Name="Enabled" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="ProductType" Relationship="Self.FK_QuoteTypes_ProductTypes" FromRole="QuoteTypes" ToRole="ProductTypes" />
-          <NavigationProperty Name="QuoteDefault" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteTypes" ToRole="QuoteDefaults" />
-          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_QuoteTypes" FromRole="QuoteTypes" ToRole="Quotes" />
+          <Property Name="QuoteTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" >
+            <Documentation>
+              <Summary>The identifier of a quote type</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="IncQuoteType" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" >
+            <Documentation>
+              <Summary>A human readable representation of the quote type</Summary>
+              <LongDescription>Basically just a string</LongDescription>
+            </Documentation>
+          </Property>
+          <Property Name="ProductParentID" Type="Int32" Nullable="false" >
+            <Documentation>
+              <Summary>The parent product id, of which this quote belongs to</Summary>
+            </Documentation>
+          </Property>
+          <Property Name="Enabled" Type="Boolean" Nullable="false" >
+            <Documentation>
+              <Summary>If the quote type is enabled or not</Summary>
+            </Documentation>
+          </Property>
+          <NavigationProperty Name="ProductType" Relationship="Self.FK_QuoteTypes_ProductTypes" FromRole="QuoteTypes" ToRole="ProductTypes" >
+            <Documentation>
+              <Summary>A navigation reference from the child quote type to it's associated parent product type</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="QuoteDefault" Relationship="Self.FK_QuoteDefaults_QuoteTypes" FromRole="QuoteTypes" ToRole="QuoteDefaults" >
+            <Documentation>
+              <Summary>A reference from a quote type, to the configuration of the visual representation of that quote type</Summary>
+            </Documentation>
+          </NavigationProperty>
+          <NavigationProperty Name="Quotes" Relationship="Self.FK_Quotes_QuoteTypes" FromRole="QuoteTypes" ToRole="Quotes" >
+            <Documentation>
+              <Summary>A navigation reference to the main quote table</Summary>
+            </Documentation>
+          </NavigationProperty>
         </EntityType>
         <Association Name="FK_HirePurchaseQuotes_HirePurchaseQuotes">
           <End Role="Quotes" Type="Self.Quote" Multiplicity="1" />

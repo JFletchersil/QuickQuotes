@@ -7,7 +7,7 @@ using System.Web;
 namespace AngularApp.API.Models.WebViewModels.OAuthModels
 {
     /// <summary>
-    /// Represents a collection of the Authorisation Extension API groups, roles and permissions
+    /// Represents a collection of the Authorization Extension API groups, roles and permissions
     /// </summary>
     /// <remarks>
     /// Each is a list of strings, groups in this context represents potential different customers,
@@ -17,7 +17,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
     public class Auth0AuthorizationWebViewModel
     {
         /// <summary>
-        /// A collection of groups stored within the Authorisation Extension API of Auth0
+        /// A collection of groups stored within the Authorization Extension API of Auth0
         /// </summary>
         /// <value>
         /// The groups.
@@ -25,7 +25,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         [JsonProperty("groups")]
         public List<string> Groups { get; set; }
         /// <summary>
-        /// A collection of roles stored within the Authorisation Extension API of Auth0
+        /// A collection of roles stored within the Authorization Extension API of Auth0
         /// </summary>
         /// <value>
         /// The roles.
@@ -33,7 +33,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         [JsonProperty("roles")]
         public List<string> Roles { get; set; }
         /// <summary>
-        /// A collection of permissions stored within the Authorisation Extension API of Auth0
+        /// A collection of permissions stored within the Authorization Extension API of Auth0
         /// </summary>
         /// <value>
         /// The permissions.

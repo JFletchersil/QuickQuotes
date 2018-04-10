@@ -7,7 +7,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -32,7 +31,7 @@ namespace AngularApp.API.Controllers
         private readonly Entities _dbContext = null;
 
         /// <summary>
-        /// Intialises the ConfigurationController Controller with a entity context, allowing access to the Quote Database.
+        /// Initializes the ConfigurationController Controller with a entity context, allowing access to the Quote Database.
         /// Constructs the default details for the controller on start up.
         /// </summary>
         /// <remarks>
@@ -58,7 +57,7 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult SearchDefaultConfigurations(DefaultConfigurationSearchWebViewModel viewModel)
         {
-            // Selects the correct config type based on the string provided by the search model
+            // Selects the correct configuration type based on the string provided by the search model
             switch (viewModel.ConfigType)
             {
                 case "QuoteDefaults":
@@ -100,14 +99,14 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Returns a paginated list of all given configuration types when given a correct paging view model.
         /// </summary>
-        /// <param name="parameterWebView">Contains the configuraion type that is being examined</param>
+        /// <param name="parameterWebView">Contains the configuration type that is being examined</param>
         /// <returns>
         /// Returns a paginated view model, containing a set number of values, the number of possible pages as well as a list of configuration types.
         /// </returns>
         /// <remarks>
         /// This works in conjunction with the GenerateSelectedItemReference to return a paginated result setup.
         /// This also works to Sort configuration types based on the OrderBy value contained within the parameter configurations
-        /// More details on both are in their assoicated function remarks.
+        /// More details on both are in their associated function remarks.
         /// </remarks>
         [HttpPost]
         public IHttpActionResult ReturnDefaultConfigurations(ConfigurationPagingParameterWebViewModel parameterWebView)
@@ -259,7 +258,7 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Sorts the configuration types according to a given parameter
         /// </summary>
-        /// <typeparam name="T">This is needed to assertain the object type being worked on, must be present</typeparam>
+        /// <typeparam name="T">This is needed to ascertain the object type being worked on, must be present</typeparam>
         /// <param name="sortingList">The list to be sorted</param>
         /// <param name="orderBy">The parameter to be sorted by</param>
         /// <returns>
@@ -293,7 +292,7 @@ namespace AngularApp.API.Controllers
         /// </summary>
         /// <typeparam name="T">The type of the old list being mapped from</typeparam>
         /// <typeparam name="J">The type of the new list being mapped to</typeparam>
-        /// <param name="oldList">This list is used to assertain the type being converted to, it is not actually used for data processing</param>
+        /// <param name="oldList">This list is used to ascertain the type being converted to, it is not actually used for data processing</param>
         /// <param name="newList">The list of web view models being mapped away from</param>
         /// <returns>
         /// A mapped and casted list of web view models into database view models.
@@ -393,7 +392,7 @@ namespace AngularApp.API.Controllers
                 destination.Add(Mapper.Map(item, sourceType, destinationType));
             }
 
-            // Object is seralised to a string, prior to being deseralised down to a JObject list, else rest
+            // Object is serialised to a string, prior to being deserialised down to a JObject list, else rest
             // is similar to details provided above.
             return JsonConvert.DeserializeObject<List<JObject>>(JsonConvert.SerializeObject(destination));
         }

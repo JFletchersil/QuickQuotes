@@ -36,7 +36,7 @@ namespace AngularApp.API.Models.WebViewModels.OAuthModels
         /// </value>
         public DateTime Last_Login { get; set; }
         /// <summary>
-        /// Gives the username for the user
+        /// Gives the user name for the user
         /// </summary>
         /// <value>
         /// The name.
