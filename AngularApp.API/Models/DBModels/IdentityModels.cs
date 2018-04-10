@@ -9,6 +9,7 @@ namespace AngularApp.API.Models.WebViewModels
     /// Provides a basic model of an application user within our application
     /// This inherates from the standard asp.net Identity User and otherwise remains untouched
     /// </summary>
+    /// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityUser" />
     /// <remarks>
     /// This is barely used in any contexts, and can be safely ignored.
     /// </remarks>
@@ -18,7 +19,9 @@ namespace AngularApp.API.Models.WebViewModels
         /// Generates a single user identit
         /// </summary>
         /// <param name="manager">a User Manager that is filled with application users</param>
-        /// <returns>An async with an identity claim</returns>
+        /// <returns>
+        /// An async with an identity claim
+        /// </returns>
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType
@@ -31,6 +34,7 @@ namespace AngularApp.API.Models.WebViewModels
     /// <summary>
     /// Creates an User Database Context for accessing the user database
     /// </summary>
+    /// <seealso cref="Microsoft.AspNet.Identity.EntityFramework.IdentityDbContext{AngularApp.API.Models.WebViewModels.ApplicationUser}" />
     /// <remarks>
     /// Legacy generated code from the creation of the database, this can be safely ignored.
     /// </remarks>
@@ -50,7 +54,9 @@ namespace AngularApp.API.Models.WebViewModels
         /// <summary>
         /// Creates a ApplicationDBContext and returns it for usage in other application areas
         /// </summary>
-        /// <returns>A new applicationdbcontext</returns>
+        /// <returns>
+        /// A new applicationdbcontext
+        /// </returns>
         /// <remarks>
         /// This is not used in the project, it can be safely ignored.
         /// </remarks>

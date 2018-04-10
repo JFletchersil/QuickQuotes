@@ -329,12 +329,10 @@
       <DependentUpon>Database.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DBModels\IdentityModels.cs" />
-    <Compile Include="Models\WebViewModels\ManageViewModels.cs" />
     <Compile Include="Models\PetaPoco.cs" />
     <Compile Include="Models\WebViewModels\PagingParameterWebViewModels.cs" />
     <Compile Include="Models\WebViewModels\QueueDisplayWebViewModel.cs" />
     <Compile Include="Models\WebViewModels\QuotationDetailWebViewModels.cs" />
-    <Compile Include="Models\WebViewModels\QuotationResultsWebViewModel.cs" />
     <Compile Include="Models\WebViewModels\QuotationSaveWebViewModels.cs" />
     <Compile Include="Models\WebViewModels\UserActionWebViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

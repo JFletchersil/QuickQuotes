@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace AngularApp.API.Models.WebViewModels.OAuth
+namespace AngularApp.API.Models.WebViewModels.OAuthModels
 {
     /// <summary>
     /// A representation of a single user retrieved from the Management API
@@ -85,12 +85,20 @@ namespace AngularApp.API.Models.WebViewModels.OAuth
         /// <summary>
         /// A summation of the users meta data, includes information such phone number and full name
         /// </summary>
+        /// <remarks>
+        /// More details about the model can be found in Auth0UserMetaDataWebViewModel
+        /// </remarks>
+        /// <see cref="Auth0UserMetaDataWebViewModel"/>
         [JsonProperty("user_metadata")]
         public Auth0UserMetaDataWebViewModel UserMetaData { get; set; }
 
         /// <summary>
         /// A summation of the users app meta data, includes information from roles and permissions
         /// </summary>
+        /// <remarks>
+        /// More details about the model can be found in Auth0AppMetaDataWebViewModel
+        /// </remarks>
+        /// <see cref="Auth0AppMetaDataWebViewModel"/>
         [JsonProperty("app_metadata")]
         public Auth0AppMetaDataWebViewModel AppMetaData { get; set; }
 

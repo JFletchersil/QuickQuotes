@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AngularApp.API.Models.WebViewModels.OAuth
+namespace AngularApp.API.Models.WebViewModels.OAuthModels
 {
     /// <summary>
     /// Represents the bits of user meta-data we are interested in
@@ -18,11 +18,17 @@ namespace AngularApp.API.Models.WebViewModels.OAuth
         /// <summary>
         /// A full name of a user stored within the meta data of a user
         /// </summary>
+        /// <value>
+        /// The full name.
+        /// </value>
         [JsonProperty("fullname")]
         public string FullName { get; set; }
         /// <summary>
         /// The phone number of a user stored within the meta data of a user
         /// </summary>
+        /// <value>
+        /// The phone number.
+        /// </value>
         [JsonProperty("phonenumber")]
         public string PhoneNumber { get; set; }
     }

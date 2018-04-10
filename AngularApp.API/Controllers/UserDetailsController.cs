@@ -15,6 +15,7 @@ namespace AngularApp.API.Controllers
     /// <summary>
     /// Provides methods to alter and adjust the user details section of the user database
     /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     /// <remarks>
     /// This is distinct from the Account controller section due to the fact that this information is not
     /// associated with the direct user object.
@@ -29,7 +30,9 @@ namespace AngularApp.API.Controllers
         /// Returns a given User Model when given a correct full name
         /// </summary>
         /// <param name="request">The fullname/guid of a given user</param>
-        /// <returns>A model representing the user details of a given user</returns>
+        /// <returns>
+        /// A model representing the user details of a given user
+        /// </returns>
         /// <remarks>
         /// This model will contain meta-data that is not specifically required to generate the quotes,
         /// but might be useful for providing additional context and restrictions to identify user changes.
@@ -47,7 +50,9 @@ namespace AngularApp.API.Controllers
         /// Saves a given model of user details when given a valid user details model
         /// </summary>
         /// <param name="userDetails">A user details model with updated or changed parameters</param>
-        /// <returns>A bool representing if the change was successful or not</returns>
+        /// <returns>
+        /// A bool representing if the change was successful or not
+        /// </returns>
         /// <remarks>
         /// This uses PetaPoco to update the database, this allows us to sidestep update issues present
         /// within other sections of the project.

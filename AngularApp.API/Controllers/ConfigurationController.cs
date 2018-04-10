@@ -1,5 +1,6 @@
 ﻿using AngularApp.API.Models.DBModels;
-using AngularApp.API.Models.WebViewModels;
+using AngularApp.API.Models.WebViewModels.ConfigurationViewModels;
+using AngularApp.API.Models.WebViewModels.PagingModels;
 using AutoMapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -15,15 +16,19 @@ namespace AngularApp.API.Controllers
     /// <summary>
     /// The controller responsible for working with the Database to configure the application
     /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     /// <remarks>
     /// This controller is designed only to update the work involving the configuration of the application.
-    /// It is the second most complicated controller due to this, as it must be relatively 
+    /// It is the second most complicated controller due to this, as it must be relatively
     /// flexible to account for the multiple different configuration types.
     /// </remarks>
     [EnableCors("*", "*", "*")]
     public class ConfigurationController : ApiController
     {
         // Provides a context location to the database containing all application user data
+        /// <summary>
+        /// The database context
+        /// </summary>
         private readonly Entities _dbContext = null;
 
         /// <summary>
@@ -42,7 +47,9 @@ namespace AngularApp.API.Controllers
         /// Performs a search against all configuration options to locate a matching configuration
         /// </summary>
         /// <param name="viewModel">A model containing the Search Parameter as well as the Configuration Type</param>
-        /// <returns>A list of matching configurations based on the filter text and how close the response is</returns>
+        /// <returns>
+        /// A list of matching configurations based on the filter text and how close the response is
+        /// </returns>
         /// <remarks>
         /// This function works for all configuration types currently configured, it uses the
         /// TestFunction and LINQ to test all the relevant fields for matches.
@@ -91,10 +98,12 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Returns a paginated list of all given configuration types when given a correct paging view model. 
+        /// Returns a paginated list of all given configuration types when given a correct paging view model.
         /// </summary>
         /// <param name="parameterWebView">Contains the configuraion type that is being examined</param>
-        /// <returns>Returns a paginated view model, containing a set number of values, the number of possible pages as well as a list of configuration types.</returns>
+        /// <returns>
+        /// Returns a paginated view model, containing a set number of values, the number of possible pages as well as a list of configuration types.
+        /// </returns>
         /// <remarks>
         /// This works in conjunction with the GenerateSelectedItemReference to return a paginated result setup.
         /// This also works to Sort configuration types based on the OrderBy value contained within the parameter configurations
@@ -129,9 +138,11 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Saves a given default configuration depending on what type the configuration type is being worked with
         /// </summary>
-        /// <param name="saveConfigs">Contains the configuration type that is being saved, as well as the 
+        /// <param name="saveConfigs">Contains the configuration type that is being saved, as well as the
         /// list of configurations that is to be saved.</param>
-        /// <returns>A 200 or 500 HTTP response depending on if the result was a success or not</returns>
+        /// <returns>
+        /// A 200 or 500 HTTP response depending on if the result was a success or not
+        /// </returns>
         /// <remarks>
         /// The function presumes that you wish to update only one type of configuration at a time, but
         /// with any number of configurations within that range.
@@ -251,7 +262,9 @@ namespace AngularApp.API.Controllers
         /// <typeparam name="T">This is needed to assertain the object type being worked on, must be present</typeparam>
         /// <param name="sortingList">The list to be sorted</param>
         /// <param name="orderBy">The parameter to be sorted by</param>
-        /// <returns>A sorted list of type T</returns>
+        /// <returns>
+        /// A sorted list of type T
+        /// </returns>
         /// <remarks>
         /// The orderBy is expected to be a valid parameter type for a module, with potentially a - on it.
         /// If - is on it, descending order is presumed, else the order is presumed to be ascending.
@@ -322,7 +335,9 @@ namespace AngularApp.API.Controllers
         /// <param name="items">The full list of database models that is being paginated</param>
         /// <param name="pageSize">Sets the given size of the pages, I.e. 5 would make pages 5 items long</param>
         /// <param name="pageNumber">Sets the current page number the front end is on, I.e. 2 would give us 6-10 paginated items</param>
-        /// <returns>A paginated object, containing all the details to properly represent the given pagination configuration and the results</returns>
+        /// <returns>
+        /// A paginated object, containing all the details to properly represent the given pagination configuration and the results
+        /// </returns>
         /// <remarks>
         /// It is expected that the results will be ordered prior to being given to the function to be paginated.
         /// Objects returned are made out of a web view model, rather than a database model, this is important
@@ -350,10 +365,12 @@ namespace AngularApp.API.Controllers
         /// Maps the given values away from database view models to web view models, breaking any object references and giving only data
         /// </summary>
         /// <typeparam name="T">The database model being mapped away from</typeparam>
-        /// <param name="pagedConfigurations">The paged configuration values being mapped to view models </param>
-        /// <returns>A List of JObjects representing the paginated configuration results</returns>
+        /// <param name="pagedConfigurations">The paged configuration values being mapped to view models</param>
+        /// <returns>
+        /// A List of JObjects representing the paginated configuration results
+        /// </returns>
         /// <remarks>
-        /// JObjects are used, as they are generic across all of the quote types, this allows us to simplify 
+        /// JObjects are used, as they are generic across all of the quote types, this allows us to simplify
         /// the code down and use the same functions for all the configuration types.
         /// This does not pose a reference problem, due to the fact that they are all accurate prior to this
         /// simplification.
@@ -386,7 +403,9 @@ namespace AngularApp.API.Controllers
         /// </summary>
         /// <param name="str1">The value which is being searched, normally a database model</param>
         /// <param name="str2">The search or filter text, which the user is searching for, generally a string.</param>
-        /// <returns>A true or false value which signals if the str2 value is present within str1</returns>
+        /// <returns>
+        /// A true or false value which signals if the str2 value is present within str1
+        /// </returns>
         private bool TestFunction(string str1, string str2)
         {
             // Checks if the string is null, prior to doing a search, then forces both strings to upper for 

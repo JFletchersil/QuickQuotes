@@ -10,6 +10,7 @@ namespace AngularApp.API.Controllers
     /// <summary>
     /// Provides a list of all the quote and product types within the database.
     /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     /// <remarks>
     /// Adding and removing Product and Quote types is handled within the Configuration controller.
     /// This is effectively just a standard returner of all values.
@@ -63,7 +64,7 @@ namespace AngularApp.API.Controllers
         /// Returns all current quote types within the database
         /// </summary>
         /// <returns>
-        /// An ordered list of quote types, ordered by parent product type. 
+        /// An ordered list of quote types, ordered by parent product type.
         /// </returns>
         /// <remarks>
         /// As per the enabled feature might suggest, the return object is altered depending on if quote type

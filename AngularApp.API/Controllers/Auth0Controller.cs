@@ -2,14 +2,15 @@
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using AngularApp.API.Models.DBModels;
-using AngularApp.API.Models.WebViewModels;
-using AngularApp.API.Models.WebViewModels.OAuth;
 using AngularApp.API.ActionFilters;
 using AutoMapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
+using AngularApp.API.Models.DBModels;
+using AngularApp.API.Models.WebViewModels.OAuthModels;
+using AngularApp.API.Models.WebViewModels.PagingModels;
+using AngularApp.API.Models.WebViewModels.UserQueueDisplayModels;
 
 namespace AngularApp.API.Controllers
 {
@@ -17,12 +18,13 @@ namespace AngularApp.API.Controllers
     /// The Auth0 Controller, it allows interaction, via their API to the Auth0 user management system
     /// This will replace the Account Controller when/if we decide to move to Auth0 instead of a self hosted Database
     /// </summary>
+    /// <seealso cref="System.Web.Http.ApiController" />
     /// <remarks>
     /// This API is missing several features that would fully account for all the functionality in the account
     /// controller, however those features are not required for the full running of the account system
     /// In future the API must be secured via the Auth0 middlewear and OWIN in order to fully complete the
     /// transition to Auth0 and it's authentication.
-    /// This API is disabled via an APIDiasabled attribute, this attribute must be removed prior to using the 
+    /// This API is disabled via an APIDiasabled attribute, this attribute must be removed prior to using the
     /// Auth0 controller. This will require another compliation
     /// </remarks>
     [EnableCors("*", "*", "*")]
@@ -30,16 +32,31 @@ namespace AngularApp.API.Controllers
     public class Auth0Controller : ApiController
     {
         // Provides a context location to the database containing all application user data
+        /// <summary>
+        /// The database context
+        /// </summary>
         private readonly Entities _dbContext = null;
         // Locations to store the Tokens for Authentication and management API
         // TODO - Must place these as configuration options inside the Web.config area
+        /// <summary>
+        /// The authentication exten bearer token
+        /// </summary>
         private string AuthenticationExtenBearerToken = "";
+        /// <summary>
+        /// The management bearer token
+        /// </summary>
         private string ManagementBearerToken = "";
         // Locations to configure the connection type
         // TODO - Must place this as configuration option inside the Web.config area
+        /// <summary>
+        /// The connection
+        /// </summary>
         private readonly string Connection = "Username-Password-Authentication";
         // Sets the ClientID for the front end app being used for communication
         // TODO - Must place this as configuration option inside the Web.config area
+        /// <summary>
+        /// The client identifier front end application
+        /// </summary>
         private readonly string ClientIDFrontEndApp = "cxX97IXqqTE0ziE4w5MfG4GJD1DayIBA";
 
         /// <summary>
@@ -58,13 +75,13 @@ namespace AngularApp.API.Controllers
         /// Returns a full list of all users containted within the User Database stored in Auth0 Database.
         /// Requires a paging parameter model in order to set the correct ordering and paging for the client.
         /// </summary>
-        /// <param name="param">A Paging parameter model, this is used to configure the paging on the server, 
+        /// <param name="param">A Paging parameter model, this is used to configure the paging on the server,
         /// as well as setting the order and the page of users that should be returned.</param>
         /// <returns>
         /// A list of users, and their details. Including role, and meta-data.
         /// </returns>
         /// <remarks>
-        /// This is used to return users for the admininstration screen, otherwise it should not be 
+        /// This is used to return users for the admininstration screen, otherwise it should not be
         /// used for any other purpose.
         /// </remarks>
         /// <example>
@@ -96,17 +113,11 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Adds a user to a given role.
+        /// Adds the user to role.
         /// </summary>
-        /// <param name="userID">The Auth0 GUID of the user whose Role is being changed</param>
-        /// <param name="roleName">The string name of the Role that the user is being added to</param>
-        /// <returns>A bool that denotes if the role change was successful or not</returns>
-        /// <remarks>
-        /// This is used soley to swap between Admin/User. It should not be used in any other format.
-        /// </remarks>
-        /// <example>
-        /// Get [websitename]/api/AddUserToRole?userID=userID&roleName=roleName
-        /// </example>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="roleName">Name of the role.</param>
+        /// <returns></returns>
         [HttpGet]
         public bool AddUserToRole(string userID, string roleName)
         {
@@ -119,17 +130,11 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Deletes a user from a role
+        /// Deletes the user from role.
         /// </summary>
-        /// <param name="userID">The Auth0 GUID of the user whose Role is being changed</param>
-        /// <param name="roleName">The string name of the Role that the user is being removed from </param>
+        /// <param name="userID">The user identifier.</param>
+        /// <param name="roleName">Name of the role.</param>
         /// <returns></returns>
-        /// <remarks>
-        /// This is used soley to swap between Admin/User. It should not be used in any other format.
-        /// </remarks>
-        /// <example>
-        /// Get [websitename]/api/DeleteUserFromRole?userID=userID&roleName=roleName
-        /// </example>        
         [HttpGet]
         public bool DeleteUserFromRole(string userID, string roleName)
         {
@@ -145,9 +150,11 @@ namespace AngularApp.API.Controllers
         /// Resets a given users password on request by an administrator
         /// </summary>
         /// <param name="email">The email address of the user whose password is being reset</param>
-        /// <returns>A bool that determines if the reset was successful or not</returns>
+        /// <returns>
+        /// A bool that determines if the reset was successful or not
+        /// </returns>
         /// <remarks>
-        /// This is to be used by the administrator if the administrator wishes to forcably reset a users 
+        /// This is to be used by the administrator if the administrator wishes to forcably reset a users
         /// password. This should only be used by administrators, users have alternate methods for forcing a reset.
         /// </remarks>
         /// <example>
@@ -171,22 +178,12 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Updates the root document, allows changing of email address and other root level items
-        /// Can only be used for one change at a time due to limitations on the Api, so it's designed to work in that fashion
+        /// Updates the root document.
         /// </summary>
-        /// <param name="parameterSet">The name for the parameter whose value is being adjusted</param>
-        /// <param name="parameterValue">The value of the parameter, either being added, removed or altered</param>
-        /// <param name="userID">The GUID of the user whose values are being altered</param>
-        /// <returns>A bool notifying if the user has successfully altered their root data or not</returns>
-        /// <remarks>
-        /// This is limited to one change at a time, this must be accounted for in the client end and multiple
-        /// requests made. 
-        /// Alternately, an additional method may be created which provides the entire user object and then iterates
-        /// over the data line by line sending it off.
-        /// </remarks>
-        /// <example>
-        /// Get [websitename]/api/UpdateRootDocument?parameterSet=parameterSet&parameterValue=parameterValue&userID=userID
-        /// </example>
+        /// <param name="parameterSet">The parameter set.</param>
+        /// <param name="parameterValue">The parameter value.</param>
+        /// <param name="userID">The user identifier.</param>
+        /// <returns></returns>
         [HttpGet]
         public bool UpdateRootDocument(string parameterSet, string parameterValue, string userID)
         {
@@ -211,8 +208,10 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Clones a user, and their roles, from an old role to a new one
         /// </summary>
-        /// <param name="clientID"></param>
-        /// <returns>False, function has not been implemented</returns>
+        /// <param name="clientID">The client identifier.</param>
+        /// <returns>
+        /// False, function has not been implemented
+        /// </returns>
         /// <remarks>
         /// The function has not been implemented yet.
         /// </remarks>
@@ -231,9 +230,11 @@ namespace AngularApp.API.Controllers
         /// of simulatonius changes down.
         /// </summary>
         /// <param name="metaUpdate">The JSON Representation of the data being changed</param>
-        /// <returns>A bool notifying if the user has successfully altered their meta-data or not</returns>
+        /// <returns>
+        /// A bool notifying if the user has successfully altered their meta-data or not
+        /// </returns>
         /// <remarks>
-        /// This is used to handle the standard user meta-data, and not root level data. 
+        /// This is used to handle the standard user meta-data, and not root level data.
         /// This is data stored in the meta data section, and no data in the high level area.
         /// </remarks>
         /// <example>
@@ -261,7 +262,9 @@ namespace AngularApp.API.Controllers
         /// Creates a new user when given a new user model.
         /// </summary>
         /// <param name="newModel">A model for the new user that is being created</param>
-        /// <returns>A bool notifying if the user has successfully created a new user or not</returns>
+        /// <returns>
+        /// A bool notifying if the user has successfully created a new user or not
+        /// </returns>
         /// <remarks>
         /// Allows the creation of a new user, must present at least email and username for successful user creation.
         /// </remarks>
@@ -291,7 +294,9 @@ namespace AngularApp.API.Controllers
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
         /// <param name="methodType">What type the method is, such as POST</param>
         /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
-        /// <returns>The return string value for evaluation later</returns>
+        /// <returns>
+        /// The return string value for evaluation later
+        /// </returns>
         private string RequestWithStringReturn(string targetEndpoint, Method methodType, string bearerToken)
         {
             var client = new RestClient($"https://quickquotes.eu.webtask.io/adf6e2f2b84784b57522e3b19dfc9201/api/{targetEndpoint}");
@@ -307,7 +312,9 @@ namespace AngularApp.API.Controllers
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
         /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
         /// <param name="roleId">The role id for a given user, used to change the roles of a user</param>
-        /// <returns>The return string value for evaluation later</returns>
+        /// <returns>
+        /// The return string value for evaluation later
+        /// </returns>
         private string PatchRequestItems(string targetEndpoint, string bearerToken, string roleId)
         {
             var client = new RestClient($"https://quickquotes.eu.webtask.io/adf6e2f2b84784b57522e3b19dfc9201/api/{targetEndpoint}");
@@ -325,7 +332,9 @@ namespace AngularApp.API.Controllers
         /// <param name="targetEndpoint">The target endpoint, where the request is being made</param>
         /// <param name="bearerToken">The correct bearer token needed to autheticate the request</param>
         /// <param name="roleId">The role id for a given user, used to change the roles of a user</param>
-        /// <returns>The return string value for evaluation later</returns>
+        /// <returns>
+        /// The return string value for evaluation later
+        /// </returns>
         private string DeleteRequestItems(string targetEndpoint, string bearerToken, string roleId)
         {
             var client = new RestClient($"https://quickquotes.eu.webtask.io/adf6e2f2b84784b57522e3b19dfc9201/api/{targetEndpoint}");
@@ -340,7 +349,9 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Returns a summary of all Roles within the application
         /// </summary>
-        /// <returns>Returns an Auth0RolesWebViewModel containing all possible roles within the Auth0 application.</returns>
+        /// <returns>
+        /// Returns an Auth0RolesWebViewModel containing all possible roles within the Auth0 application.
+        /// </returns>
         private Auth0RolesWebViewModel ReturnAllRoles()
         {
             return JsonConvert.DeserializeObject<Auth0RolesWebViewModel>(RequestWithStringReturn("roles", Method.GET, AuthenticationExtenBearerToken));

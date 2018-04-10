@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace AngularApp.API.Models.WebViewModels.OAuth
+namespace AngularApp.API.Models.WebViewModels.OAuthModels
 {
     /// <summary>
     /// Provides a wrapper to store a collection of roles when gathered via a Role Request from 
@@ -11,8 +11,8 @@ namespace AngularApp.API.Models.WebViewModels.OAuth
     /// </summary>
     /// <remarks>
     /// As before, this exists as a wrapper for dserialisation purposes into a usable format.
-    /// 
     /// </remarks>
+    /// <see cref="Auth0RoleWebViewModel"/>
     public class Auth0RolesWebViewModel
     {
         /// <summary>
