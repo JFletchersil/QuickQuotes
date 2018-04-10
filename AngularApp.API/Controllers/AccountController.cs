@@ -17,6 +17,16 @@ using Microsoft.AspNet.Identity.EntityFramework;
 namespace AngularApp.API.Controllers
 {
     /// <summary>
+    /// A collection of controllers designed to provide an api that allows for the full
+    /// management of the application
+    /// </summary>
+    [System.Runtime.CompilerServices.CompilerGenerated]
+    internal class NamespaceDoc
+    {
+
+    }
+
+    /// <summary>
     /// The Account Controller
     /// Provides access, via the API, to various operations that can be performed on the user database.
     /// Includes access to all functions regarding Account Functionality.
@@ -36,7 +46,7 @@ namespace AngularApp.API.Controllers
         private readonly AuthRepository _repo = null;
 
         /// <summary>
-        /// Provides an initalisation for the AuthRepository, allowing you to communicate with the user database.
+        /// Provides an initialisation for the AuthRepository, allowing you to communicate with the user database.
         /// </summary>
         public AccountController()
         {
@@ -47,7 +57,7 @@ namespace AngularApp.API.Controllers
         /// Logins the specified login view model.
         /// </summary>
         /// <param name="loginViewModel">The login view model.</param>
-        /// <returns></returns>
+        /// <returns>A 200 or 500 response depending on if the login action was successful or not</returns>
         [HttpPost]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
@@ -82,7 +92,7 @@ namespace AngularApp.API.Controllers
         /// Registers the specified user model.
         /// </summary>
         /// <param name="userModel">The user model.</param>
-        /// <returns></returns>
+        /// <returns>A 200 or 500 response depending on if the user was successfully registered or not</returns>
         [AllowAnonymous]
         [HttpPost]
         public async Task<IHttpActionResult> Register(RegisterViewModel userModel)
@@ -103,12 +113,13 @@ namespace AngularApp.API.Controllers
         /// Returns all users.
         /// </summary>
         /// <param name="parameterWebView">The parameter web view.</param>
-        /// <returns></returns>
+        /// <returns>Returns a 200 response with a list of all users or an exception</returns>
         [HttpPost]
         public IHttpActionResult ReturnAllUsers(AccountPagingParameterWebViewModel parameterWebView)
         {
             var users = _repo.GetAllUsers();
 
+            // Orders the users according to a parameter if they were given an order by attribute
             if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
             {
                 if (parameterWebView.OrderBy.Contains("-"))
@@ -120,10 +131,14 @@ namespace AngularApp.API.Controllers
                     users.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
                 }
             }
+
+            // Filters out irrelevant users to the role type that was requested
             var pagedQuotes = !parameterWebView.ReturnAll ?
                 users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
                 users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
 
+            // Paginates the results returned from the database once they have been filtered by role and 
+            // ordered by a property
             var totalPages = (int)Math.Ceiling(pagedQuotes.Count() / (double)parameterWebView.PageSize);
             pagedQuotes = pagedQuotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
 
@@ -148,13 +163,19 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Returns all users at level for search.
         /// </summary>
+        /// <remarks>
+        /// Effectively, this is the search function used when there is a need to search
+        /// for users at a given role level. This is used in the administration
+        /// screen within the front end application.
+        /// </remarks>
         /// <param name="viewModel">The view model.</param>
-        /// <returns></returns>
+        /// <returns>Returns a 200 response with all users, at a given role level, or an exception</returns>
         [HttpPost]
         public IHttpActionResult ReturnAllUsersAtLevelForSearch(SearchAccounthWebViewModel viewModel)
         {
             var users = _repo.GetAllUsers();
             var returnItems = ConvertToWebViewModel(users, viewModel.ReturnAll);
+            // Filters users based on the filter/search text provided
             var returnItem = returnItems.Where(x => TestFunction(x.UserName, viewModel.FilterTerm) || TestFunction(x.EmailAddress, viewModel.FilterTerm) ||
                                                     TestFunction(x.Guid, viewModel.FilterTerm) || TestFunction(x.PhoneNumber, viewModel.FilterTerm)).ToList();
             return Ok(returnItem);
@@ -164,7 +185,8 @@ namespace AngularApp.API.Controllers
         /// Deletes the user.
         /// </summary>
         /// <param name="deleteModel">The delete model.</param>
-        /// <returns></returns>
+        /// <returns>Either a 200 response with no content or a 500 response detailing why the delete
+        /// action failed.</returns>
         [HttpPost]
         public IHttpActionResult DeleteUser(UserDeleteViewModel deleteModel)
         {
@@ -176,8 +198,11 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Alters the account login details.
         /// </summary>
+        /// <remarks>
+        /// Alters a given account's log in details such as user name, password or email.
+        /// </remarks>
         /// <param name="editViewModel">The edit view model.</param>
-        /// <returns></returns>
+        /// <returns>A 200 response or an error result detailing why the edit details function failed</returns>
         [HttpPost]
         public async Task<IHttpActionResult> AlterAccountLoginDetails(UserEditViewModel editViewModel)
         {
@@ -205,8 +230,11 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Clones the user.
         /// </summary>
+        /// <remarks>
+        /// Effectively clones a user's permissions and roles and gives them to a new user
+        /// </remarks>
         /// <param name="cloneUserViewModel">The clone user view model.</param>
-        /// <returns></returns>
+        /// <returns>A 200 response or an error result detailing why the clone user function failed</returns>
         [HttpPost]
         public IHttpActionResult CloneUser(UserEditViewModel cloneUserViewModel)
         {
@@ -225,8 +253,11 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Changes the type of the user.
         /// </summary>
+        /// <remarks>
+        /// Changes the user type between Administrator and user in an alternating fashion
+        /// </remarks>
         /// <param name="typeViewModel">The type view model.</param>
-        /// <returns></returns>
+        /// <returns>A 200 response or an error result detailing why the change user role function failed</returns>
         [HttpPost]
         public IHttpActionResult ChangeUserType(UserTypeViewModel typeViewModel)
         {
@@ -267,7 +298,7 @@ namespace AngularApp.API.Controllers
         /// Gets the error result.
         /// </summary>
         /// <param name="result">The result.</param>
-        /// <returns></returns>
+        /// <returns>A server response that contains the unpacked reasons why an identity transaction failed.</returns>
         private IHttpActionResult GetErrorResult(IdentityResult result)
         {
             if (result == null)
@@ -300,9 +331,13 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Converts to web view model.
         /// </summary>
+        /// <remarks>
+        /// Converts a list of identity users into a list of QueueUserWebViewModels in order to
+        /// send back to the front end
+        /// </remarks>
         /// <param name="pagedQuotes">The paged quotes.</param>
         /// <param name="returnAll">if set to <c>true</c> [return all].</param>
-        /// <returns></returns>
+        /// <returns>A list of QueueUserWebViewModels</returns>
         private List<QueueUserWebViewModel> ConvertToWebViewModel(List<IdentityUser> pagedQuotes, bool returnAll)
         {
             pagedQuotes = !returnAll ?
@@ -325,11 +360,11 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
-        /// Tests the function.
+        /// Determines if string one contains string two as a sub string
         /// </summary>
-        /// <param name="str1">The STR1.</param>
-        /// <param name="str2">The STR2.</param>
-        /// <returns></returns>
+        /// <param name="str1">The string that is being searched</param>
+        /// <param name="str2">The string that is being searched for</param>
+        /// <returns>A bool which indicates if string one contains string two</returns>
         private bool TestFunction(string str1, string str2)
         {
             return str1 != null && str1.ToUpper().Contains(str2.ToUpper());
