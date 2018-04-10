@@ -13,17 +13,35 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AngularApp.API.Controllers
 {
-    //[RoutePrefix("api/Account")]
+    /// <summary>
+    /// The Account Controller
+    /// Provides access, via the API, to various operations that can be performed on the user database.
+    /// Includes access to all functions regarding Account Functionality.
+    /// </summary>
+    /// <remarks>
+    /// This controller will be replaced, if Auth0 is used. This works only on a self hosted Database in the style
+    /// of Microsoft's authentication Database.
+    /// There are no Cors Limits on the requests made.
+    /// This has been partially created based off helper code from Microsoft.
+    /// </remarks>
     [EnableCors("*", "*", "*")]
     public class AccountController : ApiController
     {
         private readonly AuthRepository _repo = null;
 
+        /// <summary>
+        /// Provides an initalisation for the AuthRepository, allowing you to communicate with the user database.
+        /// </summary>
         public AccountController()
         {
             _repo = new AuthRepository();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="loginViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IHttpActionResult> Login(LoginViewModel loginViewModel)
         {
