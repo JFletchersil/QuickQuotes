@@ -1,0 +1,130 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AngularApp.API.Models.DBModels.AngularUsersEntities">
+    <Position X="2.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAgAAAAAAAAAAAEAAAQAAAAAAAAAgAAAE=</HashCode>
+      <FileName>Models\DBModels\AngularUsers.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.AspNetRole">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\AspNetRole.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.AspNetUser">
+    <Position X="9.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AACCAAAAACAAIEAAAAAAQAABAAAAAAAIAQQAABAAAQA=</HashCode>
+      <FileName>Models\DBModels\AspNetUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.AspNetUserClaim">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAQAAAAAgAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>Models\DBModels\AspNetUserClaim.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.AspNetUserDetail">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAEAAAMEAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\DBModels\AspNetUserDetail.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.AspNetUserLogin">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAgAAAAAEAAAABAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\AspNetUserLogin.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.ColumnMapper">
+    <Position X="14" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\ColumnMapper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.Entities">
+    <Position X="11.75" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAwAAAAAAAAAAAAAAgAkEIACAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\QuoteDB.Context.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.PersonalLoanQuote">
+    <Position X="6.5" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AEAAAAAAAAAAAAAAAAAAAAAogAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>Models\DBModels\PersonalLoanQuote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.PersonalLoanResult">
+    <Position X="10.25" Y="4.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAABAEAAAAAAAAAAAAAAAAAggAEAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\PersonalLoanResult.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.ProductType">
+    <Position X="12.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIEAAAAAAAgAgAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Models\DBModels\ProductType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.Quote">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAQAAAgAAAAwAAAAAAwAAAAAAAAAAAAAABAQAA=</HashCode>
+      <FileName>Models\DBModels\Quote.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.QuoteDefault">
+    <Position X="2.25" Y="4.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAIAAAAAAAAAABIAAADAgAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\QuoteDefault.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.QuoteStatus">
+    <Position X="4.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAAAAIgAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Models\DBModels\QuoteStatus.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.QuoteType">
+    <Position X="8.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAIAAAAAAAgAAgAAAACAAAAAAAgAAIAA=</HashCode>
+      <FileName>Models\DBModels\QuoteType.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.DBModels.UserDetails">
+    <Position X="13.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAEAAAEAAAMEAAAAAAAAAAAAAAAAAAAAAAAAAAAg=</HashCode>
+      <FileName>Models\DBModels\UserDetails.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.IdentityModels.ApplicationUser">
+    <Position X="7" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\IdentityModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.IdentityModels.ApplicationDbContext">
+    <Position X="4.25" Y="3" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\DBModels\IdentityModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

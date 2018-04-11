@@ -288,6 +288,11 @@
     <Content Include="Models\DBModels\QuoteDB.edmx.diagram">
       <DependentUpon>QuoteDB.edmx</DependentUpon>
     </Content>
+    <Content Include="AngularAppAPI.API.cd" />
+    <Content Include="Controllers\AngularApp.Controllers.cd" />
+    <Content Include="Models\DBModels\AngularApp.DBModels.cd" />
+    <Content Include="Models\WebViewModels\OAuth\AngularApp.0Auth.cd" />
+    <Content Include="Models\WebViewModels\AngularApp.WebViewModels.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0AppMetaDataWebViewModel">
+    <Position X="0.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0AppMetaDataWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0AuthorizationWebViewModel">
+    <Position X="3.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAAAAAAAAAAAAAAAAAgAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0AuthorizationWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0LightUserWebViewModel">
+    <Position X="6.5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAAIAAAAAAAAQAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0LightUserWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0MultiUserWebViewModel">
+    <Position X="9.25" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0MultiUserWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0NewUserModel">
+    <Position X="2" Y="3.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAABAAEAAAAAAAAAAAACAgAAQAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0NewUserModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0RolesWebViewModel">
+    <Position X="4" Y="2.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0RolesWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0RoleWebViewModel">
+    <Position X="7" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACACAAAAAgAAAAAAAAAAQAAAAAAAAAEAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0RoleWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0SingleUserWebViewModel">
+    <Position X="9.25" Y="1.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAQAAACAAABAAAIQQAAgAAACA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0SingleUserWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0UserMetaDataWebViewModel">
+    <Position X="0.5" Y="1.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIAAAAAAQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\WebViewModels\OAuth\Auth0UserMetaDataWebViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
