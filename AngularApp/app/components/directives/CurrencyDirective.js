@@ -7,7 +7,7 @@ angular.module("CurrencyDirective", [])
  * On blur, this will force the addition of a currency symbol to a text box
  * This is an attribute restricted Directive, it can only be used as an HTML attribute
  * @class blurToCurrency
- * @param $filter Object The $filter module, this allows filters to be placed on text
+ * @param $filter {Object} The $filter module, this allows filters to be placed on text
  */
     .directive("blurToCurrency", function ($filter) {
         return {
@@ -19,9 +19,9 @@ angular.module("CurrencyDirective", [])
              * Links the element to the currency directive. This allows the currency
              * directive to function with other directives
              * @method link
-             * @param scope Object The scope of the element that is being worked with
-             * @param el Object The element being worked with
-             * @param attrs Object The attributes present on the element being worked with
+             * @param scope {Object} The scope of the element that is being worked with
+             * @param el {Object} The element being worked with
+             * @param attrs {Object} The attributes present on the element being worked with
              */
             link: function (scope, el, attrs) {
                 el.val($filter("currency")(scope.amount, "\u00A3"));

@@ -15,10 +15,10 @@ angular.module("quoteTool.userdetails", ["ui.router", "ngAnimate"])
      * of the administration screen
      * Upon loading, this controller will immediately retrieve the details for a given user
      * @class UserDetails
-     * @param $scope Object The local $scope of the controller
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param UserService Object The UserService responsible for saving data for the user
-     * @param __env JSON This stores environment values that the application will use
+     * @param $scope {Object} The local $scope of the controller
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param UserService {Object} The UserService responsible for saving data for the user
+     * @param __env {JSON} This stores environment values that the application will use
      */
     .controller("UserDetails", ["$scope", "$http", "UserService", "__env",
         function ($scope, $http, UserService, __env) {

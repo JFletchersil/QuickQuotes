@@ -3,10 +3,10 @@
  * A collection of controllers designed to manage the generic quotation generation page as well as making HTTP
  * requests.
  * @module quoteTool.quotegeneration
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
- * @param CurrencyDirective Object The currency directive that formats the currency object such that it works correctly
- * @param ngInputCurrency Object The currency directive that creates the skeleton allowing currency elements to work
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
+ * @param CurrencyDirective {Object} The currency directive that formats the currency object such that it works correctly
+ * @param ngInputCurrency {Object} The currency directive that creates the skeleton allowing currency elements to work
  */
 angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "CurrencyDirective", "ngInputCurrency"])
     /**
@@ -16,10 +16,10 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
      * The page is designed to be generic, it does not care what the quote type is, it will render it according the
      * definition given
      * @class QuoteGeneration
-     * @param $scope Object The local $scope of the controller
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param $stateParams Object Allows the controller to access the state parameters passed, used to differentiate between different states the controller needs to handle
-     * @param __env JSON This stores environment values that the application will use
+     * @param $scope {Object} The local $scope of the controller
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param $stateParams {Object} Allows the controller to access the state parameters passed, used to differentiate between different states the controller needs to handle
+     * @param __env {JSON} This stores environment values that the application will use
      */
     .controller("QuoteGeneration", ["$scope", "$http", "$stateParams", "__env",
         function ($scope, $http, $stateParams, __env) {
@@ -167,8 +167,8 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
              * Splits a string based on the Upper characters within the string
              * Put the string back together with spaces between the Upper characters
              * @method splitOnUpper
-             * @param string string The string that is being split
-             * @return {*} A string split based on Upper characters and then put spaces between them
+             * @param string {string} The string that is being split
+             * @return {string} A string split based on Upper characters and then put spaces between them
              */
             $scope.splitOnUpper = function (string) {
                 if (string === undefined) {

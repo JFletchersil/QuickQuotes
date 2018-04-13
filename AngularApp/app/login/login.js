@@ -7,8 +7,8 @@ angular.module("User", []);
 /**
  * A collection of controllers designed to run and operate the log in screen of the application
  * @module quoteTool.login
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
  */
 angular.module("quoteTool.login", ["ui.router", "ngAnimate"])
     /**
@@ -17,11 +17,11 @@ angular.module("quoteTool.login", ["ui.router", "ngAnimate"])
      * and will not be kicked out of the system.
      * The controller also sets the access rights of the user, based on what the model received tells the application
      * @class Login
-     * @param $scope Object The local $scope of the controller
-     * @param $rootScope Object The $rootScope of the application as a whole
-     * @param $location Object Allows the login form to redirect users if their login process was successful
-     * @param AuthenticationService Object The Authentication service that does the majority of the grunt work in logging a user into the system
-     * @param UserService Object The UserService responsible for saving data for the user
+     * @param $scope {Object} The local $scope of the controller
+     * @param $rootScope {Object} The $rootScope of the application as a whole
+     * @param $location {Object} Allows the login form to redirect users if their login process was successful
+     * @param AuthenticationService {Object} The Authentication service that does the majority of the grunt work in logging a user into the system
+     * @param UserService {Object} The UserService responsible for saving data for the user
      */
     .controller("Login", ["$scope", "$rootScope", "$location", "AuthenticationService", "UserService",
         function ($scope, $rootScope, $location, AuthenticationService, UserService) {

@@ -2,10 +2,10 @@
 /**
  * A collection of controllers designed to manage and control the quote queue screen
  * @module quoteTool.quotequeue
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
- * @param ngMaterial Object The object that allows interaction with the Material Design of the page in an AngularJS Fashion
- * @param md.data.table Object The object that allows JQuery DataTables to be constructed within the scope of the module
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ngMaterial {Object} The object that allows interaction with the Material Design of the page in an AngularJS Fashion
+ * @param md.data.table {Object} The object that allows JQuery DataTables to be constructed within the scope of the module
  */
 angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])
     /**
@@ -15,12 +15,12 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
      * The page is capable of navigating to the quote generation page in order to allow a user to edit an old quote
      * The page also provides a more in depth quote search functionality than is present within the main menu
      * @class QuoteQueue
-     * @param $scope Object The local $scope of the controller
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param $filter Object The $filter module, this allows filters to be placed on text
-     * @param $location Object Allows the queue screen to redirect users if they require a more in depth search of the database
-     * @param $stateParams Object Allows the controller to set state parameters as well as act when it receives state parameters that alter how it acts
-     * @param __env JSON This stores environment values that the application will use
+     * @param $scope {Object} The local $scope of the controller
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param $filter {Object} The $filter module, this allows filters to be placed on text
+     * @param $location {Object} Allows the queue screen to redirect users if they require a more in depth search of the database
+     * @param $stateParams {Object} Allows the controller to set state parameters as well as act when it receives state parameters that alter how it acts
+     * @param __env {JSON} This stores environment values that the application will use
      */
     .controller("QuoteQueue", ["$scope", "$http", "$filter", "$location", "$stateParams", "__env",
         function ($scope, $http, $filter, $location, $stateParams, __env) {
@@ -110,8 +110,8 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
              * Forces a reset of the filter system if the reference ID is present, allowing a direct search when being
              * moved from the global search on the main menu
              * @method success
-             * @return {*|Object} Updates the total number of quote, the total number of paged quote, and provides a list of quote
-             * @param returnData Object The return data.
+             * @return {Object} Updates the total number of quote, the total number of paged quote, and provides a list of quote
+             * @param returnData {Object} The return data.
              */
             function success(returnData) {
                 $scope.TotalSize = returnData.TotalPages;
@@ -127,8 +127,8 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
             /**
              * Performs a search within the database for the given search term
              * @method generalSearch
-             * @param searchTerm string The search term
-             * @return {*|Object} A list of users who match the search term
+             * @param searchTerm {string} The search term
+             * @return {Object} A list of users who match the search term
              */
             $scope.generalSearch = function (searchTerm) {
                 $http.post(__env.apiUrl + "/Queue/SearchQueueSearchResults", searchTerm).
@@ -140,8 +140,8 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
             /**
              * Changes the current database page that the user of the application is using
              * @method pageChangeHandler
-             * @param newPageNumber number The new page number that the user wishes to view
-             * @return {*|Object} A new list of users who would be on the current page
+             * @param newPageNumber {number} The new page number that the user wishes to view
+             * @return {Object} A new list of users who would be on the current page
              */
             $scope.pageChangeHandler = function (newPageNumber) {
                 if (isNaN(newPageNumber)) {
@@ -159,7 +159,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
              * Resets the quotes list, and removes the filter that the user was searching for
              * within the application
              * @method removeFilter
-             * @return {*|Object} The normal state of the application prior to searching for quotes
+             * @return {Object} The normal state of the application prior to searching for quotes
              */
             $scope.removeFilter = function () {
                 if ($scope.filter.hasFiltered) {
@@ -183,7 +183,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
              * If it cannot find it present within the current list of quotes, it will
              * search the database
              * @method filterItems
-             * @return {*|Object} A list of quotes that matches the current filter search text
+             * @return {Object} A list of quotes that matches the current filter search text
              */
             $scope.filterItems = function () {
                 if ($scope.oldItems.length === 0) {
@@ -203,7 +203,7 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
              * Shows the filter location for the user to enter his search text
              * Simpler than other filters, as it does not need to lock different tabs down
              * @method activateFilter
-             * @return {*|Object} A visible search box for the user to use
+             * @return {Object} A visible search box for the user to use
              */
             $scope.activateFilter = function () {
                 $scope.filter.show = true;
@@ -224,8 +224,8 @@ angular.module("quoteTool.quotequeue", ["ui.router", "ngAnimate", "ngMaterial", 
              * Splits a string based on the Upper characters within the string
              * Put the string back together with spaces between the Upper characters
              * @method splitOnUpper
-             * @param string string The string that is being split
-             * @return {*} A string split based on Upper characters and then put spaces between them
+             * @param string {string} The string that is being split
+             * @return {Object} A string split based on Upper characters and then put spaces between them
              */
             $scope.splitOnUpper = function (string) {
                 return string.split(/(?=[A-Z])/).join(" ");

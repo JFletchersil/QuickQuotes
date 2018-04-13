@@ -119,10 +119,10 @@ angular.module("quoteTool", [
      * token then they will be allowed into the application and automatically redirected
      * If they are not authorised to enter the app, they will be refused entry and be redirected back to the login screen
      * @class run
-     * @param $rootScope Object The $rootScope of the application as a whole
-     * @param $location Object Allows the login form to redirect users if their login process was successful
-     * @param $cookies Object An AngularJS object designed to allow easy interaction with web browser cookies
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
+     * @param $rootScope {Object} The $rootScope of the application as a whole
+     * @param $location {Object} Allows the login form to redirect users if their login process was successful
+     * @param $cookies {Object} An AngularJS object designed to allow easy interaction with web browser cookies
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
      */
     .run(["$rootScope", "$location", "$cookies", "$http",
         function ($rootScope, $location, $cookies, $http) {

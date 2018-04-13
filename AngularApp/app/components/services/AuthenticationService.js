@@ -9,11 +9,11 @@ angular.module("quoteTool.login")
      * Provides a centralised Authentication service allowing the application to log into the system
      * using a single access point
      * @class AuthenticationService
-     * @param Base64 Object Allows for obfuscation and encryption of the login token
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param $cookies Object An AngularJS object designed to allow easy interaction with web browser cookies
-     * @param $rootScope Object The root scope of the AngularJS application
-     * @param $timeout Object An AngularJS object designed to allow easy checking of the time for timeout purposes
+     * @param Base64 {Object} Allows for obfuscation and encryption of the login token
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param $cookies {Object} An AngularJS object designed to allow easy interaction with web browser cookies
+     * @param $rootScope {Object} The root scope of the AngularJS application
+     * @param $timeout {Object} An AngularJS object designed to allow easy checking of the time for timeout purposes
      * @param __env JSON This stores environment values that the application will use
      */
     .factory("AuthenticationService", ["Base64", "$http", "$cookies", "$rootScope", "$timeout", "__env",
@@ -28,10 +28,10 @@ angular.module("quoteTool.login")
             /**
              * Allows a user to log in via the standard login service
              * @method Login
-             * @param Username string The username
-             * @param password string The password
-             * @param callback Object How the function should call back to the area that called it
-             * @return {*|Object} A callback allowing the calling function to interact with the function
+             * @param Username {string} The username
+             * @param password {string} The password
+             * @param callback {Object} How the function should call back to the area that called it
+             * @return {Object} A callback allowing the calling function to interact with the function
              */
             service.Login = function (Username, password, callback) {
                 $http.post(__env.apiUrl + "/Account/Login", { Email: Username, Password: password })
@@ -47,8 +47,8 @@ angular.module("quoteTool.login")
             /**
              * Sets the credentials of a given user inside the cookie
              * @method SetCredentials
-             * @param Username string The username
-             * @param password string The password
+             * @param Username {string} The username
+             * @param password {string} The password
              */
             service.SetCredentials = function (Username, password) {
                 let authdata = Base64.encode(Username + ":" + password);
@@ -71,7 +71,7 @@ angular.module("quoteTool.login")
             /**
              * Checks to see if the rootscope of the application has the user credentials or not
              * @method HasCredentials
-             * @return {*|Object} A bool value showing if the credentials exist within the system or not
+             * @return {Object} A bool value showing if the credentials exist within the system or not
              */
             service.HasCredentials = function () {
                 return $cookies.getObject("globals");
@@ -106,8 +106,8 @@ angular.module("quoteTool.login")
             /**
              * Encodes a standard string into a base64 format
              * @method encode
-             * @param input string A standard non-encoded base 64 string
-             * @return {string|string} A base64 encoded string
+             * @param input {string} A standard non-encoded base 64 string
+             * @return {string} A base64 encoded string
              */
             encode: function (input) {
                 /// <summary>
@@ -151,8 +151,8 @@ angular.module("quoteTool.login")
             /**
              * Decodes a given string from the base64 encoding back into a standard string
              * @method decode
-             * @param input string A base64 encoded string
-             * @return {string|string} A string value that been decoded from base64
+             * @param input {string} A base64 encoded string
+             * @return {string} A string value that been decoded from base64
              */
             decode: function (input) {
                 var output = "";

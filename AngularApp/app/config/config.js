@@ -2,8 +2,8 @@
 /**
  * A collection of controllers designed to run and operate the configuration system for the application
  * @module quoteTool.applicationconfiguration
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
  */
 angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
     /**
@@ -16,11 +16,11 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
      * This controller also tracks all changes made to the data, and will not allow save operations unless the state
      * has changed
      * @class AppConfiguration
-     * @param $scope Object The local $scope of the controller
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param $filter Object The $filter module, this allows filters to be placed on text
-     * @param UserService Object The UserService responsible for saving data for the user
-     * @param __env JSON This stores environment values that the application will use
+     * @param $scope {Object} The local $scope of the controller
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param $filter {Object} The $filter module, this allows filters to be placed on text
+     * @param UserService {Object} The UserService responsible for saving data for the user
+     * @param __env {JSON} This stores environment values that the application will use
      */
     .controller("AppConfiguration", ["$scope", "$http", "$filter", "UserService", "__env",
         function ($scope, $http, $filter, UserService, __env) {
@@ -48,7 +48,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * This describes how the tables operate as well as what the datatypes and validations, if any, work
              * In short, this is vital, do not touch it unless you have altered the backing database tables
              * @property $scope.tabs
-             * @type {*[]}
+             * @type {[]}
              */
             $scope.tabs = [{
                     Label: "Quote Defaults",
@@ -207,8 +207,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * This is used when making requests to the database, and is used to evaluate
              * how long it will take before a promise resolves.
              * @method success
-             * @return {*|Object} Updates the total number of users, the total number of paged users, and provides a list of users
-             * @param returnData Object The return data.
+             * @return {Object} Updates the total number of users, the total number of paged users, and provides a list of users
+             * @param returnData {Object} The return data.
              */
             function success(returnData) {
                 $scope.TotalSize = returnData.TotalPages;
@@ -220,10 +220,10 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             /**
              * Changes the current database page that the user of the application is using
              * @method pageChangeHandler
-             * @param newPageNumber number The new page number that the user wishes to view
-             * @param configurationType string The configuration type that is being looked at
-             * @param newLimit number The size of the paging to be used on the server
-             * @return {*|Object} A new list of users who would be on the current page
+             * @param newPageNumber {number} The new page number that the user wishes to view
+             * @param configurationType {string} The configuration type that is being looked at
+             * @param newLimit {number} The size of the paging to be used on the server
+             * @return {Object} A new list of users who would be on the current page
              */
             $scope.pageChangeHandler = function (newPageNumber, configurationType, newLimit) {
                 if (isNaN(newPageNumber))
@@ -243,8 +243,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             /**
              * Performs a search within the database for the given search term
              * @method generalSearch
-             * @param searchTerm string The search term
-             * @return {*|Object} A list of users who match the search term
+             * @param searchTerm {string} The search term
+             * @return {Object} A list of users who match the search term
              */
             $scope.generalSearch = function (searchTerm) {
                 let model = {
@@ -260,7 +260,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             /**
              * Saves any updated values or new configuration options to the database
              * @method saveUpdatedValues
-             * @param configType string The table that has updated values
+             * @param configType {string} The table that has updated values
              */
             $scope.saveUpdatedValues = function (configType) {
                 let updateModel = { ConfigType: configType, ConfigsToBeSaved: $scope.configData };
@@ -278,8 +278,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             /**
              * Tracks if a row within the table has been changed or not
              * @method onChange
-             * @param data Object The configuration object that has been changed or altered
-             * @param index number The index of the configuration object that has been changed or altered
+             * @param data {Object} The configuration object that has been changed or altered
+             * @param index {number} The index of the configuration object that has been changed or altered
              */
             $scope.onChange = function (data, index) {
                 let newData = {};
@@ -312,8 +312,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * Allows the user to change the tab, if the user has multiple tabs in which
              * they can move between
              * @method onTabSelected
-             * @param tabSelected number The tab number that is being moved towards
-             * @param configurationType string The configuration type that is currently being viewed
+             * @param tabSelected {number} The tab number that is being moved towards
+             * @param configurationType {string} The configuration type that is currently being viewed
              */
             $scope.onTabSelected = function (tabSelected, configurationType) {
                 $scope.stateTrack = [];
@@ -326,8 +326,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             /**
              * Changes the item limit and page number
              * @method onItemLimitChange
-             * @param newPageNumber int The new page number
-             * @param newLimit int The new configuration object limit
+             * @param newPageNumber {number} The new page number
+             * @param newLimit {number} The new configuration object limit
              */
             $scope.onItemLimitChange = function (newPageNumber, newLimit) {
                 $scope.pageChangeHandler(newPageNumber, undefined, newLimit);
@@ -337,7 +337,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * Resets the configuration list, and removes the filter that the user was searching for
              * within the application
              * @method removeFilter
-             * @return {*|Object} The normal state of the application prior to searching for configurations
+             * @return {Object} The normal state of the application prior to searching for configurations
              */
             $scope.removeFilter = function () {
                 if ($scope.filter.hasFiltered) {
@@ -367,7 +367,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * If it cannot find it present within the current list of users, it will
              * search the database
              * @method filterItems
-             * @return {*|Object} A list of users that matches the current filter search text
+             * @return {Object} A list of users that matches the current filter search text
              */
             $scope.filterItems = function () {
                 if ($scope.oldItems.length === 0) {
@@ -386,7 +386,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              * Shows the filter location for the user to enter his search text
              * Takes into account which tab is currently being searched
              * @method activateFilter
-             * @return {*|Object} A visible search box for the user to use
+             * @return {Object} A visible search box for the user to use
              */
             $scope.activateFilter = function () {
                 $scope.filter.show = true;

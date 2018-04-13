@@ -2,8 +2,8 @@
 /**
  * A collection of controllers designed to help operate and control the MainMenu
  * @module quoteTool.mainmenu
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
  */
 angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
     /**
@@ -11,12 +11,12 @@ angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
      * This controller manages the global quote system, as well as the main menu and the log out button
      * The controller has only a few functions and is relatively lightweight
      * @class MainMenu
-     * @param $scope Object The local $scope of the controller
-     * @param UserService Object The UserService responsible for saving data for the user
-     * @param AuthenticationService Object The Authentication service that does the majority of the grunt work in logging a user into the system
-     * @param $location Object Allows the main menu to redirect users if they require a more in depth search of the database
-     * @param __env JSON This stores environment values that the application will use
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
+     * @param $scope {Object} The local $scope of the controller
+     * @param UserService {Object} The UserService responsible for saving data for the user
+     * @param AuthenticationService {Object} The Authentication service that does the majority of the grunt work in logging a user into the system
+     * @param $location {Object} Allows the main menu to redirect users if they require a more in depth search of the database
+     * @param __env {JSON} This stores environment values that the application will use
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
      */
     .controller("MainMenu", ["$scope", "UserService", "AuthenticationService", "$location", "__env", "$http",
         function ($scope, UserService, AuthenticationService, $location, __env, $http) {
@@ -42,7 +42,7 @@ angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
              * Performs a database query search when the user gives the main menu a search term
              * This searches the quote database for quotes, it will only search quotes
              * @method querySearch
-             * @return {*} Either the data needed in order to perform searches, or a 500 error response explaining why the server could not finish the request
+             * @return {Object} Either the data needed in order to perform searches, or a 500 error response explaining why the server could not finish the request
              */
             $scope.querySearch = function () {
                 let searchModel = {
@@ -65,7 +65,7 @@ angular.module("quoteTool.mainmenu", ["ui.router", "ngAnimate"])
              * This will redirect the user to the main queue page, including either the quote reference in order to
              * interact with the quotes, or the search text if none of the items were the correct quote
              * @method selectedItemChanged
-             * @param item Object The search item selected when viewing the search items
+             * @param item {Object} The search item selected when viewing the search items
              */
             $scope.selectedItemChanged = function (item) {
                 if (item !== undefined) {

@@ -2,8 +2,8 @@
 /**
  * A collection of controllers designed to run and operate the product and quote selection screen
  * @module quoteTool.quoteselection
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
  */
 angular.module("quoteTool.quoteselection", ["ui.router", "ngAnimate"])
     /**
@@ -14,10 +14,10 @@ angular.module("quoteTool.quoteselection", ["ui.router", "ngAnimate"])
      * This page is used to select the quote type that the user would like to make a quote for, it performs no
      * other operation
      * @class QuoteSelection
-     * @param $scope Object The local $scope of the controller
-     * @param UserService Object The UserService responsible for saving data for the user
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param __env JSON This stores environment values that the application will use
+     * @param $scope {Object} The local $scope of the controller
+     * @param UserService {Object} The UserService responsible for saving data for the user
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param __env {JSON} This stores environment values that the application will use
      */
     .controller("QuoteSelection", ["$scope", "$http", "UserService", "__env",
         function ($scope, $http, UserService, __env) {
@@ -50,8 +50,8 @@ angular.module("quoteTool.quoteselection", ["ui.router", "ngAnimate"])
             /**
              * Removes all spaces within a string
              * @method noSpaces
-             * @param string string The string to have all of it's spaces removed
-             * @return {*} A string without spaces in it
+             * @param string {string} The string to have all of it's spaces removed
+             * @return {string} A string without spaces in it
              */
             $scope.noSpaces = function(string) {
                 return string.replace(/ /g, "");
@@ -61,8 +61,8 @@ angular.module("quoteTool.quoteselection", ["ui.router", "ngAnimate"])
              * Splits a string based on the Upper characters within the string
              * Put the string back together with spaces between the Upper characters
              * @method splitOnUpper
-             * @param string string The string that is being split
-             * @return {*} A string split based on Upper characters and then put spaces between them
+             * @param string {string} The string that is being split
+             * @return {string} A string split based on Upper characters and then put spaces between them
              */
             $scope.splitOnUpper = function (string) {
                 return string.split(/(?=[A-Z])/).join(" ");

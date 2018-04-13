@@ -36,10 +36,10 @@ angular.module("GInputDirective", [])
              * This also ensures that the correct forms are linked together in order to make sure
              * that the validation works as a developer would expect
              * @method link
-             * @param $scope Object The scope of the element that is being worked with
-             * @param element Object A copy of the HTML template being worked with
-             * @param attrs Object The attributes present on the element being worked with
-             * @param ctrls Object The controls placed on the HTML element
+             * @param $scope {Object} The scope of the element that is being worked with
+             * @param element {Object} A copy of the HTML template being worked with
+             * @param attrs {Object} The attributes present on the element being worked with
+             * @param ctrls {Object} The controls placed on the HTML element
              */
             link: function ($scope, element, attrs, ctrls) {
                 $scope.formName = ctrls.form.$name;

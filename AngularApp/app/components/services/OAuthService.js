@@ -3,7 +3,7 @@
  * This is heavily based on sample code provided by the Auth0 team in order to underline how one would
  * log into their system in an AngularJS context
  * @module AuthModule
- * @param auth0.auth0 The Auth0 module required to properly interact with the Auth0 services
+ * @param auth0.auth0 {Object} The Auth0 module required to properly interact with the Auth0 services
  */
 angular.module("AuthModule", ["auth0.auth0"])
     /**
@@ -12,14 +12,14 @@ angular.module("AuthModule", ["auth0.auth0"])
      * Also stores the access token information such that it can be examined and used when communicating with the
      * Auth0 API as well as other APIs
      * @class AuthService
-     * @param $state Object The state of the calling controller
-     * @param angularAuth0 Object The Auth0 wrapper providing functions that make it possible to interact with the Auth0 API
-     * @param $timeout Object An AngularJS object designed to allow easy checking of the time for timeout purposes
+     * @param $state {Object} The state of the calling controller
+     * @param angularAuth0 {Object} The Auth0 wrapper providing functions that make it possible to interact with the Auth0 API
+     * @param $timeout {Object} An AngularJS object designed to allow easy checking of the time for timeout purposes
      */
     .service("AuthService", ["$state", "angularAuth0", "$timeout", function ($state, angularAuth0, $timeout) {
         /**
          * The current user profile of the user logged in
-         * @type {Object}
+         * @type {JSON}
          * @property userProfile
          */
         var userProfile;
@@ -74,7 +74,7 @@ angular.module("AuthModule", ["auth0.auth0"])
         /**
          * Saves the user profile to the profile of the user who just logged into the system
          * @method setUserProfile
-         * @param profile JSON The profile of the current user
+         * @param profile {JSON} The profile of the current user
          */
         function setUserProfile(profile) {
             userProfile = profile;
@@ -83,7 +83,7 @@ angular.module("AuthModule", ["auth0.auth0"])
         /**
          * Returns the profile of the current user from the saved profile within this file
          * @method getCachedProfile
-         * @return {*} JSON The profile of the current user
+         * @return {JSON} The profile of the current user
          */
         function getCachedProfile() {
             return userProfile;
@@ -94,7 +94,7 @@ angular.module("AuthModule", ["auth0.auth0"])
          * Sets when the result will expire as well
          * Will only be called if the authResult was valid, otherwise the result will not be saved to local storage
          * @method authResult
-         * @param authResult JSON The valid auth result of the authentication request
+         * @param authResult {JSON} The valid auth result of the authentication request
          */
         function setSession(authResult) {
             // Set the time that the access token will expire at

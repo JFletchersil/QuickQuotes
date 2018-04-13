@@ -2,11 +2,11 @@
 /**
  * A collection of controllers designed to run and operate the administration screen
  * @module quoteTool.administration
- * @param ui.router Object The router object that controls how the system handles navigation requests
- * @param ngAnimate Object The animation object which provides Jquery animations in AngularJS Fashion
- * @param ngMaterial Object The object that allows interaction with the Material Design of the page in an AngularJS Fashion
- * @param md.data.table Object The object that allows JQuery DataTables to be constructed within the scope of the module
- * @param ui.bootstrap Object The object that allows interaction with the Bootstrap elements of the page in an AngularJS Fashion
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ngMaterial {Object} The object that allows interaction with the Material Design of the page in an AngularJS Fashion
+ * @param md.data.table {Object} The object that allows JQuery DataTables to be constructed within the scope of the module
+ * @param ui.bootstrap {Object} The object that allows interaction with the Bootstrap elements of the page in an AngularJS Fashion
  */
 angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table", "ui.bootstrap"])
     /**
@@ -14,11 +14,11 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
      * This includes the ability to add new users, delete users, change their roles
      * and edit specific details about the user.
      * @class Administration
-     * @param $scope Object The $scope
-     * @param $http Object The $HTTP module, this allows us to make HTTP requests
-     * @param $filter Object The $filter module, this allows filters to be placed on text
-     * @param UserService Object The user service, this allows us to save and retrieve data from the local storage
-     * @param ModalService Object The modal service, this allows us to create and use modals as required
+     * @param $scope {Object} The $scope
+     * @param $http {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param $filter {Object} The $filter module, this allows filters to be placed on text
+     * @param UserService {Object} The user service, this allows us to save and retrieve data from the local storage
+     * @param ModalService {Object} The modal service, this allows us to create and use modals as required
      * @param __env JSON This stores environment values that the application will use
      */
     .controller("Administration", ["$scope", "$http", "$filter", "UserService", "ModalService", "__env",
@@ -133,8 +133,8 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * This is used when making requests to the database, and is used to evaluate
              * how long it will take before a promise resolves.
              * @method success
-             * @return {*|Object} Updates the total number of users, the total number of paged users, and provides a list of users
-             * @param returnData Object The return data.
+             * @return {Object} Updates the total number of users, the total number of paged users, and provides a list of users
+             * @param returnData {Object} The return data.
              */
             function success(returnData) {
                 $scope.TotalSize = returnData.TotalPages;
@@ -145,8 +145,8 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Performs a search within the database for the given search term
              * @method generalSearch
-             * @param searchTerm string The search term
-             * @return {*|Object} A list of users who match the search term
+             * @param searchTerm {string} The search term
+             * @return {Object} A list of users who match the search term
              */
             $scope.generalSearch = function (searchTerm) {
                 let searchModel = {
@@ -161,8 +161,8 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Changes the current database page that the user of the application is using
              * @method pageChangeHandler
-             * @param newPageNumber number The new page number that the user wishes to view
-             * @return {*|Object} A new list of users who would be on the current page
+             * @param newPageNumber {number} The new page number that the user wishes to view
+             * @return {Object} A new list of users who would be on the current page
              */
             $scope.pageChangeHandler = function (newPageNumber) {
                 if (isNaN(newPageNumber))
@@ -176,7 +176,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Creates a new user within the database
              * @method createNewUser
-             * @return {*|Object} A 200 or 500 response depending on if adding a new user was successful or not
+             * @return {Object} A 200 or 500 response depending on if adding a new user was successful or not
              */
             $scope.createNewUser = function () {
                 $http.post(__env.apiUrl + "/Account/Register", $scope.newUserModel).then(
@@ -195,7 +195,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * Options in this case being the various different actions that can be performed
              * upon a user
              * @method hideOptions
-             * @param user Object The user object whose options are being hidden
+             * @param user {Object} The user object whose options are being hidden
              */
             $scope.hideOptions = function (user) {
                 $scope.selected = user;
@@ -206,7 +206,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * Allows the user to change the tab, if the user has multiple tabs in which
              * they can move between
              * @method onTabSelected
-             * @param tabSelected number The tab number that is being moved towards
+             * @param tabSelected {number} The tab number that is being moved towards
              */
             $scope.onTabSelected = function (tabSelected) {
                 $scope.tabNumber = tabSelected;
@@ -217,9 +217,9 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Opens a modal for the user to view
              * @method onOpenModal
-             * @param title string The title of the modal
-             * @param infoMessage string The message displayed inside the modal
-             * @return {*|void} Closes the modal when closed
+             * @param title {string} The title of the modal
+             * @param infoMessage {string} The message displayed inside the modal
+             * @return {void} Closes the modal when closed
              */
             $scope.onOpenModal = function (title, infoMessage) {
                 return ModalService.showModal({
@@ -254,7 +254,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Opens a model to allow the administrator to edit the details of a user
              * @method onEditUserDetails
-             * @return {*|Object} A 200 or 500 response depending on if the action to edit the user was successful or not
+             * @return {Object} A 200 or 500 response depending on if the action to edit the user was successful or not
              */
             $scope.onEditUserDetails = function () {
                 $scope.onOpenModal("Edit User", "Please enter the details you wish to change").then(function (modal) {
@@ -285,7 +285,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
             /**
              * Deletes a user from the user database
              * @method onDeleteUser
-             * @return {*|Object} A true or false response depending on if the action to delete the user was successful or not
+             * @return {Object} A true or false response depending on if the action to delete the user was successful or not
              */
             $scope.onDeleteUser = function () {
                 $http.post(__env.apiUrl + "/Account/DeleteUser", {Guid: $scope.selected.Guid, IsDeleting: true}).then(
@@ -301,7 +301,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * A modal will display if information was missed during the clone process, it will state
              * the user must fill in all information into the application in order for the application
              * @method onCloneUser
-             * @return {*|Object} A 200 or 500 response depending on if the action to edit the user was successful or not
+             * @return {Object} A 200 or 500 response depending on if the action to edit the user was successful or not
              */
             $scope.onCloneUser = function () {
                 $scope.onOpenModal("Clone User", "Please enter the details you wish to set the cloned user with").then(function (modal) {
@@ -328,7 +328,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * Resets the user list, and removes the filter that the user was searching for
              * within the application
              * @method removeFilter
-             * @return {*|Object} The normal state of the application prior to searching for users
+             * @return {Object} The normal state of the application prior to searching for users
              */
             $scope.removeFilter = function () {
                 if ($scope.filter.hasFiltered) {
@@ -360,7 +360,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * If it cannot find it present within the current list of users, it will
              * search the database
              * @method filterItems
-             * @return {*|Object} A list of users that matches the current filter search text
+             * @return {Object} A list of users that matches the current filter search text
              */
             $scope.filterItems = function () {
                 if ($scope.oldItems.length === 0) {
@@ -380,7 +380,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
              * Shows the filter location for the user to enter his search text
              * Takes into account which tab is currently being searched
              * @method activateFilter
-             * @return {*|Object} A visible search box for the user to use
+             * @return {Object} A visible search box for the user to use
              */
             $scope.activateFilter = function () {
                 $scope.filter.show = true;

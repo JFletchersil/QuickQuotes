@@ -3,36 +3,40 @@
 /**
  * A collection of controllers designed to manage the admin modals
  * @module quoteTool.adminmodal
+ * @param ui.router {Object} The router object that controls how the system handles navigation requests
+ * @param ngAnimate {Object} The animation object which provides Jquery animations in AngularJS Fashion
+ * @param ngMaterial {Object} The object that allows interaction with the Material Design of the page in an AngularJS Fashion
+ * @param md.data.table {Object} The object that allows JQuery DataTables to be constructed within the scope of the module
  */
 angular.module("quoteTool.adminmodal", ["ui.router", "ngAnimate", "ngMaterial", "md.data.table"])
     /**
      * This controller is designed to provide a modal that allows an admin level user to edit a users details.
      * This includes the ability to change user names, passwords (only to force a new password) as well as Phone Numbers.
      * @class AdminModal
-     * @param $scope Object The $scope
-     * @param $element Object The $HTTP module, this allows us to make HTTP requests
-     * @param title string The title of the modal
-     * @param infoMessage string The message presented inside the modal
-     * @param close Object How the modal should close
+     * @param $scope {Object} The $scope
+     * @param $element {Object} The $HTTP module, this allows us to make HTTP requests
+     * @param title {string} The title of the modal
+     * @param infoMessage {string} The message presented inside the modal
+     * @param close {Object} How the modal should close
      */
     .controller("AdminModal", ["$scope", "$element", "title", "infoMessage", "close",
         function ($scope, $element, title, infoMessage, close) {
             /**
              * The title of the modal
              * @property $scope.title
-             * @type {title|*}
+             * @type {string}
              */
             $scope.title = title;
             /**
              * The infoMessage of the modal
              * @property $scope.infoMessage
-             * @type {infoMessage|*}
+             * @type {string}
              */
             $scope.infoMessage = infoMessage;
             /**
              * The newUserModel of the modal
              * @property $scope.newUserModel
-             * @type {newUserModel|*}
+             * @type {Object}
              */
             $scope.newUserModel = {};
             //  This close function doesn't need to use jQuery or bootstrap, because
