@@ -25,7 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
-    <TypeScriptToolsVersion>2.5</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>2.6</TypeScriptToolsVersion>
     <WebGreaseLibPath>..\packages\WebGrease.1.5.2\lib</WebGreaseLibPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -1582,7 +1582,6 @@
     <Content Include="app\components\scripts\js\bootstrap-material-design.min.js" />
     <Content Include="app\components\services\AuthenticationService.js" />
     <Content Include="app\components\services\OAuthService.js" />
-    <Content Include="app\components\services\StorageService.js" />
     <Content Include="app\components\services\UserService.js" />
     <Content Include="app\components\templates\genericconfigurationtemplate.html" />
     <Content Include="app\components\templates\genericinputtemplate.html" />

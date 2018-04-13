@@ -8,14 +8,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.AccountViewModels.ExternalLoginListViewModel">
-    <Position X="18.25" Y="0.5" Width="2.25" />
+    <Position X="20.25" Y="0.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\AccountViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.AccountViewModels.VerifyCodeViewModel">
-    <Position X="17.75" Y="8" Width="1.75" />
+    <Position X="20.25" Y="9.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAgAAAAAAEAAAAAAAgAAAAAAAAAAAAAAIAAAAgAAA=</HashCode>
       <FileName>Models\WebViewModels\AccountViewModels.cs</FileName>
@@ -36,14 +36,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.AccountViewModels.RegisterViewModel">
-    <Position X="15" Y="5.75" Width="1.75" />
+    <Position X="17.5" Y="7.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAICAQAAAAAAIAA=</HashCode>
       <FileName>Models\WebViewModels\AccountViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.AccountViewModels.ResetPasswordViewModel">
-    <Position X="19.75" Y="7" Width="2" />
+    <Position X="22.25" Y="8.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAACAAAAAAAAAgAAAAAAAAAAACAAAAAAAAIAA=</HashCode>
       <FileName>Models\WebViewModels\AccountViewModels.cs</FileName>
@@ -57,7 +57,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.AccountViewModels.SearchAccounthWebViewModel">
-    <Position X="10.5" Y="7.75" Width="2.5" />
+    <Position X="8.75" Y="13.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>gAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\AccountViewModels.cs</FileName>
@@ -99,14 +99,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.ConfigurationViewModels.PaginatedConfigResult">
-    <Position X="18.25" Y="1.75" Width="2" />
+    <Position X="20.25" Y="1.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAAAAAAAAAAAYAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\ConfigurationWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.ConfigurationViewModels.SaveConfigurationViewModel">
-    <Position X="17" Y="6.5" Width="2.25" />
+    <Position X="19.5" Y="8.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\ConfigurationWebViewModels.cs</FileName>
@@ -127,119 +127,119 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.ElementConfigurationModels.ElementDescription">
-    <Position X="16.25" Y="0.5" Width="1.75" />
+    <Position X="18.25" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAABEAAAAAEAIAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\ElementConfigurationWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.PagingModels.PagingParameterWebViewModel">
-    <Position X="4" Y="4.25" Width="2.5" />
+    <Position X="4" Y="5.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AICAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\PagingParameterWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.PagingModels.AccountPagingParameterWebViewModel">
-    <Position X="0.5" Y="6.25" Width="3" />
+    <Position X="0.5" Y="7.75" Width="3" />
     <TypeIdentifier>
       <HashCode>gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\PagingParameterWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.PagingModels.QueuePagingParameterWebViewModel">
-    <Position X="3.75" Y="6.25" Width="3" />
+    <Position X="3.75" Y="7.75" Width="3" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\PagingParameterWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.PagingModels.ConfigurationPagingParameterWebViewModel">
-    <Position X="7" Y="6.25" Width="3.25" />
+    <Position X="7" Y="7.75" Width="3.25" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\PagingParameterWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QueueDisplayModels.QuickSearchResult">
-    <Position X="10.5" Y="5.75" Width="1.5" />
+    <Position X="8.75" Y="11.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAgAAAAAAgAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueDisplayWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QueueDisplayModels.QuickSearchRequest">
-    <Position X="19.5" Y="3.75" Width="1.75" />
+    <Position X="21.5" Y="3.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueDisplayWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QueueDisplayModels.QueueDisplayWebViewModel">
-    <Position X="15.25" Y="8" Width="2.25" />
+    <Position X="17.75" Y="9.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>EAAAAAAAAAAAAAAAwAAAAAAgAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueDisplayWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QueueDisplayModels.PaginatedQueueResult">
-    <Position X="9.75" Y="3.75" Width="2" />
+    <Position X="8" Y="9.75" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueDisplayWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.ExampleModels.PersonalLoanWebViewModel">
-    <Position X="19.5" Y="5.25" Width="2.25" />
+    <Position X="22" Y="7" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AEAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAI=</HashCode>
       <FileName>Models\WebViewModels\QuotationDetailWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.UserQueueDisplayModels.QueueUserWebViewModel">
-    <Position X="17.25" Y="4" Width="2" />
+    <Position X="19.25" Y="4" Width="2" />
     <TypeIdentifier>
       <HashCode>AAAAABAAAAAAAAAAAAAAQAAACAAABAAAAQQAAgAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueUserWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.UserQueueDisplayModels.PaginatedQueueUserResult">
-    <Position X="12" Y="3.75" Width="2.25" />
+    <Position X="10.25" Y="9.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAgAAAAAAAAAAgAAAAAAAAAQAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QueueUserWebViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QuotationSaveModels.QuotationSaveWebViewModels">
-    <Position X="14.5" Y="4" Width="2.5" />
+    <Position X="12.75" Y="10" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAgACCAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QuotationSaveWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.QuotationSaveModels.QuotationResultWebViewModel">
-    <Position X="12.25" Y="5.75" Width="2.5" />
+    <Position X="10.5" Y="11.75" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAABAEAAAAAAAAAAAAAAAAAAAAEAAAAAAAABAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\QuotationSaveWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.UserActionModels.UserTypeViewModel">
-    <Position X="16.25" Y="2.5" Width="1.75" />
+    <Position X="18.25" Y="2.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAACAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\UserActionWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.UserActionModels.UserDeleteViewModel">
-    <Position X="13.25" Y="7.75" Width="1.75" />
+    <Position X="11.5" Y="13.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAACAAAAAAAAAAAABAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\UserActionWebViewModels.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.UserActionModels.UserEditViewModel">
-    <Position X="20.75" Y="0.5" Width="1.75" />
+    <Position X="22.75" Y="0.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAQAAAAAAABAACAQAAAgAAIAA=</HashCode>
       <FileName>Models\WebViewModels\UserActionWebViewModels.cs</FileName>

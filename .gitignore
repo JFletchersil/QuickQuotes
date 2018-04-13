@@ -288,3 +288,5 @@ __pycache__/
 *.xsd.cs
 /AngularApp/app/bower_components
 /Sandcastle Documentation/Help
+/AngularApp/out
+/AngularApp/app/out

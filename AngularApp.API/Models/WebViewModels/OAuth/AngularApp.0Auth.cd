@@ -29,14 +29,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0NewUserModel">
-    <Position X="2" Y="3.25" Width="1.75" />
+    <Position X="12" Y="1.75" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAgAAABAAEAAAAAAAAAAAACAgAAQAA=</HashCode>
       <FileName>Models\WebViewModels\OAuth\Auth0NewUserModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AngularApp.API.Models.WebViewModels.OAuthModels.Auth0RolesWebViewModel">
-    <Position X="4" Y="2.25" Width="2.25" />
+    <Position X="3.5" Y="2.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Models\WebViewModels\OAuth\Auth0RolesWebViewModel.cs</FileName>
