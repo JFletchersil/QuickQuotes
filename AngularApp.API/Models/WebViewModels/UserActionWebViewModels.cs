@@ -120,4 +120,70 @@ namespace AngularApp.API.Models.WebViewModels.UserActionModels
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
+
+    /// <summary>
+    /// A class designed to represent a user who is being cloned
+    /// </summary>
+    /// <remarks>
+    /// Effectively a copy of <see cref="UserEditViewModel"/> due to the fact
+    /// that the clone operation requires further model clarity.
+    /// Aside from the <see cref="OldUserGuid"/>, all other properies are assumed to belong
+    /// to the new user.
+    /// </remarks>
+    /// <seealso cref="Controllers.AccountController"/>
+    /// <seealso cref="Repository.AuthRepository"/>
+    public class CloneUserViewModel
+    {
+        /// <summary>
+        /// Gets or sets the unique identifier.
+        /// </summary>
+        /// <value>
+        /// The unique identifier.
+        /// </value>
+        [Required]
+        public string OldUserGuid { get; set; }
+        /// <summary>
+        /// Gets or sets the name of the user.
+        /// </summary>
+        /// <value>
+        /// The name of the user.
+        /// </value>
+        public string UserName { get; set; }
+        /// <summary>
+        /// Gets or sets the phone number.
+        /// </summary>
+        /// <value>
+        /// The phone number.
+        /// </value>
+        public string PhoneNumber { get; set; }
+        /// <summary>
+        /// Gets or sets the email address.
+        /// </summary>
+        /// <value>
+        /// The email address.
+        /// </value>
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string EmailAddress { get; set; }
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        /// <value>
+        /// The password.
+        /// </value>
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+        /// <summary>
+        /// Gets or sets the confirm password.
+        /// </summary>
+        /// <value>
+        /// The confirm password.
+        /// </value>
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+    }
 }

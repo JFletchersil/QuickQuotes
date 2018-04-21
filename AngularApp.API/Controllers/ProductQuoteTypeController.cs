@@ -25,7 +25,25 @@ namespace AngularApp.API.Controllers
         /// Unless this changes due to developer actions, this should read only as there is no need for
         /// this controller to have write permissions to the database.
         /// </remarks>
-        private readonly Entities _dbContext = new Entities();
+        private readonly Entities _dbContext;
+
+        /// <summary>
+        /// Initializes the ProductQuoteTypeController Controller with a entity context, allowing access to the Quote Database.
+        /// Constructs the default details for the controller on start up.
+        /// </summary>
+        public ProductQuoteTypeController()
+        {
+            _dbContext = new Entities();
+        }
+
+        /// <summary>
+        /// Provides an initialisation for the Entities, for UnitTests to give the ProductQuoteType Controller an Entities object
+        /// </summary>
+        /// <param name="entity">A unit tested Entities</param>
+        public ProductQuoteTypeController(Entities entity)
+        {
+            _dbContext = entity;
+        }
 
         /// <summary>
         /// Returns all current product types within the database
@@ -82,18 +100,25 @@ namespace AngularApp.API.Controllers
         [HttpGet]
         public JObject GetAllQuoteTypes()
         {
-            var productTypes = _dbContext.ProductTypes.ToList();
-            var orderedQuoteTypes = _dbContext.QuoteTypes.GroupBy(x => x.ProductParentID);
-            var groupedApprovedStructures = new JObject();
-            foreach (var productType in orderedQuoteTypes)
+            try
             {
-                // Adds to the JObject, as properties, the quotes ordered by associated product type
-                // This is required for the front end to properly display all finance and quote types
-                var retProductType = productTypes.FirstOrDefault(x => x.ProductTypeID == productType.Key)?.IncProductType;
-                groupedApprovedStructures.Add(new JProperty(retProductType, productType.Select(x => x.IncQuoteType).ToList()));
-            }
+                var productTypes = _dbContext.ProductTypes.ToList();
+                var orderedQuoteTypes = _dbContext.QuoteTypes.GroupBy(x => x.ProductParentID);
+                var groupedApprovedStructures = new JObject();
+                foreach (var productType in orderedQuoteTypes)
+                {
+                    // Adds to the JObject, as properties, the quotes ordered by associated product type
+                    // This is required for the front end to properly display all finance and quote types
+                    var retProductType = productTypes.FirstOrDefault(x => x.ProductTypeID == productType.Key)?.IncProductType;
+                    groupedApprovedStructures.Add(new JProperty(retProductType, productType.Select(x => x.IncQuoteType).ToList()));
+                }
 
-            return groupedApprovedStructures;
+                return groupedApprovedStructures;
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
     }
 }

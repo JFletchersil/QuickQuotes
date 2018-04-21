@@ -7,12 +7,14 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using System.Web.Http.Results;
 using AngularApp.API.Models.DBModels;
 using AngularApp.API.Models.WebViewModels.ElementConfigurationModels;
 using AngularApp.API.Models.WebViewModels.QuotationSaveModels;
@@ -35,7 +37,7 @@ namespace AngularApp.API.Controllers
         /// Creates a private, read only connection to the database for gathering the details required for the management
         /// of quotes themselves.
         /// </summary>
-        private readonly Entities _dbContext = new Entities();
+        private readonly Entities _dbContext;
 
         /// <summary>
         /// An ENUM representation of the table type that is being worked with
@@ -56,6 +58,24 @@ namespace AngularApp.API.Controllers
         }
 
         /// <summary>
+        /// Initializes the QuoteController Controller with a entity context, allowing access to the Quote Database.
+        /// Constructs the default details for the controller on start up.
+        /// </summary>
+        public QuoteController()
+        {
+            _dbContext = new Entities();
+        }
+
+        /// <summary>
+        /// Provides an initialisation for the Entities, for UnitTests to give the Quote Controller an Entities object
+        /// </summary>
+        /// <param name="entities">A unit tested Entities</param>
+        public QuoteController(Entities entities)
+        {
+            _dbContext = entities;
+        }
+
+        /// <summary>
         /// Returns the page configuration for a given quote type
         /// </summary>
         /// <param name="quoteType">The quote type that requires it's configuration details</param>
@@ -70,11 +90,19 @@ namespace AngularApp.API.Controllers
         [HttpGet]
         public List<ElementConfigurationWebViewModel> GetElementConfiguration(string quoteType)
         {
-            var configuration = _dbContext.QuoteDefaults.FirstOrDefault(x =>
-                x.TypeID == _dbContext.QuoteTypes.FirstOrDefault(y => y.IncQuoteType == quoteType).QuoteTypeID);
+            try
+            {
+                var configuration = _dbContext.QuoteDefaults.FirstOrDefault(x =>
+                    x.TypeID == _dbContext.QuoteTypes.FirstOrDefault(y => y.IncQuoteType == quoteType).QuoteTypeID);
 
-            return configuration != null ?
-                JsonConvert.DeserializeObject<List<ElementConfigurationWebViewModel>>(configuration.ElementDescription) : null;
+                return configuration != null ?
+                    JsonConvert.DeserializeObject<List<ElementConfigurationWebViewModel>>(configuration.ElementDescription) : null;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -97,63 +125,69 @@ namespace AngularApp.API.Controllers
         /// parts of the quote configuration match, otherwise inconsistent or wrong results will be returned.
         /// </remarks>
         [HttpPost]
-        public async Task<QuotationResultWebViewModel> CalculateQuoteAsync(HttpRequestMessage request)
+        public QuotationResultWebViewModel CalculateQuote(HttpRequestMessage request)
         {
-            // Breaks down and converts the request into a dict as well as JObject
-            // The JObject is used to ascertain the type, in order to get the defaults
-            // The Dict is used to perform the calculations later on
-            var dataText = request.Content.ReadAsStringAsync().Result;
-            var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataText);
-            var objType = JsonConvert.DeserializeObject<JObject>(dataText).GetValue("Type").Value<string>();
-            var quoteDefaults = _dbContext.QuoteDefaults.FirstOrDefault(x => x.QuoteTypeID.IncQuoteType == objType);
-            // Placeholder for storing the interest rates, this will be adjusted later
-            var interestRate = 5d;
-            dict.Add("InterestRate", "5");
-
-            // Performs a check to see if there is an active Commission Calculator, if there is then
-            // a request is made to that endpoint and the data is processed into the general data dict
-            // for the calculation
-            if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CommissionCalculatorCall"]))
+            try
             {
-                using (HttpClient client = new HttpClient())
+                // Breaks down and converts the request into a dict as well as JObject
+                // The JObject is used to ascertain the type, in order to get the defaults
+                // The Dict is used to perform the calculations later on
+                var dataText = request.Content.ReadAsStringAsync().Result;
+                var dict = JsonConvert.DeserializeObject<Dictionary<string, string>>(dataText);
+                var objType = JsonConvert.DeserializeObject<JObject>(dataText).GetValue("Type").Value<string>();
+                var quoteDefaults = _dbContext.QuoteDefaults.FirstOrDefault(x => x.QuoteTypeID.IncQuoteType == objType);
+                // Placeholder for storing the interest rates, this will be adjusted later
+                const double interestRate = 5d;
+                dict.Add("InterestRate", "5");
+
+                // Performs a check to see if there is an active Commission Calculator, if there is then
+                // a request is made to that endpoint and the data is processed into the general data dict
+                // for the calculation
+                if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CommissionCalculatorCall"]))
                 {
-                    // TODO - Requires more information about how the ComissionCalculator Works, as well as conversion methods.
-                    var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CommissionCalculatorCall"]);
-                    var returnRequest = await client.SendAsync(httpRequest);
-                    var returnValue = returnRequest.Content.ReadAsStringAsync().Result;
-                    dict.Add("ComissionValue", "500");
+                    using (var client = new HttpClient())
+                    {
+                        var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CommissionCalculatorCall"]);
+                        var returnRequest = client.SendAsync(httpRequest).Result;
+                        var returnValue = returnRequest.Content.ReadAsStringAsync().Result;
+                        dict.Add("ComissionValue", "500");
+                    }
                 }
-            }
 
-            // Performs a check to see if a Calculator Endpoint exists, if it does exist then
-            // the dict is handed to the endpoint and the result is immediately returned to the user
-            if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CalculatorAPICall"]))
-            {
-                using (HttpClient client = new HttpClient())
+                // Performs a check to see if a Calculator Endpoint exists, if it does exist then
+                // the dict is handed to the endpoint and the result is immediately returned to the user
+                if (!string.IsNullOrEmpty(WebConfigurationManager.AppSettings["CalculatorAPICall"]))
                 {
-                    // TODO - Requires more information about how the Calculator Works, as well as conversion methods, but basically done except for transformation function
-                    var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CalculatorAPICall"]);
-                    return Mapper.Map<QuotationResultWebViewModel>(await client.SendAsync(httpRequest));
+                    using (var client = new HttpClient())
+                    {
+                        var httpRequest = new HttpRequestMessage(HttpMethod.Post, WebConfigurationManager.AppSettings["CalculatorAPICall"]);
+                        return Mapper.Map<QuotationResultWebViewModel>(client.SendAsync(httpRequest).Result);
+                    }
                 }
+
+                // If the calculator endpoint is not used, then we are expected to us the database template to
+                // calculate the Total Repayable, the values within the template that need to be replaced
+                // are replaced within the function below
+                var retVal = PopularDefaultsWithString(dict, quoteDefaults.TotalRepayableTemplate);
+                // Uses the data table functionality to compute strings as if they were mathematical formulas to get
+                // a value for the total repayable. From this, we can calculate the other parameters
+                var totalRepayable = Convert.ToDecimal(new DataTable().Compute(retVal, null));
+
+                // Returns the calculated quotation result based on inferences from other values such as
+                // the totalRepyable and the given term in months
+                return new QuotationResultWebViewModel()
+                {
+                    Fees = 50.00m,
+                    InterestRate = interestRate,
+                    MonthlyRepayable = Math.Round((totalRepayable / Convert.ToDecimal(dict["TermInMonths"])), 2),
+                    TotalRepayable = Math.Round(totalRepayable, 2)
+                };
             }
-
-            // If the calculator endpoint is not used, then we are expected to us the database template to
-            // calculate the Total Repayable, the values within the template that need to be replaced
-            // are replaced within the function below
-            var retVal = PopularDefaultsWithString(dict, quoteDefaults.TotalRepayableTemplate);
-            // Uses the data table functionality to compute strings as if they were mathematical formulas to get
-            // a value for the total repayable. From this, we can calculate the other parameters
-            var totalRepayable = Convert.ToDecimal(new DataTable().Compute(retVal, null));
-
-            // Returns the calculated quotation result based on inferences from other values such as
-            // the totalRepyable and the given term in months
-            return new QuotationResultWebViewModel()
+            catch (Exception e)
             {
-                Fees = 50.00m,
-                InterestRate = interestRate,
-                MonthlyRepayable = Math.Round((totalRepayable / Convert.ToDecimal(dict["TermInMonths"])), 2),
-                TotalRepayable = Math.Round(totalRepayable, 2)
-            };
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -175,53 +209,77 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult SaveQuote(QuotationSaveWebViewModels saveModel)
         {
-            // Gets the product ID for a given parent string name, due to the fact that these are strings
-            // and not the expected IDs, this needs to happen.
-            var first = _dbContext.ProductTypes.ToList().FirstOrDefault
-                (x => x.IncProductType != null && string.Equals(x.IncProductType, saveModel.ParentId, StringComparison.CurrentCultureIgnoreCase));
-            var productId = first.ProductTypeID;
-            // Can Remain Defaulted, the first state of any quote should be QQActive anyway
-            var quoteStatusId = _dbContext.QuoteStatuses.ToList().FirstOrDefault(x => x.State != null && x.State == "QQActive")?.StatusID;
-            // Gets the quote type id for a given quote type string,  due to the fact that these are strings
-            // and not the expected IDs, this needs to happen.
-            var quoteType = _dbContext.QuoteTypes.ToList()
-                .FirstOrDefault(x => x.IncQuoteType != null && string.Equals(x.IncQuoteType, saveModel.QuoteId,
-                                         StringComparison.CurrentCultureIgnoreCase));
-            var quoteTypeId = quoteType?.QuoteTypeID;
-
-            // Generates a new Quote GUID for the quote
-            var quoteGuid = Guid.NewGuid();
-
-            // Adds the quote into main quote table, this can be done as there is nothing in this 
-            // table that requires other tables to be correct
-            _dbContext.Quotes.Add(new Quote()
+            try
             {
-                QuoteReference = quoteGuid,
-                ProductType = productId,
-                QuoteAuthor = "TestAuthor",
-                QuoteDate = DateTime.Now,
-                QuoteStatus = quoteStatusId ?? 0,
-                QuoteType = quoteTypeId ?? 0
-            });
-            // Evaluates if this was able to be saved to the database or not
-            var success = _dbContext.SaveChanges() == 1;
-            if (!success)
-                return InternalServerError(new Exception("Unable to Perform Table Operations"));
+                // Gets the product ID for a given parent string name, due to the fact that these are strings
+                // and not the expected IDs, this needs to happen.
+                var first = _dbContext.ProductTypes.ToList().FirstOrDefault
+                    (x => x.IncProductType != null && string.Equals(x.IncProductType, saveModel.ParentId, StringComparison.CurrentCultureIgnoreCase));
+                var productId = first.ProductTypeID;
+                // Can Remain Defaulted, the first state of any quote should be QQActive anyway
+                var quoteStatusId = _dbContext.QuoteStatuses.ToList().FirstOrDefault(x => x.State != null && x.State == "QQActive")?.StatusID;
+                // Gets the quote type id for a given quote type string,  due to the fact that these are strings
+                // and not the expected IDs, this needs to happen.
+                var quoteType = _dbContext.QuoteTypes.ToList()
+                    .FirstOrDefault(x => x.IncQuoteType != null && string.Equals(x.IncQuoteType, saveModel.QuoteId,
+                                             StringComparison.CurrentCultureIgnoreCase));
+                var quoteTypeId = quoteType?.QuoteTypeID;
 
-            // Inserts into the quote specific quote table the details of the quotation
-            // More information about the function can be found in the function description
-            success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, saveModel.QuotationDetails, TableType.Quotes);
-            if (!success)
-                return InternalServerError(new Exception("Unable to Perform Table Operations"));
+                // Generates a new Quote GUID for the quote
+                var quoteGuid = Guid.NewGuid();
 
-            // Inserts into the quote specific results table the details of the quotation result
-            var resultsObj = JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(saveModel.QuotationCalculation));
-            success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, resultsObj, TableType.Results);
-            if (!success)
-                return InternalServerError(new Exception("Unable to Perform Table Operations"));
+                // Adds the quote into main quote table, this can be done as there is nothing in this 
+                // table that requires other tables to be correct
+                var addQuote = new Quote()
+                {
+                    QuoteReference = quoteGuid,
+                    ProductType = productId,
+                    QuoteAuthor = "TestAuthor",
+                    QuoteDate = DateTime.Now,
+                    QuoteStatus = quoteStatusId ?? 0,
+                    QuoteType = quoteTypeId ?? 0
+                };
+                _dbContext.Quotes.Add(addQuote);
+                // Evaluates if this was able to be saved to the database or not
+                var success = _dbContext.SaveChanges() == 1;
+                if (!success)
+                    return InternalServerError(new Exception("Unable to Perform Table Operations"));
 
-            // If all of the checks pass, return a 200 to state that they worked
-            return Ok();
+                // Makes a connection to the database via PetaPoco
+                var db = new Database("QuoteDB");
+                try
+                {
+                    using (var transaction = db.GetTransaction())
+                    {
+                        // Inserts into the quote specific quote table the details of the quotation
+                        // More information about the function can be found in the function description
+                        success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, saveModel.QuotationDetails, TableType.Quotes, db);
+                        if (!success)
+                            return InternalServerError(new Exception("Unable to Perform Table Operations"));
+
+                        // Inserts into the quote specific results table the details of the quotation result
+                        var resultsObj = JsonConvert.DeserializeObject<JObject>(JsonConvert.SerializeObject(saveModel.QuotationCalculation));
+                        success = InsertIntoTables(quoteType?.IncQuoteType, quoteGuid, resultsObj, TableType.Results, db);
+                        if (!success)
+                            return InternalServerError(new Exception("Unable to Perform Table Operations"));
+                        transaction.Complete();
+                    }
+                }
+                catch (Exception e)
+                {
+                    _dbContext.Quotes.Remove(addQuote);
+                    Console.WriteLine(e);
+                    return BadRequest(e.ToString());
+                }
+
+                // If all of the checks pass, return a 200 to state that they worked
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.ToString());
+            }
         }
 
         /// <summary>
@@ -240,27 +298,35 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult RetrieveWithQuoteReference(HttpRequestMessage request)
         {
-            var actGuid = new Guid(request.Content.ReadAsStringAsync().Result);
-            var quote = _dbContext.Quotes.ToList().FirstOrDefault(x => x.QuoteReference == actGuid);
-
-            if (quote == null) return InternalServerError(new Exception("Unable to Perform Table Operations"));
+            try
             {
-                var quoteResult = _dbContext.QuoteTypes.FirstOrDefault(x => x.QuoteTypeID == quote.QuoteType);
+                var actGuid = new Guid(request.Content.ReadAsStringAsync().Result);
+                var quote = _dbContext.Quotes.ToList().FirstOrDefault(x => x.QuoteReference == actGuid);
 
-                var returnResult = new QuotationSaveWebViewModels
+                if (quote == null) return InternalServerError(new Exception("Unable to Perform Table Operations"));
                 {
-                    // In this case, we need to do the reverse and generically pull the results back from 
-                    // the associated tables. More information is within the functions present. Describing
-                    // how they work.
-                    QuotationCalculation = ReturnFromTables(actGuid, quoteResult?.IncQuoteType, TableType.Results),
-                    QuotationDetails = ReturnFromTables(actGuid, quoteResult?.IncQuoteType, TableType.Quotes),
-                    QuoteId = quoteResult?.IncQuoteType,
-                    ParentId = _dbContext.ProductTypes.ToList()
-                        .FirstOrDefault(x => x.ProductTypeID == quote.ProductType)
-                        ?.IncProductType
-                };
+                    var quoteResult = _dbContext.QuoteTypes.FirstOrDefault(x => x.QuoteTypeID == quote.QuoteType);
 
-                return Ok(returnResult);
+                    var returnResult = new QuotationSaveWebViewModels
+                    {
+                        // In this case, we need to do the reverse and generically pull the results back from 
+                        // the associated tables. More information is within the functions present. Describing
+                        // how they work.
+                        QuotationCalculation = ReturnFromTables(actGuid, quoteResult?.IncQuoteType, TableType.Results),
+                        QuotationDetails = ReturnFromTables(actGuid, quoteResult?.IncQuoteType, TableType.Quotes),
+                        QuoteId = quoteResult?.IncQuoteType,
+                        ParentId = _dbContext.ProductTypes.ToList()
+                            .FirstOrDefault(x => x.ProductTypeID == quote.ProductType)
+                            ?.IncProductType
+                    };
+
+                    return Ok(returnResult);
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest(e.ToString());
             }
         }
 
@@ -275,10 +341,11 @@ namespace AngularApp.API.Controllers
         [HttpGet]
         public IHttpActionResult UpdateQuoteReference(string quoteGuid, string quoteType)
         {
-            var quote = _dbContext.Quotes.ToList().FirstOrDefault(x => x.QuoteReference == new Guid(quoteGuid));
-            var status = _dbContext.QuoteStatuses.ToList().FirstOrDefault(x => x.State == quoteType && x.Enabled == true);
-            quote.QuoteStatus = status.StatusID;
-            return Ok();
+            return BadRequest("Function not enabled");
+            //var quote = _dbContext.Quotes.ToList().FirstOrDefault(x => x.QuoteReference == new Guid(quoteGuid));
+            //var status = _dbContext.QuoteStatuses.ToList().FirstOrDefault(x => x.State == quoteType && x.Enabled == true);
+            //quote.QuoteStatus = status.StatusID;
+            //return Ok();
         }
 
         /// <summary>
@@ -369,12 +436,10 @@ namespace AngularApp.API.Controllers
         /// At the end, the statement is created, turned into a string and then executed and the results of such
         /// returned back to the user.
         /// </example>
-        private bool InsertIntoTables(string quoteType, Guid quoteGuid, JObject resultsObj, TableType type)
+        private bool InsertIntoTables(string quoteType, Guid quoteGuid, JObject resultsObj, TableType type, Database db)
         {
             try
             {
-                // Makes a connection to the database via PetaPoco
-                var db = new Database("QuoteDB");
                 // Formats the table name according to the type of table we are working on as well as the quote type
                 var tablename = $"{quoteType}{type.ToString()}";
                 // Selects the column configurations based off SQL string configuration, preventing SQL attacks
@@ -412,6 +477,7 @@ namespace AngularApp.API.Controllers
             }
             catch (Exception ex)
             {
+                return false;
                 throw ex;
             }
         }

@@ -311,7 +311,7 @@ angular.module("quoteTool.administration", ["ui.router", "ngAnimate", "ngMateria
                             alert("Information is missing from the application, please enter all details");
                         } else {
                             $http.post(__env.apiUrl + "/Account/CloneUser", {
-                                Guid: $scope.selected.Guid, UserName: result.UserName, EmailAddress: result.EmailAddress,
+                                    OldUserGuid: $scope.selected.Guid, UserName: result.UserName, EmailAddress: result.EmailAddress,
                                 Password: result.Password, ConfirmPassword: result.ConfirmPassword
                             })
                                 .then(function (response) {

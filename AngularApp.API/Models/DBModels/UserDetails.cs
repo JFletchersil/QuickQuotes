@@ -17,6 +17,8 @@ namespace AngularApp.API.Models.DBModels
     /// <seealso cref="Controllers.AccountController" />
     /// <seealso cref="Controllers.UserDetailsController" />
     /// <seealso cref="Controllers.Auth0Controller" />
+    [TableName("AspNetUserDetails")]
+    [PrimaryKey("Id")]
     public class UserDetails
     {
         /// <summary>
@@ -25,6 +27,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The identifier.
         /// </value>
+        [Column]
         public string Id { get; set; }
 
         /// <summary>
@@ -33,6 +36,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The first name.
         /// </value>
+        [Column]
         public string FirstName { get; set; }
 
         /// <summary>
@@ -41,6 +45,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The last name.
         /// </value>
+        [Column]
         public string LastName { get; set; }
 
         /// <summary>
@@ -49,6 +54,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The full name.
         /// </value>
+        [Column]
         public string FullName { get; set; }
 
         /// <summary>
@@ -57,6 +63,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The business.
         /// </value>
+        [Column]
         public string Business { get; set; }
 
         /// <summary>
@@ -65,6 +72,7 @@ namespace AngularApp.API.Models.DBModels
         /// <value>
         /// The title.
         /// </value>
+        [Column]
         public string Title { get; set; }
 
         /// <summary>
@@ -76,6 +84,7 @@ namespace AngularApp.API.Models.DBModels
         /// <remarks>
         /// This has not been implemented yet
         /// </remarks>
+        [Column]
         public string BoundCustomers { get; set; }
     }
 }

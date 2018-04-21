@@ -200,7 +200,6 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
         public string Password { get; set; }
 
         /// <summary>
@@ -214,9 +213,10 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         /// prevent typos inside the password entry
         /// </remarks>
         /// <seealso cref="Password" />
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Compare(nameof(Password))]
         public string ConfirmPassword { get; set; }
 
         /// <summary>
@@ -345,10 +345,10 @@ namespace AngularApp.API.Models.WebViewModels.AccountViewModels
         /// </value>
         public string FilterTerm { get; set; }
         /// <summary>
-        /// Gets or sets a value indicating whether [return all].
+        /// Determines if the return from a page request should either admin users, or standard users
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [return all]; otherwise, <c>false</c>.
+        /// If set to true, then will return admin users, if false, just standard users
         /// </value>
         public bool ReturnAll { get; set; }
     }

@@ -14,10 +14,10 @@ angular.module("User", ["ngStorage"])
     .factory("UserService", ["$localStorage", function ($localStorage) {
         /**
          * Sets the $storage property to be equal to the $localStorage property
-         * @property $scope.$storage
+         * @property $storage
          * @type {Object}
          */
-        $scope.$storage = $localStorage;
+        $storage = $localStorage;
 
         /**
          * The current user and the user's data
@@ -44,7 +44,7 @@ angular.module("User", ["ngStorage"])
             Object.keys(item).forEach(function (key) {
                 user[key] = item[key];
             });
-            $scope.$storage.user = user;
+            $storage.user = user;
         }
 
         /**
@@ -54,7 +54,7 @@ angular.module("User", ["ngStorage"])
          */
         function getItem() {
             if (!user) {
-                user = $scope.$storage.user;
+                user = $storage.user;
             }
             return user;
         }

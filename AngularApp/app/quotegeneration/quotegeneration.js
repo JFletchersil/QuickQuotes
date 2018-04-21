@@ -178,9 +178,15 @@ angular.module("quoteTool.quotegeneration", ["ui.router", "ngAnimate", "Currency
                 }
             };
 
-            if ($scope.quoteReference !== undefined || $scope.quoteID !== undefined) {
+            if ($scope.quoteReference !== undefined) {
                 $scope.retrieveWithQuoteReference();
-            } else{
+            } else {
+                console.log("Unable to determine quote type")
+            }
+
+            if ($scope.quoteID !== undefined) {
+                $scope.retrieveElementConfiguration();
+            } else {
                 console.log("Unable to determine quote type")
             }
         }]);

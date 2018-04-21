@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using AngularApp.API.Models.DBModels;
-using AngularApp.API.Models.WebViewModels;
-using AngularApp.API.Repository;
 using PetaPoco;
 
 namespace AngularApp.API.Controllers
@@ -25,7 +21,6 @@ namespace AngularApp.API.Controllers
     [EnableCors("*", "*", "*")]
     public class UserDetailsController : ApiController
     {
-        // TODO - Change this to a GUID
         /// <summary>
         /// Returns a given User Model when given a correct full name
         /// </summary>
@@ -40,10 +35,19 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public UserDetails ReturnUserModel(HttpRequestMessage request)
         {
-            var fullName = request.Content.ReadAsStringAsync().Result;
-            var db = new Database("AngularUsers");
-            return db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE FullName = '{fullName}'")
-                .FirstOrDefault();
+            try
+            {
+                var fullName = request.Content.ReadAsStringAsync().Result;
+                var db = new Database("AngularUsers");
+                return db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE FullName = '{fullName}'")
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return null;
+            }
+
         }
 
         /// <summary>
@@ -62,9 +66,17 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public bool SaveUserModel(UserDetails userDetails)
         {
-            var db = new Database("AngularUsers");
-            var returnVal = db.Update("AspNetUserDetails", "Id", userDetails);
-            return returnVal == 1;
+            try
+            {
+                var db = new Database("AngularUsers");
+                var returnVal = db.Update("AspNetUserDetails", "Id", userDetails);
+                return returnVal == 1;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
         }
     }
 }

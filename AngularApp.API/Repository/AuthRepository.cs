@@ -74,28 +74,41 @@ namespace AngularApp.API.Repository
         /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> RegisterUser(RegisterViewModel userModel)
         {
-            // Gives the new user an identifier
-            var currGuid = Guid.NewGuid().ToString();
-            var user = new IdentityUser
+            try
             {
-                Id = currGuid,
-                UserName = userModel.UserName,
-                // Gives the user the correct roles, by default this is done in such a fashion
-                // as to make user the default role but an administrator can alter this.
-                Roles =
+                // Gives the new user an identifier
+                var currGuid = Guid.NewGuid().ToString();
+                var user = new IdentityUser
                 {
-                    new IdentityUserRole()
+                    Id = currGuid,
+                    UserName = userModel.UserName,
+                    // Gives the user the correct roles, by default this is done in such a fashion
+                    // as to make user the default role but an administrator can alter this.
+                    Roles =
                     {
-                        RoleId = (userModel.IsAdministrator) ? WebConfigurationManager.AppSettings["AdministratorRole"] : WebConfigurationManager.AppSettings["UserRole"],
-                        UserId = currGuid
-                    }
-                },
-                Email = userModel.Email
-            };
+                        new IdentityUserRole()
+                        {
+                            RoleId = (userModel.IsAdministrator) ? WebConfigurationManager.AppSettings["AdministratorRole"] : WebConfigurationManager.AppSettings["UserRole"],
+                            UserId = currGuid
+                        }
+                    },
+                    Email = userModel.Email
+                };
 
-            var result = await _userManager.CreateAsync(user, userModel.Password);
+                if (userModel.Password != userModel.ConfirmPassword)
+                {
+                    return new IdentityResult("Passwords do not match");
+                }
 
-            return result;
+                var result = await _userManager.CreateAsync(user, userModel.Password);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return new IdentityResult(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -111,43 +124,56 @@ namespace AngularApp.API.Repository
         /// <param name="cloneUserViewModel">The clone user view model.</param>
         /// <returns>If the clone of the user was successful or not</returns>
         /// <seealso cref="Controllers.AccountController"/>
-        public IdentityResult CloneUser(UserEditViewModel cloneUserViewModel)
+        public IdentityResult CloneUser(CloneUserViewModel cloneUserViewModel)
         {
-            // Validates the user model to ensure that the user has a password and user name
-            if (string.IsNullOrEmpty(cloneUserViewModel.Password))
+            try
             {
-                return new IdentityResult(new List<string> { "No Password for Clone User!" });
-            }
-            if (string.IsNullOrEmpty(cloneUserViewModel.UserName))
-            {
-                return new IdentityResult(new List<string> { "No UserName for Clone User!" });
-            }
-
-            // Gets a new identifier for the clone of the original user
-            var currGuid = Guid.NewGuid().ToString();
-            // Gets the old user so that we can copy details from the old user to the clone
-            var oldUser = _userManager.Users.FirstOrDefault(x => x.Id == cloneUserViewModel.Guid);
-            var user = new IdentityUser
-            {
-                Id = currGuid,
-                UserName = cloneUserViewModel.UserName,
-                Email = (string.IsNullOrEmpty(cloneUserViewModel.UserName)) ? "" : cloneUserViewModel.EmailAddress,
-            };
-            // In a loop, checking to ensure that there are roles, copy
-            // the roles that the old user has and add them to the new user.
-            if (oldUser?.Roles != null)
-                foreach (var role in oldUser.Roles)
+                // Validates the user model to ensure that the user has a password and user name
+                if (string.IsNullOrEmpty(cloneUserViewModel.Password))
                 {
-                    user.Roles.Add(new IdentityUserRole()
-                    {
-                        UserId = currGuid,
-                        RoleId = role.RoleId
-                    });
+                    return new IdentityResult(new List<string> { "No Password for Clone User!" });
+                }
+                if (string.IsNullOrEmpty(cloneUserViewModel.UserName))
+                {
+                    return new IdentityResult(new List<string> { "No UserName for Clone User!" });
                 }
 
-            var result = _userManager.Create(user, cloneUserViewModel.Password);
+                if (cloneUserViewModel.Password != cloneUserViewModel.ConfirmPassword)
+                {
+                    return new IdentityResult(new List<string> { "Passwords Do Not Match For Clone User!" });
+                }
 
-            return result;
+                // Gets a new identifier for the clone of the original user
+                var currGuid = Guid.NewGuid().ToString();
+                // Gets the old user so that we can copy details from the old user to the clone
+                var oldUser = _userManager.Users.FirstOrDefault(x => x.Id == cloneUserViewModel.OldUserGuid);
+                var user = new IdentityUser
+                {
+                    Id = currGuid,
+                    UserName = cloneUserViewModel.UserName,
+                    Email = string.IsNullOrEmpty(cloneUserViewModel.EmailAddress) ? "" : cloneUserViewModel.EmailAddress,
+                };
+                // In a loop, checking to ensure that there are roles, copy
+                // the roles that the old user has and add them to the new user.
+                if (oldUser?.Roles != null)
+                    foreach (var role in oldUser.Roles)
+                    {
+                        user.Roles.Add(new IdentityUserRole()
+                        {
+                            UserId = currGuid,
+                            RoleId = role.RoleId
+                        });
+                    }
+
+                var result = _userManager.Create(user, cloneUserViewModel.Password);
+
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new IdentityResult(e.ToString());
+            }
         }
 
         /// <summary>
@@ -160,25 +186,44 @@ namespace AngularApp.API.Repository
         /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> EditUser(RegisterViewModel userModel, string userId, string phoneNumber)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-            IdentityResult result;
-            if (!string.IsNullOrWhiteSpace(userModel.Password))
+            try
             {
-                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(userId);
-                result = await _userManager.ChangePasswordAsync(userId, resetToken, userModel.Password);
+                var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+                IdentityResult result;
+                if (!string.IsNullOrWhiteSpace(userModel.Password))
+                {
+                    if (userModel.Password == userModel.ConfirmPassword)
+                    {
+                        _userManager.RemovePassword(userId);
+                        result = _userManager.AddPassword(userId, userModel.Password);
+                        if (!result.Succeeded)
+                        {
+                            return result;
+                        }
+                    }
+                    else
+                    {
+                        return new IdentityResult("Passwords Fail To Match");
+                    }
+                }
+                // Due to the difficulty of a direct information transfer, successive if statements
+                // are used in order to check for values and then copy the new values into the 
+                // user before saving the user.
+                if (user == null) return new IdentityResult(new List<string> { "Unable to Find User" });
+                if (!string.IsNullOrWhiteSpace(userModel.Email))
+                    user.Email = userModel.Email;
+                if (!string.IsNullOrWhiteSpace(userModel.UserName))
+                    user.UserName = userModel.UserName;
+                if (!string.IsNullOrWhiteSpace(phoneNumber))
+                    user.PhoneNumber = phoneNumber;
+                result = await _userManager.UpdateAsync(user);
+                return result;
             }
-            // Due to the difficulty of a direct information transfer, successive if statements
-            // are used in order to check for values and then copy the new values into the 
-            // user before saving the user.
-            if (user == null) return new IdentityResult(new List<string> { "Unable to Find User" });
-            if (!string.IsNullOrWhiteSpace(userModel.Email))
-                user.Email = userModel.Email;
-            if (!string.IsNullOrWhiteSpace(userModel.UserName))
-                user.UserName = userModel.UserName;
-            if (!string.IsNullOrWhiteSpace(phoneNumber))
-                user.PhoneNumber = phoneNumber;
-            result = await _userManager.UpdateAsync(user);
-            return result;
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new IdentityResult(e.ToString());
+            }
         }
 
         /// <summary>
@@ -190,17 +235,16 @@ namespace AngularApp.API.Repository
         /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityUser> FindUser(string userName, string password)
         {
-            var user = await _userManager.FindAsync(userName, password);
-            return user;
-        }
-
-        /// <summary>
-        /// Returns all roles.
-        /// </summary>
-        /// <returns>Returns a full list of all roles within the database</returns>
-        public List<IdentityRole> ReturnAllRoles()
-        {
-            return _roleMngr.Roles.ToList();
+            try
+            {
+                var user = await _userManager.FindAsync(userName, password);
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -210,8 +254,16 @@ namespace AngularApp.API.Repository
         /// <returns>Returns a user who matches a given unique identifier</returns>
         public IdentityUser FindUserByGuid(string guid)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == guid);
-            return user;
+            try
+            {
+                var user = _userManager.Users.FirstOrDefault(x => x.Id == guid);
+                return user;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -221,8 +273,16 @@ namespace AngularApp.API.Repository
         /// <seealso cref="Controllers.AccountController"/>
         public List<IdentityUser> GetAllUsers()
         {
-            var users = _userManager.Users.ToList();
-            return users;
+            try
+            {
+                var users = _userManager.Users.ToList();
+                return users;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return null;
+            }
         }
 
         /// <summary>
@@ -233,9 +293,17 @@ namespace AngularApp.API.Repository
         /// <seealso cref="Controllers.AccountController"/>
         public async Task<IdentityResult> DeleteUser(string userId)
         {
-            var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
-            var result = await _userManager.DeleteAsync(user);
-            return result;
+            try
+            {
+                var user = _userManager.Users.FirstOrDefault(x => x.Id == userId);
+                var result = await _userManager.DeleteAsync(user);
+                return result;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return new IdentityResult(e.ToString());
+            }
         }
 
         /// <summary>
@@ -249,6 +317,7 @@ namespace AngularApp.API.Repository
         /// <param name="oldRole">The old role.</param>
         /// <param name="newRole">The new role.</param>
         /// <returns>A bool representation of if the user had their roles swapped</returns>
+        /// <seealso cref="Controllers.AccountController"/>
         public bool SwapUserRoles(string userId, string oldRole, string newRole)
         {
             try

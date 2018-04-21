@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AngularApp.API.Helpers;
 
 namespace AngularApp.API.Controllers
 {
@@ -28,7 +29,9 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// The database context
         /// </summary>
-        private readonly Entities _dbContext = null;
+        private readonly Entities _dbContext;
+
+        private readonly CommonFunctionsHelper _helper;
 
         /// <summary>
         /// Initializes the ConfigurationController Controller with a entity context, allowing access to the Quote Database.
@@ -40,6 +43,17 @@ namespace AngularApp.API.Controllers
         public ConfigurationController()
         {
             _dbContext = new Entities();
+            _helper = new CommonFunctionsHelper();
+        }
+
+        /// <summary>
+        /// Provides an initialisation for the Entities, for UnitTests to give the Account Controller a Entities
+        /// </summary>
+        /// <param name="context">A unit tested Entities</param>
+        public ConfigurationController(Entities context)
+        {
+            _dbContext = context;
+            _helper = new CommonFunctionsHelper();
         }
 
         /// <summary>
@@ -57,43 +71,50 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult SearchDefaultConfigurations(DefaultConfigurationSearchWebViewModel viewModel)
         {
-            // Selects the correct configuration type based on the string provided by the search model
-            switch (viewModel.ConfigType)
+            try
             {
-                case "QuoteDefaults":
-                    // Gathers all the associated configuration items and lists them for mapping and filter.
-                    var defaults = _dbContext.QuoteDefaults.ToList();
-                    var defaultQuotes = Mapper.Map<List<QuoteDefaultsViewModel>>(defaults);
-                    // As mentioned, the Test Function performs text based comparisons, further information is detailed in the test function.
-                    defaultQuotes = defaultQuotes.Where(x => TestFunction(x.ElementDescription, viewModel.FilterText) || 
-                                                             TestFunction(x.MonthlyRepayableTemplate, viewModel.FilterText) ||
-                                                             TestFunction(x.TypeID.ToString(), viewModel.FilterText) ||
-                                                             TestFunction(x.TotalRepayableTemplate, viewModel.FilterText) ||
-                                                             TestFunction(x.XMLTemplate, viewModel.FilterText)).ToList();
-                    return Ok(defaultQuotes);
-                case "QuoteStatuses":
-                    var status = _dbContext.QuoteStatuses.ToList();
-                    var defaultStatus = Mapper.Map<List<QuoteStatusesViewModel>>(status);
-                    defaultStatus = defaultStatus.Where(x => TestFunction(x.State, viewModel.FilterText) ||
-                                                             TestFunction(x.StatusID.ToString(), viewModel.FilterText)).ToList();
-                    return Ok(defaultStatus);
-                case "QuoteTypes":
-                    var types = _dbContext.QuoteTypes.ToList();
-                    var defaultTypes = Mapper.Map<List<QuoteTypesViewModel>>(types);
-                    defaultTypes = defaultTypes.Where(x => TestFunction(x.QuoteType, viewModel.FilterText) ||
-                                                           TestFunction(x.ProductParentID.ToString(), viewModel.FilterText) ||
-                                                           TestFunction(x.TypeID.ToString(), viewModel.FilterText)).ToList();
-                    return Ok(defaultTypes);
-                case "ProductTypes":
-                    var pTypes = _dbContext.ProductTypes.ToList();
-                    var defaultpTypes = Mapper.Map<List<ProductTypesViewModel>>(pTypes);
-                    defaultpTypes = defaultpTypes.Where(x => TestFunction(x.ProductType, viewModel.FilterText) ||
-                                                             TestFunction(x.ProductTypeID.ToString(), viewModel.FilterText)).ToList();
-                    return Ok(defaultpTypes);
-                default:
-                    // If unable to find matching type, returns server error.
-                    return InternalServerError();
+                switch (viewModel.ConfigType)
+                {
+                    case "QuoteDefaults":
+                        // Gathers all the associated configuration items and lists them for mapping and filter.
+                        var defaults = _dbContext.QuoteDefaults.ToList();
+                        var defaultQuotes = Mapper.Map<List<QuoteDefaultsViewModel>>(defaults);
+                        // As mentioned, the Test Function performs text based comparisons, further information is detailed in the test function.
+                        defaultQuotes = defaultQuotes.Where(x => TestFunction(x.ElementDescription, viewModel.FilterText) ||
+                                                                 TestFunction(x.MonthlyRepayableTemplate, viewModel.FilterText) ||
+                                                                 TestFunction(x.TypeID.ToString(), viewModel.FilterText) ||
+                                                                 TestFunction(x.TotalRepayableTemplate, viewModel.FilterText) ||
+                                                                 TestFunction(x.XMLTemplate, viewModel.FilterText)).ToList();
+                        return Ok(defaultQuotes);
+                    case "QuoteStatuses":
+                        var status = _dbContext.QuoteStatuses.ToList();
+                        var defaultStatus = Mapper.Map<List<QuoteStatusesViewModel>>(status);
+                        defaultStatus = defaultStatus.Where(x => TestFunction(x.State, viewModel.FilterText) ||
+                                                                 TestFunction(x.StatusID.ToString(), viewModel.FilterText)).ToList();
+                        return Ok(defaultStatus);
+                    case "QuoteTypes":
+                        var types = _dbContext.QuoteTypes.ToList();
+                        var defaultTypes = Mapper.Map<List<QuoteTypesViewModel>>(types);
+                        defaultTypes = defaultTypes.Where(x => TestFunction(x.QuoteType, viewModel.FilterText) ||
+                                                               TestFunction(x.ProductParentID.ToString(), viewModel.FilterText) ||
+                                                               TestFunction(x.TypeID.ToString(), viewModel.FilterText)).ToList();
+                        return Ok(defaultTypes);
+                    case "ProductTypes":
+                        var pTypes = _dbContext.ProductTypes.ToList();
+                        var defaultpTypes = Mapper.Map<List<ProductTypesViewModel>>(pTypes);
+                        defaultpTypes = defaultpTypes.Where(x => TestFunction(x.ProductType, viewModel.FilterText) ||
+                                                                 TestFunction(x.ProductTypeID.ToString(), viewModel.FilterText)).ToList();
+                        return Ok(defaultpTypes);
+                    default:
+                        // If unable to find matching type, returns server error.
+                        return InternalServerError();
+                }
             }
+            catch (Exception)
+            {
+                return BadRequest("An exception occured due to your search");
+            }
+            // Selects the correct configuration type based on the string provided by the search model
         }
 
         /// <summary>
@@ -111,26 +132,33 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult ReturnDefaultConfigurations(ConfigurationPagingParameterWebViewModel parameterWebView)
         {
-            switch (parameterWebView.ConfigurationType)
+            try
             {
-                case "QuoteDefaults":
-                    var defaults = _dbContext.QuoteDefaults.ToList();
-                    defaults = SortConfigurationTypes(defaults, parameterWebView.OrderBy);
-                    return Ok(GenerateSelectedItemReferences(defaults, parameterWebView.PageSize, parameterWebView.PageNumber));
-                case "QuoteStatuses":
-                    var status = _dbContext.QuoteStatuses.ToList();
-                    status = SortConfigurationTypes(status, parameterWebView.OrderBy);
-                    return Ok(GenerateSelectedItemReferences(status, parameterWebView.PageSize, parameterWebView.PageNumber));
-                case "QuoteTypes":
-                    var types = _dbContext.QuoteTypes.ToList();
-                    types = SortConfigurationTypes(types, parameterWebView.OrderBy);
-                    return Ok(GenerateSelectedItemReferences(types, parameterWebView.PageSize, parameterWebView.PageNumber));
-                case "ProductTypes":
-                    var pTypes = _dbContext.ProductTypes.ToList();
-                    pTypes = SortConfigurationTypes(pTypes, parameterWebView.OrderBy);
-                    return Ok(GenerateSelectedItemReferences(pTypes, parameterWebView.PageSize, parameterWebView.PageNumber));
-                default:
-                    return InternalServerError();
+                switch (parameterWebView.ConfigurationType)
+                {
+                    case "QuoteDefaults":
+                        var defaults = _dbContext.QuoteDefaults.ToList();
+                        defaults = _helper.ReturnSortedList(defaults, parameterWebView.OrderBy);
+                        return Ok(GenerateSelectedItemReferences(defaults, parameterWebView.PageSize, parameterWebView.PageNumber));
+                    case "QuoteStatuses":
+                        var status = _dbContext.QuoteStatuses.ToList();
+                        status = _helper.ReturnSortedList(status, parameterWebView.OrderBy);
+                        return Ok(GenerateSelectedItemReferences(status, parameterWebView.PageSize, parameterWebView.PageNumber));
+                    case "QuoteTypes":
+                        var types = _dbContext.QuoteTypes.ToList();
+                        types = _helper.ReturnSortedList(types, parameterWebView.OrderBy);
+                        return Ok(GenerateSelectedItemReferences(types, parameterWebView.PageSize, parameterWebView.PageNumber));
+                    case "ProductTypes":
+                        var pTypes = _dbContext.ProductTypes.ToList();
+                        pTypes = _helper.ReturnSortedList(pTypes, parameterWebView.OrderBy);
+                        return Ok(GenerateSelectedItemReferences(pTypes, parameterWebView.PageSize, parameterWebView.PageNumber));
+                    default:
+                        return InternalServerError();
+                }
+            }
+            catch (Exception)
+            {
+                return BadRequest("An exception occured due to your search");
             }
         }
 
@@ -150,141 +178,117 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult SaveDefaultConfigurations(SaveConfigurationViewModel saveConfigs)
         {
-            switch (saveConfigs.ConfigType)
+            try
             {
-                case "QuoteDefaults":
-                    // Converts the Object from a List of JObjects to a List of the QuoteDefaults
-                    // The same code is used throughout the switch statements
-                    var defaults = JsonConvert.DeserializeObject<List<QuoteDefaultsViewModel>>
-                        (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
-
-                    var defaultList = ReturnUpdatedList(_dbContext.QuoteDefaults.ToList(), defaults);
-
-                    // This code block, similar to each configuration type, checks to see if this is a new
-                    // configuration type or an old one. If it is an old one, it updates the model for saving
-                    // if it's a new one, it just adds to the context for adding to the database
-                    foreach (var item in defaultList)
-                    {
-                        var result = _dbContext.QuoteDefaults.SingleOrDefault(x => x.TypeID == item.TypeID);
-                        if (result != null)
-                        {
-                            result.MonthlyRepayableTemplate = item.MonthlyRepayableTemplate;
-                            result.QuoteTypeID = item.QuoteTypeID;
-                            result.TotalRepayableTemplate = item.TotalRepayableTemplate;
-                            result.XMLTemplate = item.XMLTemplate;
-                            result.Enabled = item.Enabled;
-                            result.ElementDescription = item.ElementDescription;
-                        }
-                        else
-                        {
-                            _dbContext.QuoteDefaults.Add(item);
-                        }
-                    }
-
-                    _dbContext.SaveChanges();
-                    return Ok();
-                case "QuoteStatuses":
-                    var status = JsonConvert.DeserializeObject<List<QuoteStatusesViewModel>>
-                        (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
-
-                    var statusList = ReturnUpdatedList(_dbContext.QuoteStatuses.ToList(), status);
-
-                    foreach (var item in statusList)
-                    {
-                        var result = _dbContext.QuoteStatuses.SingleOrDefault(x => x.StatusID == item.StatusID);
-                        if (result != null)
-                        {
-                            result.State = item.State;
-                            result.Enabled = item.Enabled;
-                        }
-                        else
-                        {
-                            _dbContext.QuoteStatuses.Add(item);
-                        }
-                    }
-
-                    _dbContext.SaveChanges();
-                    return Ok();
-                case "QuoteTypes":
-                    var types = JsonConvert.DeserializeObject<List<QuoteTypesViewModel>>
-                        (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
-
-                    var typeList = ReturnUpdatedList(_dbContext.QuoteTypes.ToList(), types);
-
-                    foreach (var item in typeList)
-                    {
-                        var result = _dbContext.QuoteTypes.SingleOrDefault(x => x.QuoteTypeID == item.QuoteTypeID);
-                        if (result != null)
-                        {
-                            result.IncQuoteType = item.IncQuoteType;
-                            result.ProductParentID = item.ProductParentID;
-                            result.Enabled = item.Enabled;
-                        }
-                        else
-                        {
-                            _dbContext.QuoteTypes.Add(item);
-                        }
-                    }
-
-                    _dbContext.SaveChanges();
-                    return Ok();
-                case "ProductTypes":
-                    var pTypes = JsonConvert.DeserializeObject<List<ProductTypesViewModel>>
-                        (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
-
-                    var pTypesList = ReturnUpdatedList(_dbContext.ProductTypes.ToList(), pTypes);
-
-                    foreach (var item in pTypesList)
-                    {
-                        var result = _dbContext.ProductTypes.SingleOrDefault(x => x.ProductTypeID == item.ProductTypeID);
-                        if (result != null)
-                        {
-                            result.IncProductType = item.IncProductType;
-                            result.Enabled = item.Enabled;
-                        }
-                        else
-                        {
-                            _dbContext.ProductTypes.Add(item);
-                        }
-                    }
-
-                    _dbContext.SaveChanges();
-                    return Ok();
-                default:
-                    return InternalServerError();
-            }
-        }
-
-        /// <summary>
-        /// Sorts the configuration types according to a given parameter
-        /// </summary>
-        /// <typeparam name="T">This is needed to ascertain the object type being worked on, must be present</typeparam>
-        /// <param name="sortingList">The list to be sorted</param>
-        /// <param name="orderBy">The parameter to be sorted by</param>
-        /// <returns>
-        /// A sorted list of type T
-        /// </returns>
-        /// <remarks>
-        /// The orderBy is expected to be a valid parameter type for a module, with potentially a - on it.
-        /// If - is on it, descending order is presumed, else the order is presumed to be ascending.
-        /// </remarks>
-        private List<T> SortConfigurationTypes<T>(List<T> sortingList, string orderBy)
-        {
-            if (!string.IsNullOrWhiteSpace(orderBy))
-            {
-                if (orderBy.Contains("-"))
+                switch (saveConfigs.ConfigType)
                 {
-                    // Getting the type, then the property allows us to set the property by specifying a 
-                    // string parameter rather than specifying a specific parameter to order by.
-                    // This allows the code to be used in a generic fashion.
-                    sortingList.OrderByDescending(x => x.GetType().GetProperty(orderBy.Split('-')[1]));
-                }
-                else
-                {
-                    sortingList.OrderBy(x => x.GetType().GetProperty(orderBy));
+                    case "QuoteDefaults":
+                        // Converts the Object from a List of JObjects to a List of the QuoteDefaults
+                        // The same code is used throughout the switch statements
+                        var defaults = JsonConvert.DeserializeObject<List<QuoteDefaultsViewModel>>
+                            (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
+
+                        var defaultList = ReturnUpdatedList(_dbContext.QuoteDefaults.ToList(), defaults);
+
+                        // This code block, similar to each configuration type, checks to see if this is a new
+                        // configuration type or an old one. If it is an old one, it updates the model for saving
+                        // if it's a new one, it just adds to the context for adding to the database
+                        foreach (var item in defaultList)
+                        {
+                            var result = _dbContext.QuoteDefaults.SingleOrDefault(x => x.TypeID == item.TypeID);
+                            if (result != null)
+                            {
+                                result.MonthlyRepayableTemplate = item.MonthlyRepayableTemplate;
+                                result.TotalRepayableTemplate = item.TotalRepayableTemplate;
+                                result.XMLTemplate = item.XMLTemplate;
+                                result.Enabled = item.Enabled;
+                                result.ElementDescription = item.ElementDescription;
+                            }
+                            else
+                            {
+                                _dbContext.QuoteDefaults.Add(item);
+                            }
+                        }
+
+                        _dbContext.SaveChanges();
+                        return Ok();
+                    case "QuoteStatuses":
+                        var status = JsonConvert.DeserializeObject<List<QuoteStatusesViewModel>>
+                            (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
+
+                        var statusList = ReturnUpdatedList(_dbContext.QuoteStatuses.ToList(), status);
+
+                        foreach (var item in statusList)
+                        {
+                            var result = _dbContext.QuoteStatuses.SingleOrDefault(x => x.StatusID == item.StatusID);
+                            if (result != null)
+                            {
+                                result.State = item.State;
+                                result.Enabled = item.Enabled;
+                            }
+                            else
+                            {
+                                _dbContext.QuoteStatuses.Add(item);
+                            }
+                        }
+
+                        _dbContext.SaveChanges();
+                        return Ok();
+                    case "QuoteTypes":
+                        var types = JsonConvert.DeserializeObject<List<QuoteTypesViewModel>>
+                            (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
+
+                        var typeList = ReturnUpdatedList(_dbContext.QuoteTypes.ToList(), types);
+
+                        foreach (var item in typeList)
+                        {
+                            var result = _dbContext.QuoteTypes.SingleOrDefault(x => x.QuoteTypeID == item.QuoteTypeID);
+                            if (result != null)
+                            {
+                                result.IncQuoteType = item.IncQuoteType;
+                                result.ProductParentID = item.ProductParentID;
+                                result.Enabled = item.Enabled;
+                            }
+                            else
+                            {
+                                _dbContext.QuoteTypes.Add(item);
+                            }
+                        }
+
+                        _dbContext.SaveChanges();
+                        return Ok();
+                    case "ProductTypes":
+                        var pTypes = JsonConvert.DeserializeObject<List<ProductTypesViewModel>>
+                            (JsonConvert.SerializeObject(saveConfigs.ConfigsToBeSaved));
+
+                        var pTypesList = ReturnUpdatedList(_dbContext.ProductTypes.ToList(), pTypes);
+
+                        foreach (var item in pTypesList)
+                        {
+                            var result =
+                                _dbContext.ProductTypes.SingleOrDefault(x => x.ProductTypeID == item.ProductTypeID);
+                            if (result != null)
+                            {
+                                result.IncProductType = item.IncProductType;
+                                result.Enabled = item.Enabled;
+                            }
+                            else
+                            {
+                                _dbContext.ProductTypes.Add(item);
+                            }
+                        }
+
+                        _dbContext.SaveChanges();
+                        return Ok();
+                    default:
+                        return InternalServerError();
                 }
             }
-            return sortingList;
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+                return BadRequest("An exception occured due to your search");
+            }
         }
 
         /// <summary>
@@ -344,18 +348,14 @@ namespace AngularApp.API.Controllers
         /// </remarks>
         private PaginatedConfigResult GenerateSelectedItemReferences<T>(List<T> items, int pageSize, int pageNumber)
         {
-            // Calculates the total number of pages in the database, based off the number of items and the page size
-            var totalPages = (int)Math.Ceiling(items.Count() / (double)pageSize);
-            // Gathers the items for the given page location and size for return.
-            var pagedConfigurations = items.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
-
+            var pagedConfigurations = _helper.PaginateDbTables(items, pageNumber, pageSize);
             // Returns the values for usage elsewhere in the controller.
             return new PaginatedConfigResult()
             {
                 // Maps the results to the correct view model, away from the database view model
                 // THIS IS IMPORTANT, YOU WILL GET ERRORS UNLESS IT IS MAPPED AWAY
-                ConfigResult = ReturnAllGeneratedItems(pagedConfigurations),
-                TotalPages = totalPages,
+                ConfigResult = ReturnAllGeneratedItems(pagedConfigurations.Items),
+                TotalPages = pagedConfigurations.TotalPages,
                 TotalItems = items.Count
             };
         }

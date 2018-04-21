@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AngularApp.API.Helpers;
 using AngularApp.API.Models.DBModels;
 using AngularApp.API.Models.WebViewModels.UserActionModels;
 using AngularApp.API.Models.WebViewModels.AccountViewModels;
@@ -13,6 +14,7 @@ using AngularApp.API.Models.WebViewModels.UserQueueDisplayModels;
 using AngularApp.API.Repository;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json.Linq;
 
 namespace AngularApp.API.Controllers
 {
@@ -43,7 +45,8 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// The Authentication Repository
         /// </summary>
-        private readonly AuthRepository _repo = null;
+        private AuthRepository _repo = null;
+        private readonly CommonFunctionsHelper _helper;
 
         /// <summary>
         /// Provides an initialisation for the AuthRepository, allowing you to communicate with the user database.
@@ -51,6 +54,17 @@ namespace AngularApp.API.Controllers
         public AccountController()
         {
             _repo = new AuthRepository();
+            _helper = new CommonFunctionsHelper();
+        }
+
+        /// <summary>
+        /// Provides an initialisation for the AuthRepository, for UnitTests to give the Account Controller a repository
+        /// </summary>
+        /// <param name="repo">A unit tested AuthRepository</param>
+        public AccountController(AuthRepository repo)
+        {
+            _repo = repo;
+            _helper = new CommonFunctionsHelper();
         }
 
         /// <summary>
@@ -73,18 +87,19 @@ namespace AngularApp.API.Controllers
                 var db = new PetaPoco.Database("AngularUsers");
                 var returnData = db.Query<UserDetails>($"SELECT * FROM AspNetUserDetails WHERE Id = '{result.Id}'").FirstOrDefault();
 
-                return Ok(new
+                if (!string.IsNullOrWhiteSpace(returnData.FullName))
                 {
-                    FullName = returnData?.FullName.Trim(),
-                    result.UserName,
-                    IsSuperAdmin = result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"]),
-                    IsAdmin = result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])
-                });
+                    return Ok(new JObject()
+                    {
+                        new JProperty("FullName", returnData?.FullName.Trim()),
+                        new JProperty("UserName", result.UserName),
+                        new JProperty("IsSuperAdmin", result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])),
+                        new JProperty("IsAdmin", result.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"]))
+                    });
+                }
+                 return BadRequest();
             }
-            else
-            {
-                return BadRequest();
-            }
+            return BadRequest();
         }
 
         // POST api/Account/Register
@@ -102,6 +117,9 @@ namespace AngularApp.API.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (userModel.Password != userModel.ConfirmPassword)
+                return BadRequest();
+
             var result = await _repo.RegisterUser(userModel);
 
             var errorResult = GetErrorResult(result);
@@ -117,47 +135,53 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult ReturnAllUsers(AccountPagingParameterWebViewModel parameterWebView)
         {
-            var users = _repo.GetAllUsers();
-
-            // Orders the users according to a parameter if they were given an order by attribute
-            if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
+            try
             {
-                if (parameterWebView.OrderBy.Contains("-"))
+                var users = _repo.GetAllUsers().ToList();
+
+                // Orders the users according to a parameter if they were given an order by attribute
+                users = _helper.ReturnSortedList(users, parameterWebView.OrderBy);
+
+                // Filters out irrelevant users to the role type that was requested
+                var tamp = users.Where(x =>
+                        x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"]))
+                    .ToList();
+                var tamp2 = users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"]))
+                    .ToList();
+                var pagedUsers = !parameterWebView.ReturnAll
+                    ? users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"]))
+                        .ToList()
+                    : users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"]))
+                        .ToList();
+
+                // Paginates the results returned from the database once they have been filtered by role and 
+                // ordered by a property
+                var pagedModels = _helper.PaginateDbTables(pagedUsers, parameterWebView.PageNumber, parameterWebView.PageSize);
+
+                var returnItems = pagedModels.Items.Select(x => new QueueUserWebViewModel()
                 {
-                    users.OrderByDescending(x => x.GetType().GetProperty(parameterWebView.OrderBy.Split('-')[1]));
-                }
-                else
+                    Guid = x.Id,
+                    UserName = x.UserName,
+                    AccountLocked = !x.LockoutEndDateUtc.HasValue,
+                    EmailAddress = x.Email,
+                    PhoneNumber = string.IsNullOrEmpty(x.PhoneNumber) ? "00000 000000" : x.PhoneNumber,
+                    EmailConfirmed = x.EmailConfirmed,
+                    IsAdmin = x.Roles.Any(y =>
+                        y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"] ||
+                        y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])
+                });
+
+                return Ok(new PaginatedQueueUserResult()
                 {
-                    users.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
-                }
+                    QueueDisplay = returnItems,
+                    TotalPages = pagedModels.TotalPages,
+                    TotalItems = pagedModels.Items.Count
+                });
             }
-
-            // Filters out irrelevant users to the role type that was requested
-            var pagedQuotes = !parameterWebView.ReturnAll ?
-                users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
-                users.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
-
-            // Paginates the results returned from the database once they have been filtered by role and 
-            // ordered by a property
-            var totalPages = (int)Math.Ceiling(pagedQuotes.Count() / (double)parameterWebView.PageSize);
-            pagedQuotes = pagedQuotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
-
-            var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
+            catch (Exception ex)
             {
-                Guid = x.Id,
-                UserName = x.UserName,
-                AccountLocked = !x.LockoutEndDateUtc.HasValue,
-                EmailAddress = x.Email,
-                PhoneNumber = string.IsNullOrEmpty(x.PhoneNumber) ? "00000 000000" : x.PhoneNumber,
-                EmailConfirmed = x.EmailConfirmed,
-                IsAdmin = x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"] || y.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"])
-            });
-            return Ok(new PaginatedQueueUserResult()
-            {
-                QueueDisplay = returnItems,
-                TotalPages = totalPages,
-                TotalItems = pagedQuotes.Count
-            });
+                return BadRequest(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -190,9 +214,16 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult DeleteUser(UserDeleteViewModel deleteModel)
         {
-            if (!deleteModel.IsDeleting) return Ok();
-            var result = _repo.DeleteUser(deleteModel.Guid).Result;
-            return result.Succeeded ? Ok() : GetErrorResult(result);
+            try
+            {
+                if (!deleteModel.IsDeleting) return Ok();
+                var result = _repo.DeleteUser(deleteModel.Guid).Result;
+                return result.Succeeded ? Ok() : GetErrorResult(result);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.ToString());
+            }
         }
 
         /// <summary>
@@ -223,7 +254,7 @@ namespace AngularApp.API.Controllers
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw;
+                return BadRequest(e.ToString());
             }
         }
 
@@ -231,12 +262,13 @@ namespace AngularApp.API.Controllers
         /// Clones the user.
         /// </summary>
         /// <remarks>
-        /// Effectively clones a user's permissions and roles and gives them to a new user
+        /// Effectively clones a users permissions and roles and gives them to a new user.
+        /// If the old user does not exist, or has no roles, the new user will be created regardless.
         /// </remarks>
         /// <param name="cloneUserViewModel">The clone user view model.</param>
         /// <returns>A 200 response or an error result detailing why the clone user function failed</returns>
         [HttpPost]
-        public IHttpActionResult CloneUser(UserEditViewModel cloneUserViewModel)
+        public IHttpActionResult CloneUser(CloneUserViewModel cloneUserViewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -263,16 +295,16 @@ namespace AngularApp.API.Controllers
         {
             try
             {
+                if (_repo.FindUserByGuid(typeViewModel.Guid).Roles.Any
+                    (x => x.RoleId == WebConfigurationManager.AppSettings["SuperAdministratorRole"]))
+                    return BadRequest("User is not eligable for Role Swap");
                 if (typeViewModel.IsAdmin)
                 {
                     _repo.SwapUserRoles(typeViewModel.Guid, "Administrator", "User");
                     return Ok();
                 }
-                else
-                {
-                    _repo.SwapUserRoles(typeViewModel.Guid, "User", "Administrator");
-                    return Ok();
-                }
+                _repo.SwapUserRoles(typeViewModel.Guid, "User", "Administrator");
+                return Ok();
             }
             catch (Exception ex)
             {
@@ -306,26 +338,23 @@ namespace AngularApp.API.Controllers
                 return InternalServerError();
             }
 
-            if (!result.Succeeded)
+            if (result.Succeeded) return null;
+            if (result.Errors != null)
             {
-                if (result.Errors != null)
+                foreach (var error in result.Errors)
                 {
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError("", error);
-                    }
+                    ModelState.AddModelError("", error);
                 }
-
-                if (ModelState.IsValid)
-                {
-                    // No ModelState errors are available to send, so just return an empty BadRequest.
-                    return BadRequest();
-                }
-
-                return BadRequest(ModelState);
             }
 
-            return null;
+            if (ModelState.IsValid)
+            {
+                // No ModelState errors are available to send, so just return an empty BadRequest.
+                return BadRequest();
+            }
+
+            return BadRequest(ModelState);
+
         }
 
         /// <summary>
@@ -343,7 +372,6 @@ namespace AngularApp.API.Controllers
             pagedQuotes = !returnAll ?
                 pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["UserRole"])).ToList() :
                 pagedQuotes.Where(x => x.Roles.Any(y => y.RoleId == WebConfigurationManager.AppSettings["AdministratorRole"])).ToList();
-
 
             var returnItems = pagedQuotes.Select(x => new QueueUserWebViewModel()
             {

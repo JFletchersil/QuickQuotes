@@ -1,13 +1,11 @@
 ﻿using System.Web.Http;
-using AngularApp.API;
 using AngularApp.API.Models.DBModels;
 using AngularApp.API.Models.WebViewModels.ConfigurationViewModels;
 using AutoMapper;
 using Microsoft.Owin;
 using Owin;
 
-[assembly: OwinStartup(typeof(Startup))]
-
+[assembly: OwinStartup(typeof(AngularApp.API.Startup))]
 namespace AngularApp.API
 {   
     /// <summary>
@@ -38,7 +36,7 @@ namespace AngularApp.API
             // Registers the WebApi as active
             // WARNING - Removing this line will stop the Api from working
             WebApiConfig.Register(config);
-            // Tells the application to use this WebApi as the main WebApi.
+            //// Tells the application to use this WebApi as the main WebApi.
             app.UseWebApi(config);
             // Creates a bunch of mapping relations
             // These relations map from the configuration database model to a web view model
@@ -47,8 +45,12 @@ namespace AngularApp.API
                 cfg.CreateMap<QuoteDefault, QuoteDefaultsViewModel>();
                 cfg.CreateMap<QuoteDefaultsViewModel, QuoteDefault>()
                 .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
-                cfg.CreateMap<QuoteType, QuoteTypesViewModel>().ForMember(dest => dest.QuoteType, opt => opt.MapFrom(src => src.IncQuoteType));
-                cfg.CreateMap<QuoteTypesViewModel, QuoteType>().ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.QuoteType))
+                cfg.CreateMap<QuoteType, QuoteTypesViewModel>()
+                    .ForMember(dest => dest.QuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
+                    .ForMember(dest => dest.TypeID, opt => opt.MapFrom(src => src.QuoteTypeID));
+                cfg.CreateMap<QuoteTypesViewModel, QuoteType>()
+                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.QuoteType))
+                    .ForMember(dest => dest.QuoteTypeID, opt => opt.MapFrom(src => src.TypeID))
                 .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
                 cfg.CreateMap<QuoteStatus, QuoteStatusesViewModel>();
                 cfg.CreateMap<QuoteStatusesViewModel, QuoteStatus>()

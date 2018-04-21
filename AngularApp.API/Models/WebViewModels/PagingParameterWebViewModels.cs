@@ -78,10 +78,10 @@ namespace AngularApp.API.Models.WebViewModels.PagingModels
     public class AccountPagingParameterWebViewModel : PagingParameterWebViewModel
     {
         /// <summary>
-        /// Determines if the return from a page request should ignore the pagination and return all results
+        /// Determines if the return from a page request should either admin users, or standard users
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [return all]; otherwise, <c>false</c>.
+        /// If set to true, then will return admin users, if false, just standard users
         /// </value>
         [Required]
         public bool ReturnAll { get; set; }

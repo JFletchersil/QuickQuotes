@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Cors;
+using AngularApp.API.Helpers;
 using AngularApp.API.Models.DBModels;
 using AngularApp.API.Models.WebViewModels.PagingModels;
 using AngularApp.API.Models.WebViewModels.QueueDisplayModels;
@@ -24,7 +25,29 @@ namespace AngularApp.API.Controllers
         /// <summary>
         /// Creates a private, read only connection to the database for gathering the details required for the Quote Queue
         /// </summary>
-        private readonly Entities _dbContext = new Entities();
+        private readonly Entities _dbContext;
+
+        private readonly CommonFunctionsHelper _helper;
+
+        /// <summary>
+        /// Initializes the QueueController Controller with a entity context, allowing access to the Quote Database.
+        /// Constructs the default details for the controller on start up.
+        /// </summary>
+        public QueueController()
+        {
+            _dbContext = new Entities();
+            _helper = new CommonFunctionsHelper();
+        }
+
+        /// <summary>
+        /// Provides an initialisation for the Entities, for UnitTests to give the Queue Controller an Entities object
+        /// </summary>
+        /// <param name="entities">A unit tested Entities</param>
+        public QueueController(Entities entities)
+        {
+            _dbContext = entities;
+            _helper = new CommonFunctionsHelper();
+        }
 
         /// <summary>
         /// Returns quotes in a paginated format, ordered according how the active column was ordered
@@ -41,50 +64,42 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public PaginatedQueueResult ShowPaginatedQuotes(QueuePagingParameterWebViewModel parameterWebView)
         {
-            var quotes = _dbContext.Quotes.ToList();
-
-            // Checks if OrderBy is present
-            if (!string.IsNullOrWhiteSpace(parameterWebView.OrderBy))
+            try
             {
-                // The orderBy is expected to be a valid parameter type for a module, with potentially a - on it.
-                // If - is on it, descending order is presumed, else the order is presumed to be ascending.
-                if (parameterWebView.OrderBy.Contains("-"))
+                var quotes = _dbContext.Quotes.ToList();
+                // Sorts the list in a centralised location
+                quotes = _helper.ReturnSortedList(quotes, parameterWebView.OrderBy);
+
+                // Calculates the total number of pages in the database, based off the number of items and the page size
+                var pagingResults = _helper.PaginateDbTables(quotes, parameterWebView.PageNumber, parameterWebView.PageSize);
+
+                // Processes the results from the database view model to the web view model
+                // As per other instances of this, this is important to remove references and data that is not needed
+                // on the front end
+                var returnItems = pagingResults.Items.Select(x => new QueueDisplayWebViewModel()
                 {
-                    // Getting the type, then the property allows us to set the property by specifying a 
-                    // string parameter rather than specifying a specific parameter to order by.
-                    // This allows the code to be used in a generic fashion.
-                    quotes.OrderByDescending(x => x.GetType().GetProperty(parameterWebView.OrderBy.Split('-')[1]));
-                }
-                else
+                    QuoteReference = x.QuoteReference.ToString(),
+                    QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)
+                        ?.State,
+                    QuoteAuthor = x.QuoteAuthor,
+                    QuoteDate = x.QuoteDate,
+                    QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)
+                        ?.IncQuoteType
+                });
+
+                // Returns the values for usage on the front end
+                return new PaginatedQueueResult()
                 {
-                    quotes.OrderBy(x => x.GetType().GetProperty(parameterWebView.OrderBy));
-                }
+                    QueueDisplay = returnItems,
+                    TotalPages = pagingResults.TotalPages,
+                    TotalItems = quotes.Count
+                };
             }
-
-            // Calculates the total number of pages in the database, based off the number of items and the page size
-            var totalPages = (int)Math.Ceiling(quotes.Count() / (double)parameterWebView.PageSize);
-            // Gathers the items for the given page location and size for return.
-            var pagedQuotes = quotes.Skip((parameterWebView.PageNumber - 1) * parameterWebView.PageSize).Take(parameterWebView.PageSize).ToList();
-
-            // Processes the results from the database view model to the web view model
-            // As per other instances of this, this is important to remove references and data that is not needed
-            // on the front end
-            var returnItems = pagedQuotes.Select(x => new QueueDisplayWebViewModel()
+            catch (Exception ex)
             {
-                QuoteReference = x.QuoteReference.ToString(),
-                QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
-                QuoteAuthor = x.QuoteAuthor,
-                QuoteDate = x.QuoteDate,
-                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
-            });
-
-            // Returns the values for usage on the front end
-            return new PaginatedQueueResult()
-            {
-                QueueDisplay = returnItems,
-                TotalPages = totalPages,
-                TotalItems = quotes.Count
-            };
+                Console.WriteLine(ex.ToString());
+                return null;
+            }
         }
 
         /// <summary>
@@ -102,17 +117,25 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult SearchQueueSearchResults(HttpRequestMessage request)
         {
-            var dataText = request.Content.ReadAsStringAsync().Result;
-            var quotes = SearchQueryFiltering(dataText);
-            var returnItems = quotes.Select(x => new QueueDisplayWebViewModel()
+            try
             {
-                QuoteReference = x.QuoteReference.ToString(),
-                QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
-                QuoteAuthor = x.QuoteAuthor,
-                QuoteDate = x.QuoteDate,
-                QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
-            });
-            return Ok(returnItems);
+                var dataText = request.Content.ReadAsStringAsync().Result;
+                var quotes = SearchQueryFiltering(dataText);
+                if (!quotes.Any()) return Ok(new List<QueueDisplayWebViewModel>());
+                var returnItems = quotes.Select(x => new QueueDisplayWebViewModel()
+                {
+                    QuoteReference = x.QuoteReference.ToString(),
+                    QuoteStatus = _dbContext.QuoteStatuses.ToList().FirstOrDefault(y => y.StatusID == x.QuoteStatus)?.State,
+                    QuoteAuthor = x.QuoteAuthor,
+                    QuoteDate = x.QuoteDate,
+                    QuoteType = _dbContext.QuoteTypes.ToList().FirstOrDefault(y => y.QuoteTypeID == x.QuoteType)?.IncQuoteType
+                });
+                return Ok(returnItems.ToList());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.ToString());
+            }
         }
 
         /// <summary>
@@ -132,25 +155,36 @@ namespace AngularApp.API.Controllers
         [HttpPost]
         public IHttpActionResult ReturnSearchResults(QuickSearchRequest request)
         {
-            var quoteType = _dbContext.QuoteTypes.ToList();
-
-            var query = SearchQueryFiltering(request.SearchText).Select(x => new QuickSearchResult
+            try
             {
-                QuoteAuthor = x.QuoteAuthor,
-                QuoteReference = x.QuoteReference.ToString(),
-                QuoteType = quoteType.FirstOrDefault(y => y.QuoteTypeID == x.QuoteType && y.Enabled).IncQuoteType
-            });
+                var quoteType = _dbContext.QuoteTypes.ToList();
 
-            // This places the very last item, no matter what case, as this dummy item is used by the 
-            // front end to force users to the main quote menu if the result they want is not present
-            var queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
-            queryList.Add(new QuickSearchResult
+                var query = SearchQueryFiltering(request.SearchText).Select(x => new QuickSearchResult
+                {
+                    QuoteAuthor = x.QuoteAuthor,
+                    QuoteReference = x.QuoteReference.ToString(),
+                    QuoteType = quoteType.FirstOrDefault(y => y.QuoteTypeID == x.QuoteType && y.Enabled).IncQuoteType
+                });
+
+                // This places the very last item, no matter what case, as this dummy item is used by the 
+                // front end to force users to the main quote menu if the result they want is not present
+                var queryList = new List<QuickSearchResult>();
+                if (query.Any())
+                {
+                    queryList = query.ToList().GetRange(0, request.ResultNumber - 1);
+                }
+                queryList.Add(new QuickSearchResult
+                {
+                    QuoteAuthor = "If you wish to see",
+                    QuoteType = "Additional quotes present",
+                    QuoteReference = "ExecuteOrder66"
+                });
+                return Ok(queryList);
+            }
+            catch (Exception e)
             {
-                QuoteAuthor = "If you wish to see",
-                QuoteType = "Additional quotes present",
-                QuoteReference = "ExecuteOrder66"
-            });
-            return Ok(queryList);
+                return BadRequest(e.ToString());
+            }
         }
 
         /// <summary>
