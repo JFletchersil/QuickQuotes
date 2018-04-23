@@ -1,52 +1,49 @@
 
 <div class="bmd-layout-container bmd-drawer-f-l bmd-drawer-overlay" data-ng-controller="MainMenu as Menu">
     <header class="bmd-layout-header">
-        <div class="navbar navbar-light bg-faded">
+        <div class="navbar navbar-light bg-faded row" style="margin-left: 0; margin-right: 0;">
             <button class="navbar-toggler" type="button" data-toggle="drawer" data-target="#dw-s1">
                 <span class="sr-only">Toggle drawer</span>
                 <i class="material-icons">menu</i>
             </button>
-            <ul class="nav navbar-nav"></ul>
-            <div class="float-right">
-                <form class="form-inline">
-                    <div class="row">
-                        <i class="mi mi-search col-sm-1 col-1" style="margin-top: 10px;margin-bottom: 15px;"></i>
-                        <div class="col-sm-11 col-12" style="margin-top: 10px; padding-right: 0px; padding-left: 0px;">
-                            <md-autocomplete md-selected-item="selectedItem"
-                                             md-search-text="searchText"
-                                             md-items="item in querySearch(searchText)"
-                                             md-item-text="item.QuoteReference"
-                                             md-min-length="4"
-                                             md-selected-item-change="selectedItemChanged(item)"
-                                             placeholder="Quote Search"
-                                             ng-model-options="{debounce: 1000}"
-                                             md-menu-class="autocomplete-custom-template"
-                                             style="margin-top: -10px; width:21em; padding-right: 0px;"
-                                             class="col-sm-12 col-11">
-                                <md-item-template style="margin:5px;">
-                                    <div class="col-12 col-sm-4" style="margin-bottom: 5px; margin-top:5px;">
-                                        <span class="item-title">
-                                            <span> {{item.QuoteAuthor}} </span>
+            <div>
+                <form class="form-inline" style="margin-left: -15px;">
+                    <i class="mi mi-search col-sm-1 col-1" style="margin-top: 10px;margin-bottom: 15px;"></i>
+                    <div class="col-sm-11 col-12" style="margin-top: 10px;padding-right: 0px;padding-left: 0px;margin-right: -15px;">
+                        <md-autocomplete md-selected-item="selectedItem"
+                                         md-search-text="searchText"
+                                         md-items="item in querySearch(searchText)"
+                                         md-item-text="item.QuoteReference"
+                                         md-min-length="4"
+                                         md-selected-item-change="selectedItemChanged(item)"
+                                         placeholder="Quote Search"
+                                         ng-model-options="{debounce: 1000}"
+                                         md-menu-class="autocomplete-custom-template"
+                                         style="margin-top: -10px; width:21em; padding-right: 0px;"
+                                         class="col-sm-12 col-11">
+                            <md-item-template style="margin:5px;">
+                                <div class="col-12 col-sm-4" style="margin-bottom: 5px; margin-top:5px;">
+                                    <span class="item-title">
+                                        <span> {{item.QuoteAuthor}} </span>
+                                    </span>
+                                    <span class="item-metadata">
+                                        <span>
+                                            <strong>{{item.QuoteType}}</strong>
                                         </span>
-                                        <span class="item-metadata">
-                                            <span>
-                                                <strong>{{item.QuoteType}}</strong>
-                                            </span>
+                                    </span>
+                                    <span class="item-metadata" ng-hide="(item.hideLast === true && item.hideLast !== undefined)">
+                                        <span>
+                                            <strong>{{item.QuoteReference}}</strong>
                                         </span>
-                                        <span class="item-metadata" ng-hide="(item.hideLast === true && item.hideLast !== undefined)">
-                                            <span>
-                                                <strong>{{item.QuoteReference}}</strong>
-                                            </span>
+                                    </span>
+                                    <span class="item-metadata" ng-show="(item.hideLast === true && item.hideLast !== undefined)">
+                                        <span>
+                                            <strong>Please click here</strong>
                                         </span>
-                                        <span class="item-metadata" ng-show="(item.hideLast === true && item.hideLast !== undefined)">
-                                            <span>
-                                                <strong>Please click here</strong>
-                                            </span>
-                                        </span>
-                                    </div>
-                                </md-item-template>
-                            </md-autocomplete>
-                        </div>
+                                    </span>
+                                </div>
+                            </md-item-template>
+                        </md-autocomplete>
                     </div>
                 </form>
             </div>

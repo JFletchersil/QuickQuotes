@@ -42,7 +42,7 @@
                         <table md-table md-progress="promise" class="table-hover">
                             <thead md-head md-order="tab.QueryOrder" md-on-reorder="pageChangeHandler" class="thead-light">
                                 <tr md-row>
-                                    <th md-column md-order-by="{{column.Name}}" ng-repeat="column in tab.Columns"><span>{{column.Name}}</span></th>
+                                    <th md-column md-order-by="{{(column.SortBy !== undefined)? column.SortBy : column.Name}}" ng-repeat="column in tab.Columns"><span>{{column.Name}}</span></th>
                                 </tr>
                             </thead>
                             <tbody md-body ng-repeat="config in configData | orderBy: tab.QueryOrder" ng-init="sectionIndex = $index">

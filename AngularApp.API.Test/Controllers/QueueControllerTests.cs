@@ -25,17 +25,17 @@ namespace AngularApp.API.Test.Controllers.Queue
                 cfg.CreateMap<QuoteDefaultsViewModel, QuoteDefault>()
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
                 cfg.CreateMap<QuoteType, QuoteTypesViewModel>()
-                    .ForMember(dest => dest.QuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
+                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
                     .ForMember(dest => dest.TypeID, opt => opt.MapFrom(src => src.QuoteTypeID));
                 cfg.CreateMap<QuoteTypesViewModel, QuoteType>()
-                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.QuoteType))
+                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
                     .ForMember(dest => dest.QuoteTypeID, opt => opt.MapFrom(src => src.TypeID))
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
                 cfg.CreateMap<QuoteStatus, QuoteStatusesViewModel>();
                 cfg.CreateMap<QuoteStatusesViewModel, QuoteStatus>()
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
-                cfg.CreateMap<ProductType, ProductTypesViewModel>().ForMember(dest => dest.ProductType, opt => opt.MapFrom(src => src.IncProductType));
-                cfg.CreateMap<ProductTypesViewModel, ProductType>().ForMember(dest => dest.IncProductType, opt => opt.MapFrom(src => src.ProductType))
+                cfg.CreateMap<ProductType, ProductTypesViewModel>().ForMember(dest => dest.IncProductType, opt => opt.MapFrom(src => src.IncProductType));
+                cfg.CreateMap<ProductTypesViewModel, ProductType>().ForMember(dest => dest.IncProductType, opt => opt.MapFrom(src => src.IncProductType))
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
             });
             _entity = new Entities();

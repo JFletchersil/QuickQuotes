@@ -110,16 +110,18 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 {
                     Label: "Quote Types",
                     OnSelect: "QuoteTypes",
-                    QueryOrder: "QuoteType",
+                    QueryOrder: "IncQuoteType",
                     Columns: {
                         ElementOne: {
                             Name: "TypeID",
+                            SortBy: "QuoteTypeID",
                             Binding: "configData.TypeID",
                             Type: "text",
                             Disabled: true
                         },
                         ElementTwo: {
                             Name: "QuoteType",
+                            SortBy: "IncQuoteType",
                             Binding: "configData.QuoteType",
                             Type: "text"
                         },
@@ -139,10 +141,10 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                 {
                     Label: "Product Types",
                     OnSelect: "ProductTypes",
-                    QueryOrder: "ProductType",
+                    QueryOrder: "IncProductType",
                     Columns: {
                         ElementOne: {
-                            Name: "ProductType",
+                            Name: "IncProductType",
                             Binding: "configData.ProductType",
                             Type: "text"
                         },
@@ -228,7 +230,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
             $scope.pageChangeHandler = function (newPageNumber, configurationType, newLimit) {
                 if (isNaN(newPageNumber))
                     $scope.pagingModel.OrderBy = newPageNumber;
-                if (configurationType !== null && configurationType !== undefined)
+                if (configurationType !== null && configurationType !== undefined && isNaN(configurationType))
                     $scope.pagingModel.ConfigurationType = configurationType;
                 if (configurationType !== null && configurationType !== undefined && !isNaN(newLimit))
                     $scope.pagingModel.PageSize = newLimit;
@@ -317,6 +319,7 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
              */
             $scope.onTabSelected = function (tabSelected, configurationType) {
                 $scope.stateTrack = [];
+                $scope.pagingModel.OrderBy = $scope.tabs[tabSelected].QueryOrder;
                 $scope.pageChangeHandler(1, configurationType);
                 if ($scope.hasNewItemOrUpdate) {
                     $scope.hasNewItemOrUpdate = false;
