@@ -137,7 +137,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void CloneUser_ValidModel_EmptyUserName_OtherUserIsValid_ReturnSuccess()
+        public void CloneUser_ValidModel_EmptyUserName_OtherUserIsValid_ReturnFailure()
         {
             var model = new CloneUserViewModel
             {
@@ -153,7 +153,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void CloneUser_ValidModel_EmptyPassword_OtherUserIsValid_ReturnSuccess()
+        public void CloneUser_ValidModel_EmptyPassword_OtherUserIsValid_ReturnFailure()
         {
             var model = new CloneUserViewModel
             {
@@ -169,8 +169,8 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void CloneUser_ValidModel_PasswordNotMatching_OtherUserIsValid_ReturnSuccess()
-        {
+        public void CloneUser_ValidModel_PasswordNotMatching_OtherUserIsValid_ReturnFailure()
+        { 
             var model = new CloneUserViewModel
             {
                 UserName = "U",
@@ -202,7 +202,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void EditUser_ValidModel_PasswordsNotMatch_ValidUserId_ValidPhoneNumber_ReturnSuccess()
+        public void EditUser_ValidModel_PasswordsNotMatch_ValidUserId_ValidPhoneNumber_ReturnFailure()
         {
             var userGuid = RegisterAndRetrieveUserGuidAsync();
             var model = new RegisterViewModel
@@ -217,7 +217,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void EditUser_InvalidModel_ModelIsNull_ValidUserId_ValidPhoneNumber_ReturnSuccess()
+        public void EditUser_InvalidModel_ModelIsNull_ValidUserId_ValidPhoneNumber_ReturnFailure()
         {
             var userGuid = RegisterAndRetrieveUserGuidAsync();
             var model = new RegisterViewModel
@@ -232,7 +232,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void EditUser_ValidModel_InvalidUserId_ValidPhoneNumber_ReturnSuccess()
+        public void EditUser_ValidModel_InvalidUserId_ValidPhoneNumber_ReturnFailure()
         {
             var userGuid = RegisterAndRetrieveUserGuidAsync();
             var model = new RegisterViewModel
@@ -271,7 +271,7 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void FindUserByGuid_ValidUsername_ValidPassword_ReturnUser()
+        public void FindUserByGuid_ValidGuid_ReturnUser()
         {
             var userGuid = RegisterAndRetrieveUserGuidAsync();
             var retVal = _repo.FindUserByGuid(userGuid.ToString());
@@ -282,14 +282,14 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void FindUserByGuidr_NullUsername_ValidPassword_ReturnNull()
+        public void FindUserByGuid_NullInsteadOfGuid_ReturnNull()
         {
             var retVal = _repo.FindUserByGuid(null);
             Assert.IsNull(retVal);
         }
 
         [TestMethod]
-        public void FindUserByGuid_InvalidUsername_ValidPassword_ReturnNull()
+        public void FindUserByGuid_InvalidGuid_ReturnNull()
         {
             var retVal = _repo.FindUserByGuid("Hello");
             Assert.IsNull(retVal);
@@ -312,14 +312,14 @@ namespace AngularApp.API.Test.Repository.AuthRepository
         }
 
         [TestMethod]
-        public void DeleteUser_InvalidUserId_ReturnsSuccess()
+        public void DeleteUser_InvalidUserId_ReturnsFailure()
         {
             var retVal = _repo.DeleteUser("55555").Result;
             Assert.IsFalse(retVal.Succeeded);
         }
 
         [TestMethod]
-        public void DeleteUser_NullUserId_ReturnsSuccess()
+        public void DeleteUser_NullUserId_ReturnsFailure()
         {
             var retVal = _repo.DeleteUser(null).Result;
             Assert.IsFalse(retVal.Succeeded);

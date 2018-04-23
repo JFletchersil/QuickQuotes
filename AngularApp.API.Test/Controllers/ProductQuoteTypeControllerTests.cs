@@ -47,7 +47,7 @@ namespace AngularApp.API.Test.Controllers.ProductQuoteType
         }
 
         [TestMethod()]
-        public void GetAllProductTypes_ValidEnitty_ReturnsJObject()
+        public void GetAllProductTypes_ValidEntity_ReturnsJObject()
         {
             var controller = CreateAndReturnController(false);
             var retVal = controller.GetAllProductTypes();
@@ -64,7 +64,7 @@ namespace AngularApp.API.Test.Controllers.ProductQuoteType
         }
 
         [TestMethod()]
-        public void GetAllQuoteTypes_ValidEnitty_ReturnsJObject()
+        public void GetAllQuoteTypes_ValidEntity_ReturnsJObject()
         {
             var controller = CreateAndReturnController(false);
             var retVal = controller.GetAllQuoteTypes();

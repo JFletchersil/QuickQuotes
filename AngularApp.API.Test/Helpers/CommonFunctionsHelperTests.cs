@@ -76,7 +76,7 @@ namespace AngularApp.API.Test.Helpers
         }
 
         [TestMethod()]
-        public void ReturnSortedList_ValidItems_NoOrderBy_ReturnEmptyList()
+        public void ReturnSortedList_ValidItems_NoOrderBy_ReturnListBack()
         {
             var helper = new CommonFunctionsHelper();
             var quotesInOrderOfDates = helper.ReturnSortedList(_entity.Quotes.ToList(), "");
@@ -104,7 +104,7 @@ namespace AngularApp.API.Test.Helpers
         }
 
         [TestMethod()]
-        public void PaginateDbTables_WithInvalidItems_WithValidNumbers_ReturnsCorrectPageModel()
+        public void PaginateDbTables_WithInvalidItems_WithValidNumbers_ReturnsNull()
         {
             var helper = new CommonFunctionsHelper();
             try

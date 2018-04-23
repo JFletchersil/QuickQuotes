@@ -14,7 +14,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json.Linq;
 using PetaPoco;
 
-namespace AngularApp.API.Test.Controllers.AccountController
+namespace AngularApp.API.Test.Controllers.Account
 {
     [TestClass]
     public class AccountControllerTests
