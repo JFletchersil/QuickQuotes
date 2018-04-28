@@ -25,10 +25,10 @@ namespace AngularApp.API.Test.Helpers
                 cfg.CreateMap<QuoteDefaultsViewModel, QuoteDefault>()
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
                 cfg.CreateMap<QuoteType, QuoteTypesViewModel>()
-                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
+                    .ForMember(dest => dest.QuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
                     .ForMember(dest => dest.TypeID, opt => opt.MapFrom(src => src.QuoteTypeID));
                 cfg.CreateMap<QuoteTypesViewModel, QuoteType>()
-                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.IncQuoteType))
+                    .ForMember(dest => dest.IncQuoteType, opt => opt.MapFrom(src => src.QuoteType))
                     .ForMember(dest => dest.QuoteTypeID, opt => opt.MapFrom(src => src.TypeID))
                     .IgnoreAllPropertiesWithAnInaccessibleSetter().IgnoreAllSourcePropertiesWithAnInaccessibleSetter();
                 cfg.CreateMap<QuoteStatus, QuoteStatusesViewModel>();
