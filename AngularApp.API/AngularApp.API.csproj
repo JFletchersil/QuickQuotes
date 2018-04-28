@@ -307,6 +307,7 @@
     <Content Include="Models\DBModels\AngularApp.DBModels.cd" />
     <Content Include="Models\WebViewModels\OAuth\AngularApp.0Auth.cd" />
     <Content Include="Models\WebViewModels\AngularApp.WebViewModels.cd" />
+    <Content Include="Helpers\AngularAppAPI.Helpers.cd" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
