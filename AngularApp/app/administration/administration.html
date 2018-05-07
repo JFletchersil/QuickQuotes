@@ -2,7 +2,8 @@
     <h1 class="display-3 higher-heading">Administration</h1>
     <br />
     <md-tabs md-dynamic-height="" md-border-bottom="">
-        <md-tab label="{{tabLabels[$index]}}" ng-if="isSuperAdmin" md-on-select="onTabSelected($index)" ng-repeat="tab in tabs track by $index" ng-disabled="tab.Disabled">
+        <md-tab label="{{tabLabels[$index]}}" ng-if="isSuperAdmin" md-on-select="onTabSelected($index)" ng-repeat="tab in tabs track by $index" 
+        ng-disabled="tab.Disabled">
             <md-content class="md-padding">
                 <div class="container col-12">
                     <md-toolbar class="md-table-toolbar md-default" style="background-color: transparent !important" ng-hide="filter.show" aria-hidden="false">
