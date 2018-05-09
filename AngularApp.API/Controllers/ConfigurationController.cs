@@ -102,7 +102,7 @@ namespace AngularApp.API.Controllers
                     case "ProductTypes":
                         var pTypes = _dbContext.ProductTypes.ToList();
                         var defaultpTypes = Mapper.Map<List<ProductTypesViewModel>>(pTypes);
-                        defaultpTypes = defaultpTypes.Where(x => TestFunction(x.IncProductType, viewModel.FilterText) ||
+                        defaultpTypes = defaultpTypes.Where(x => TestFunction(x.ProductType, viewModel.FilterText) ||
                                                                  TestFunction(x.ProductTypeID.ToString(), viewModel.FilterText)).ToList();
                         return Ok(defaultpTypes);
                     default:

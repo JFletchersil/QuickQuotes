@@ -217,7 +217,7 @@ namespace AngularApp.API.Models.WebViewModels.ConfigurationViewModels
         /// <remarks>
         /// Used to help users identity which product type is being used or worked on at any one time.
         /// </remarks>
-        public string IncProductType { get; set; }
+        public string ProductType { get; set; }
         /// <summary>
         /// Represents if a product type is in use or not
         /// </summary>

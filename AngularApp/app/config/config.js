@@ -144,7 +144,8 @@ angular.module("quoteTool.applicationconfiguration", ["ui.router", "ngAnimate"])
                     QueryOrder: "IncProductType",
                     Columns: {
                         ElementOne: {
-                            Name: "IncProductType",
+                            Name: "ProductType",
+                            SortBy: "IncProductType",
                             Binding: "configData.ProductType",
                             Type: "text"
                         },
